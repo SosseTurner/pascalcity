@@ -1,0 +1,57 @@
+object Form1: TForm1
+  Left = 928
+  Height = 1017
+  Top = 394
+  Width = 1920
+  Caption = 'Form1'
+  ClientHeight = 1017
+  ClientWidth = 1920
+  DesignTimePPI = 144
+  OnClick = FormClick
+  LCLVersion = '2.2.4.0'
+  object ToggleBox1: TToggleBox
+    Left = 1600
+    Height = 64
+    Top = 300
+    Width = 64
+    Caption = 'Build'
+    TabOrder = 0
+    Visible = False
+  end
+  object ToggleBox2: TToggleBox
+    Left = 2496
+    Height = 96
+    Top = 450
+    Width = 96
+    Caption = 'Destroy'
+    TabOrder = 1
+    Visible = False
+  end
+  object Memo1: TMemo
+    Left = 2400
+    Height = 128
+    Top = 546
+    Width = 128
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 2
+    Visible = False
+  end
+  object Button1: TButton
+    Left = 165
+    Height = 38
+    Top = 166
+    Width = 113
+    Caption = 'Start'
+    OnClick = Button1Click
+    TabOrder = 3
+  end
+  object SpinEdit1: TSpinEdit
+    Left = 398
+    Height = 33
+    Top = 138
+    Width = 75
+    TabOrder = 4
+  end
+end
