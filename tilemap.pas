@@ -22,21 +22,24 @@ type
 var
   terrain: array of array of  Integer;
   buildings: array of array of Building;
-  tileArr: array[0..7] of array[0..20] of TBitmap;
+  tileArr: array[0..8] of array[0..20] of TBitmap;
   screenWidth, screenHeight:  Integer;
   offsetX, offsetY : Integer;
   mapWidth, mapHeight: Integer;
   tile: TBitmap;
 
 function FormCoordsToTile(x,y :Integer):TPoint;
-function GetTile(x, y: Integer):TBitmap;
+function GetTileBitmap(x, y: Integer):TBitmap;
 procedure LoadTiles();
 procedure GenerateMap();
-procedure DestroyMultiTile2x2(x, y : Integer);
+procedure PlaceMultiTile(tileX, tileY, width, height, id: Integer);
+procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
+procedure PlaceBuildingTile(x, y, id : Integer);
+procedure DestroyBuildingTile(x, y: Integer);
 
 implementation
 
-// World Generation durch Cellular Automate
+// World Generation durch Cellular Automata
 procedure WorldCellularAutomata();
 var iteratedWorld: array of array of Integer;
   x, y, i, x2, y2: Integer;
@@ -92,56 +95,34 @@ begin
     WorldCellularAutomata();
 end;
 
-function MultiTile2x2(x, y, Id: Integer):TBitmap;
+function GetParentTilePosition(tileX, tileY, width, height: Integer):TPoint;
+var id, x, y : Integer;
 begin
-  // Die oberen drei (Eck)tiles werden auf .isParent überprüft
-  // je nachdem welche welches Tile es ist wird das sprite ausgesucht.
-  // Bsp.: Die Tiles a,b,c sind die (Eck)Tiles   ab
-  //                                             c#
-   if (buildings[x-1][y-1].isParentTile) then
-     multiTile2x2:=tileArr[id][3]
-   else if (buildings[x][y-1].isParentTile) then
-     multiTile2x2:=tileArr[id][2]
-   else if (buildings[x-1][y].isParentTile) then
-     multiTile2x2:=tileArr[id][1]
-   else
-     multiTile2x2:=tileArr[id][0];
+  id:=buildings[tileX][tileY].id;
+
+  for x:=0 to width-1 do
+  begin
+    for y:=0 to height-1 do
+    begin
+      if (buildings[tileX-x][tileY-y].isParentTile) and (buildings[tileX-x][tileY-y].id=id) then
+      begin
+        GetParentTilePosition.X:=tilex-x;
+        GetParentTilePosition.Y:=tiley-y;
+      end;
+    end;
+  end;
 end;
 
-procedure DestroyMultiTile2x2(x, y : Integer);
-var id : Integer;
+function GetMultiTileBitmap(tileX, tileY, width, height, Id: Integer):TBitmap;
+var x, y, index: Integer;
+  parentPos:TPoint;
 begin
-  id:=buildings[x][y].id;
-  // Löscht ein 2x2 Tile
-  // falls unten Link
-   if (buildings[x-1][y-1].isParentTile) and (buildings[x-1][y-1].id=id)then
-     begin
-       buildings[x-1][y-1].id:=0;
-       buildings[x][y-1].id:=0;
-       buildings[x-1][y].id:=0;
-       buildings[x][y].id:=0;
-     end
-   else if (buildings[x][y-1].isParentTile) and (buildings[x][y-1].id=id) then
-     begin
-       buildings[x][y-1].id:=0;
-       buildings[x][y].id:=0;
-       buildings[x+1][y-1].id:=0;
-       buildings[x+1][y].id:=0;
-     end
-   else if (buildings[x-1][y].isParentTile) and (buildings[x-1][y].id=id) then
-     begin
-       buildings[x][y].id:=0;
-       buildings[x-1][y].id:=0;
-       buildings[x][y+1].id:=0;
-       buildings[x-1][y+1].id:=0;
-     end
-   else
-     begin
-       buildings[x][y].id:=0;
-       buildings[x+1][y].id:=0;
-       buildings[x][y+1].id:=0;
-       buildings[x+1][y+1].id:=0;
-     end
+  parentPos:=GetParentTilePosition(tileX, tileY, width, height);
+
+  x:=tileX-parentPos.X;
+  y:=tileY-parentPos.Y;
+  index:=(width*y)+x;
+  GetMultiTileBitmap:=tileArr[id][index]
 end;
 
 function BuildAutoTileTerrain(x, y, ID, targedId: Integer):TBitmap;
@@ -433,7 +414,7 @@ begin
   result:=TPoint.Create(Floor(x/32),Floor(y/32));
 end;
 
-function GetTile(x, y: Integer):TBitmap;
+function GetTileBitmap(x, y: Integer):TBitmap;
 var tile:TBitmap;
 begin
   tile:=TBitmap.Create;
@@ -464,15 +445,100 @@ begin
       4:
         tile:=tileArr[4][0];
       6:
-        tile:=multiTile2x2(x,y,6);
+        tile:=GetMultiTileBitmap(x, y, 2, 2, 6);
       7:
         tile:=AutoTile8Sites(x, y);
+      8:
+        tile:=GetMultiTileBitmap(x, y, 2, 3, 8);
     end;
   end;
 
-  GetTile:=tile;
+  GetTileBitmap:=tile;
+end;
+function IsBuildingPlacable(tileX, tileY, width, height:Integer):Boolean;
+var x, y:Integer;
+begin
+  // Wird am anfang true gesetzt
+  IsBuildingPlacable:=true;
+  for x:=0 to width-1 do
+  begin
+    for y:=0 to height-1 do
+    begin
+      // Innerhalb der baufläche ein gebäude erkannt wird, wird false returned
+      if (buildings[tilex+x][tiley+y].id<>0) then
+        IsBuildingPlacable:=false;
+    end;
+  end;
 end;
 
+procedure PlaceMultiTile(tileX, tileY, width, height, id: Integer);
+var x, y : Integer;
+begin
+  for x:=0 to width-1 do
+  begin
+    for y:=0 to height-1 do
+    begin
+      buildings[tilex+x][tiley+y].id:=id;
+      if (x=0) and (y=0) then
+      begin
+        buildings[tilex+x][tiley+y].isParentTile:=true;
+      end
+      else
+    end;
+  end;
+end;
+
+procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
+var x, y : Integer;
+  parentPos:TPoint;
+begin
+  parentPos:=GetParentTilePosition(tilex, tiley, width, height);
+  for x:=0 to width-1 do
+  begin
+    for y:=0 to height-1 do
+    begin
+      buildings[parentpos.X+x][parentPos.Y+y].id:=0;
+      buildings[parentpos.X+x][parentPos.Y+y].isParentTile:=false;
+    end;
+  end;
+end;
+
+procedure PlaceBuildingTile(x, y, id : Integer);
+begin
+  case id of
+    6:
+      begin
+        if (IsBuildingPlacable(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 6)
+      end;
+    8:
+      begin
+        if (IsBuildingPlacable(x, y, 2, 3)) then
+          PlaceMultiTile(x, y, 2, 3, 8);
+      end;
+    else
+      begin
+        if (IsBuildingPlacable(x, y, 1, 1)) then
+          buildings[x][y].id:=id;
+      end;
+  end;
+end;
+
+procedure DestroyBuildingTile(x, y: Integer);
+var id : Integer;
+begin
+  id:=buildings[x][y].id;
+  begin
+    case id of
+      6:
+        DestroyMultiTile(x, y, 2, 2);
+      8:
+        DestroyMultiTile(x, y, 2, 3);
+      else
+        buildings[x][y].id:=0;
+    end;
+  end;
+end;
 procedure LoadTiles();
 var i: Integer;
 begin
@@ -528,6 +594,13 @@ begin
   begin
     tileArr[7][i+1]:=TBitmap.Create;
     tileArr[7][i+1].LoadFromFile('gfx/tiles/7/7_7-'+IntToStr(i)+'.bmp');
+  end;
+
+  // TestTile 2x3
+  for i:=0 to 5 do
+  begin
+    tileArr[8][i]:=TBitmap.Create;
+    tileArr[8][i].LoadFromFile('gfx/tiles/8/8_8-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization

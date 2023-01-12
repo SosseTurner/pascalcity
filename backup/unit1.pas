@@ -78,7 +78,7 @@ begin
   Form1.SpinEdit1.Top:=300;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=7;
+  Form1.SpinEdit1.MaxValue:=8;
   Form1.SpinEdit1.MinValue:=3;
 end;
 
@@ -183,6 +183,7 @@ begin
           7:
             Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 0, 255);
         end;
+      end;
     end;
   end;
 
@@ -208,7 +209,7 @@ begin
   begin
     for y:=0 to screenHeight-1 do
     begin
-      bmp.Canvas.Draw(x*32, y*32, Tilemap.GetTile(x+offsetX, y+offsetY));
+      bmp.Canvas.Draw(x*32, y*32, Tilemap.GetTileBitmap(x+offsetX, y+offsetY));
     end;
   end;
 
@@ -217,7 +218,7 @@ begin
   DrawMinimap();
 end;
 
-procedure UpdateTilemapTile(tileX, tileY : Integer);
+procedure UpdateTilemapTile(tileX, tileY, radius : Integer);
 var x, y, screenX, screenY : Integer;
 begin
   screenX:=tileX-offsetX;
@@ -226,14 +227,14 @@ begin
   // Diese wird benutzt um die Tiles auf die Form zu malen
 
   // Jedes Sichtbare Tile wird gesammtelt und zu einem Bild zusammengesetzt
-  for x:=screenX-1 to screenX+1 do
+  for x:=screenX-radius to screenX+radius do
   begin
-    for y:=screenY-1 to screenY+1 do
+    for y:=screenY-radius to screenY+radius do
     begin
       // schließt aus das außerhalb der Arrays abgefragt wird
-      if (x>=0) or (x<=screenWidth-1) or (y>=0) or (y<=screenHeight-1)then
+      if (x>=0) and (x<=screenWidth-1) and (y>=0) and (y<=screenHeight-1)then
         begin
-          Form1.Canvas.Draw(x*32, y*32, Tilemap.GetTile(x+offsetX, y+offsetY));
+          Form1.Canvas.Draw(x*32, y*32, Tilemap.GetTileBitmap(x+offsetX, y+offsetY));
         end;
     end;
   end;
@@ -269,53 +270,12 @@ begin
 
   DrawMap();
 end;
-procedure PlaceBuildingTile(x, y, id : Integer);
-begin
-  if buildings[x][y].id<3 then
-    begin
-      case id of
-        6:
-          begin
-            if (buildings[x+1][y].id<3) and (buildings[x+1][y+1].id<3) and (buildings[x][y+1].id<3) then
-              begin
-                buildings[x][y].id:=id;
-                buildings[x][y].isParentTile:=true;
-
-                buildings[x+1][y].id:=id;
-                buildings[x][y+1].id:=id;
-                buildings[x+1][y+1].id:=id;
-              end;
-
-          end;
-        else
-          buildings[x][y].id:=id;
-      end;
-
-      UpdateTilemapTile(x, y);
-    end;
-end;
-
-procedure DestroyBuildingTile(x, y: Integer);
-var id : Integer;
-begin
-  id:=buildings[x][y].id;
-  begin
-    case id of
-      6:
-        DestroyMultiTile2x2(x, y);
-      else
-        buildings[x][y].id:=0;
-    end;
-    DrawMap();
-    //UpdateTilemapTile(x, y);
-  end;
-end;
 
 procedure PlaceTerrainTile(x, y, id : Integer);
 begin
   terrain[x][y]:=id;
 
-  UpdateTilemapTile(x, y);
+  UpdateTilemapTile(x, y, 5);
 end;
 
 procedure TForm1.FormClick(Sender: TObject);
@@ -330,12 +290,18 @@ begin
 
        // Build Tile
        if Form1.ToggleBox1.Checked then
-         PlaceBuildingTile(tilePos.X, tilePos.Y, Form1.SpinEdit1.Value)
+         begin
+           PlaceBuildingTile(tilePos.X, tilePos.Y, Form1.SpinEdit1.Value);
+           UpdateTilemapTile(tilePos.x, tilepos.y, 5);
+         end
+
 
        // Destroy Tile
        else if Form1.ToggleBox2.Checked then
-         DestroyBuildingTile(tilepos.x, tilepos.Y)
-
+         begin
+           DestroyBuildingTile(tilepos.x, tilepos.Y);
+           UpdateTilemapTile(tilePos.x, tilepos.y);
+         end
 
        // Click Tile
        else

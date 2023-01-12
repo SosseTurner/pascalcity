@@ -4,13 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="6">
       <Unit0>
         <Filename Value="project1.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="24" Y="10"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,9 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <TopLine Value="332"/>
-        <CursorPos X="24" Y="354"/>
-        <UsageCount Value="35"/>
+        <TopLine Value="275"/>
+        <CursorPos X="38" Y="293"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,139 +32,155 @@
         <UnitName Value="Tilemap"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="331"/>
-        <CursorPos X="45" Y="370"/>
-        <UsageCount Value="35"/>
+        <TopLine Value="415"/>
+        <CursorPos X="23" Y="523"/>
+        <FoldState Value=" T0k729021212[44211[C9[A9 PkWld2s"/>
+        <UsageCount Value="46"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="C:\lazarus\lcl\include\canvas.inc"/>
         <EditorIndex Value="1"/>
         <CursorPos X="9" Y="27"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
+        <UnitName Value="LCLMessageGlue"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="88"/>
+        <CursorPos Y="116"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2582"/>
+        <CursorPos Y="2609"/>
+        <UsageCount Value="10"/>
+      </Unit5>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="155" Column="12" TopLine="119"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="117" TopLine="93"/>
       </Position1>
       <Position2>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="106" Column="36" TopLine="64"/>
+        <Caret Line="128" Column="22" TopLine="93"/>
       </Position2>
       <Position3>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="105" Column="34" TopLine="66"/>
+        <Caret Line="127" Column="5" TopLine="93"/>
       </Position3>
       <Position4>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="280" Column="18" TopLine="242"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="126" Column="18" TopLine="93"/>
       </Position4>
       <Position5>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="276" Column="20" TopLine="238"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="127" Column="21" TopLine="93"/>
       </Position5>
       <Position6>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="267" Column="39" TopLine="231"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="118" Column="9" TopLine="93"/>
       </Position6>
       <Position7>
         <Filename Value="unit1.pas"/>
-        <Caret Line="353" Column="36" TopLine="285"/>
+        <Caret Line="184" Column="78" TopLine="25"/>
       </Position7>
       <Position8>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="317" Column="97" TopLine="225"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="25" Column="22"/>
       </Position8>
       <Position9>
         <Filename Value="unit1.pas"/>
-        <Caret Line="313" Column="38" TopLine="285"/>
+        <Caret Line="81" Column="30" TopLine="37"/>
       </Position9>
       <Position10>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="318" Column="11" TopLine="290"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="125" TopLine="85"/>
       </Position10>
       <Position11>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="314" Column="29" TopLine="290"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="98" TopLine="85"/>
       </Position11>
       <Position12>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="346" Column="26" TopLine="305"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="503" Column="36" TopLine="480"/>
       </Position12>
       <Position13>
         <Filename Value="unit1.pas"/>
-        <Caret Line="343" Column="50" TopLine="316"/>
+        <Caret Line="232" Column="44" TopLine="282"/>
       </Position13>
       <Position14>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="112" Column="28" TopLine="73"/>
+        <Caret Line="509" Column="17" TopLine="489"/>
       </Position14>
       <Position15>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="115" Column="28" TopLine="84"/>
+        <Caret Line="458" Column="62" TopLine="430"/>
       </Position15>
       <Position16>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="110" Column="45" TopLine="82"/>
+        <Caret Line="461" Column="26" TopLine="433"/>
       </Position16>
       <Position17>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="301" Column="14" TopLine="291"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="467" Column="27" TopLine="439"/>
       </Position17>
       <Position18>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="276" Column="99" TopLine="248"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="461" Column="22" TopLine="433"/>
       </Position18>
       <Position19>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="332" Column="51" TopLine="287"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="459" Column="18" TopLine="434"/>
       </Position19>
       <Position20>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="81" Column="30" TopLine="56"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="463" Column="7" TopLine="435"/>
       </Position20>
       <Position21>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="350" Column="38" TopLine="305"/>
+        <Caret Line="468" Column="27" TopLine="440"/>
       </Position21>
       <Position22>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="198" Column="16" TopLine="169"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="458" Column="10" TopLine="430"/>
       </Position22>
       <Position23>
-        <Filename Value="unit1.pas"/>
-        <Caret Line="185" Column="13" TopLine="160"/>
+        <Filename Value="tilemap.pas"/>
+        <Caret Line="515" Column="25" TopLine="451"/>
       </Position23>
       <Position24>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="468" Column="37" TopLine="416"/>
+        <Caret Line="458" Column="56" TopLine="434"/>
       </Position24>
       <Position25>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="373" Column="32" TopLine="337"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="278" Column="28" TopLine="250"/>
       </Position25>
       <Position26>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="295" Column="38" TopLine="262"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="295" Column="12" TopLine="267"/>
       </Position26>
       <Position27>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="373" Column="35" TopLine="330"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="221" Column="11" TopLine="194"/>
       </Position27>
       <Position28>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="346" Column="34" TopLine="313"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="298" Column="50" TopLine="267"/>
       </Position28>
       <Position29>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="380" Column="17" TopLine="353"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="221" Column="11" TopLine="193"/>
       </Position29>
       <Position30>
-        <Filename Value="tilemap.pas"/>
-        <Caret Line="468" Column="29" TopLine="442"/>
+        <Filename Value="unit1.pas"/>
+        <Caret Line="303" Column="53" TopLine="275"/>
       </Position30>
     </JumpHistory>
     <RunParams>
