@@ -168,24 +168,10 @@ begin
   begin
     for y:=0 to mapHeight-1 do
     begin
-      case terrain[x][y] of
-          0:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(0, 153, 219);
-          1:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(62, 137, 72);
-          2:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(184, 111, 80);
-      end;
-      case buildings[x][y].id of
-          3:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(38, 43, 68);
-          4:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(200, 20, 20);
-          6:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(100, 100, 100);
-          7:
-            bmp.Canvas.Pixels[x, y]:=RGBToColor(0, 0, 255);
-      end;
+      if buildings[x][y].id<3 then
+        bmp.Canvas.Pixels[x, y]:=GetMinimapColor(terrain[x][y])
+      else
+        bmp.Canvas.Pixels[x, y]:=GetMinimapColor(buildings[x][y].id)
     end;
   end;
   Form1.Canvas.Draw(32*screenWidth+32, 32, bmp);
@@ -214,29 +200,11 @@ begin
 
       // Falls nach einer Koordinate außerhalb des Arrays gefragt wird
       if (x>=0) or (x<=screenWidth-1) or (y>=0) or (y<=screenHeight-1)then
-        begin
-                case terrain[x][y] of
-          0:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 153, 219);
-          1:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(62, 137, 72);
-          2:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(184, 111, 80);
-      end;
-      case buildings[x][y].id of
-          3:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 200, 0);
-          4:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 0, 200);
-          5:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 250, 250);
-          7:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(200, 200, 200);
-          8:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(255, 255, 255);
-          9:
-            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(137, 10, 241);
-        end;
+      begin
+        if (buildings[x][y].id<3) then
+          Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=GetMinimapColor(terrain[x][y])
+        else
+          Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=GetMinimapColor(buildings[x][y].id)
       end;
     end;
   end;

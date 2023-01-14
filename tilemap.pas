@@ -22,7 +22,7 @@ type
 var
   terrain: array of array of  Integer;
   buildings: array of array of Building;
-  tileArr: array[0..9] of array[0..20] of TBitmap;
+  tileArr: array[0..40] of array[0..20] of TBitmap;
   screenWidth, screenHeight:  Integer;
   offsetX, offsetY : Integer;
   mapWidth, mapHeight: Integer;
@@ -36,6 +36,7 @@ procedure PlaceMultiTile(tileX, tileY, width, height, id: Integer);
 procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 procedure PlaceBuildingTile(x, y, id : Integer);
 procedure DestroyBuildingTile(x, y: Integer);
+function GetMinimapColor(id:Integer):TColor;
 
 implementation
 
@@ -113,10 +114,11 @@ begin
   end;
 end;
 
-function GetMultiTileBitmap(tileX, tileY, width, height, Id: Integer):TBitmap;
-var x, y, index: Integer;
+function GetMultiTileBitmap(tileX, tileY, width, height: Integer):TBitmap;
+var x, y, id, index: Integer;
   parentPos:TPoint;
 begin
+  id:=buildings[tileX][tileY].id;
   parentPos:=GetParentTilePosition(tileX, tileY, width, height);
 
   x:=tileX-parentPos.X;
@@ -325,12 +327,76 @@ begin
         tile:=tileArr[4][buildings[x][y].level];
       5:
         tile:=tileArr[5][buildings[x][y].level];
+      6:
+        tile:=AutoTile4Sides(x, y, 6, true);
       7:
         tile:=AutoTile4Sides(x, y, 7, true);
       8:
-        tile:=GetMultiTileBitmap(x, y, 2, 3, 8);
+        tile:=AutoTile4Sides(x, y, 8, true);
       9:
-        tile:=GetMultiTileBitmap(x, y, 2, 2, 9);
+        tile:=AutoTile4Sides(x, y, 9, true);
+      10:
+        tile:=AutoTile4Sides(x, y, 10, true);
+      11:
+        tile:=tileArr[11][0];
+      12:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      13:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      14:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      15:
+        tile:=GetMultiTileBitmap(x, y, 3, 2);
+      16:
+        tile:=tileArr[16][0];
+      17:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      18:
+        tile:=tileArr[0][0];
+      19:
+        tile:=tileArr[0][0];
+      20:
+        tile:=tileArr[20][0];
+      21:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      22:
+        tile:=GetMultiTileBitmap(x, y, 3, 3);
+      23:
+        tile:=GetMultiTileBitmap(x, y, 4, 4);
+      24:
+        tile:=tileArr[24][0];
+      25:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      26:
+        tile:=GetMultiTileBitmap(x, y, 3, 3);
+      27:
+        tile:=GetMultiTileBitmap(x, y, 4, 4);
+      28:
+        tile:=tileArr[28][0];
+      29:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      30:
+        tile:=GetMultiTileBitmap(x, y, 3, 3);
+      31:
+        tile:=GetMultiTileBitmap(x, y, 4, 4);
+      32:
+        tile:=tileArr[32][0];
+      33:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      34:
+        tile:=GetMultiTileBitmap(x, y, 3, 3);
+      35:
+        tile:=GetMultiTileBitmap(x, y, 4, 4);
+      36:
+        tile:=tileArr[36][0];
+      37:
+        tile:=tileArr[37][0];
+      38:
+        tile:=GetMultiTileBitmap(x, y, 2, 2);
+      39:
+        tile:=GetMultiTileBitmap(x, y, 4, 3);
+      40:
+        tile:=tileArr[40][0];
     end;
   end;
 
@@ -387,25 +453,196 @@ end;
 
 procedure PlaceBuildingTile(x, y, id : Integer);
 begin
+
   case id of
-    8:
+    12:
       begin
-        if (IsBuildingPlacable(x, y, 2, 3)) then
-          PlaceMultiTile(x, y, 2, 3, 8);
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 12);
       end;
-    9:
+    13:
       begin
-        if (IsBuildingPlacable(x, y, 2, 2)) then
-          PlaceMultiTile(x, y, 2, 2, 9)
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 13);
+      end;
+    14:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 14);
+      end;
+    15:
+      begin
+      if (IsBuildingPlacable(x, y, 3, 2)) then
+        PlaceMultiTile(x, y, 3, 2, 15);
+      end;
+    17:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 17);
+      end;
+    21:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 21);
+      end;
+    22:
+      begin
+      if (IsBuildingPlacable(x, y, 3, 3)) then
+        PlaceMultiTile(x, y, 3, 3, 22);
+      end;
+    23:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 4)) then
+        PlaceMultiTile(x, y, 4, 4, 23);
+      end;
+    25:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 25);
+      end;
+    26:
+      begin
+      if (IsBuildingPlacable(x, y, 3, 3)) then
+        PlaceMultiTile(x, y, 3, 3, 26);
+      end;
+    27:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 4)) then
+        PlaceMultiTile(x, y, 4, 4, 27);
+      end;
+    29:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 29);
+      end;
+    30:
+      begin
+      if (IsBuildingPlacable(x, y, 3, 3)) then
+        PlaceMultiTile(x, y, 3, 3, 30);
+      end;
+    31:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 4)) then
+        PlaceMultiTile(x, y, 4, 4, 31);
+      end;
+    33:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 33);
+      end;
+    34:
+      begin
+      if (IsBuildingPlacable(x, y, 3, 3)) then
+        PlaceMultiTile(x, y, 3, 3, 34);
+      end;
+    35:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 4)) then
+        PlaceMultiTile(x, y, 4, 4, 35);
+      end;
+    38:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 2)) then
+        PlaceMultiTile(x, y, 2, 2, 38);
+      end;
+    39:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 3)) then
+        PlaceMultiTile(x, y, 4, 3, 39);
       end;
     else
       begin
         if (IsBuildingPlacable(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
-          buildings[x][y].level:=Random(5);
         end;
       end;
+  end;
+end;
+
+function GetMinimapColor(id:Integer):TColor;
+begin
+  case id of
+    0:
+      GetMinimapColor:=RGBToColor(0, 153, 219);
+    1:
+      GetMinimapColor:=RGBToColor(62, 137, 72);
+    2:
+      GetMinimapColor:=RGBToColor(184, 111, 80);
+    3:
+      GetMinimapColor:=RGBToColor(0, 200, 0);
+    4:
+      GetMinimapColor:=RGBToColor(0, 0, 200);
+    5:
+      GetMinimapColor:=RGBToColor(0, 250, 250);
+    7:
+      GetMinimapColor:=RGBToColor(200, 200, 200);
+    8:
+      GetMinimapColor:=RGBToColor(255, 255, 255);
+    9:
+      GetMinimapColor:=RGBToColor(137, 10, 241);
+    10:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    11:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    12:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    13:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    14:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    15:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    16:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    17:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    18:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    19:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    20:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    21:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    22:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    23:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    24:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    25:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    26:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    27:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    28:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    29:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    30:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    31:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    32:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    33:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    34:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    35:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    36:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    37:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    38:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    39:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
+    40:
+      GetMinimapColor:=RGBToColor(0, 255, 255);
   end;
 end;
 
@@ -415,10 +652,44 @@ begin
   id:=buildings[x][y].id;
   begin
     case id of
-      8:
-        DestroyMultiTile(x, y, 2, 3);
-      9:
-        DestroyMultiTile(x, y, 2, 2);
+      12:
+         DestroyMultiTile(x, y, 2, 2);
+      13:
+         DestroyMultiTile(x, y, 2, 2);
+      14:
+         DestroyMultiTile(x, y, 2, 2);
+      15:
+         DestroyMultiTile(x, y, 3, 2);
+      17:
+         DestroyMultiTile(x, y, 2, 2);
+      21:
+         DestroyMultiTile(x, y, 2, 2);
+      22:
+         DestroyMultiTile(x, y, 3, 3);
+      23:
+         DestroyMultiTile(x, y, 4, 4);
+      25:
+         DestroyMultiTile(x, y, 2, 2);
+      26:
+         DestroyMultiTile(x, y, 3, 3);
+      27:
+         DestroyMultiTile(x, y, 4, 4);
+      29:
+         DestroyMultiTile(x, y, 2, 2);
+      30:
+         DestroyMultiTile(x, y, 3, 3);
+      31:
+         DestroyMultiTile(x, y, 4, 4);
+      33:
+         DestroyMultiTile(x, y, 2, 2);
+      34:
+         DestroyMultiTile(x, y, 3, 3);
+      35:
+         DestroyMultiTile(x, y, 4, 4);
+      38:
+         DestroyMultiTile(x, y, 2, 2);
+      39:
+         DestroyMultiTile(x, y, 4, 3);
       else
         buildings[x][y].id:=0;
     end;
@@ -475,24 +746,17 @@ begin
     tileArr[5][i].LoadFromFile('gfx/tiles/5/5_'+IntToStr(i)+'.bmp');
   end;
 
-  // Straße
+  // Feldweg
+  for i:=0 to 15 do
+  begin
+    tileArr[6][i]:=TBitmap.Create;
+    tileArr[6][i].LoadFromFile('gfx/tiles/6/6_6-'+IntToStr(i)+'.bmp');
+  end;
+  // Landstraße 2-Spuren
   for i:=0 to 15 do
   begin
     tileArr[7][i]:=TBitmap.Create;
     tileArr[7][i].LoadFromFile('gfx/tiles/7/7_7-'+IntToStr(i)+'.bmp');
-  end;
-
-  // TestTile 2x3
-  for i:=0 to 5 do
-  begin
-    tileArr[8][i]:=TBitmap.Create;
-    tileArr[8][i].LoadFromFile('gfx/tiles/8/8_8-'+IntToStr(i)+'.bmp');
-  end;
-  // TestTile 2x2
-  for i:=0 to 3 do
-  begin
-    tileArr[9][i]:=TBitmap.Create;
-    tileArr[9][i].LoadFromFile('gfx/tiles/9/9_9-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization
