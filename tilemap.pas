@@ -22,7 +22,7 @@ type
 var
   terrain: array of array of  Integer;
   buildings: array of array of Building;
-  tileArr: array[0..8] of array[0..20] of TBitmap;
+  tileArr: array[0..9] of array[0..20] of TBitmap;
   screenWidth, screenHeight:  Integer;
   offsetX, offsetY : Integer;
   mapWidth, mapHeight: Integer;
@@ -243,125 +243,6 @@ begin
   BuildAutoTileTerrain:=tile;
 end;
 
-function AutoTile8Sites(x, y: Integer):TBitmap;
-var id : Integer;
-begin
-
-  tile.Canvas.Clear;
-  id:=buildings[x][y].id;
-
-
-  // Oben Links
-  if buildings[x][y-1].id<>id then
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[id][12]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[ID][4]);
-      end;
-    end
-  else
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[ID][3]);
-      end
-      else
-      begin
-        if buildings[x-1][y-1].id<>id then
-          tile.Canvas.Draw(0, 0, tileArr[ID][10])
-        else
-          tile.Canvas.Draw(0, 0, tileArr[ID][1])
-      end;
-    end;
-
-  //Oben-Rechts
-  if buildings[x][y-1].id<>id then
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][13]);
-    end
-    else
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][4]);
-    end;
-  end
-  else
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][5]);
-    end
-    else
-    begin
-      if buildings[x+1][y-1].id<>id then
-        tile.Canvas.Draw(16, 0, tileArr[ID][7])
-      else
-        tile.Canvas.Draw(16, 0, tileArr[ID][1])
-    end;
-  end;
-
-  //Unten-Links
-  if buildings[x][y+1].id<>id then
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][11]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][6]);
-      end;
-    end
-  else
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][3]);
-      end
-      else
-      begin
-        if buildings[x-1][y+1].id<>id then
-          tile.Canvas.Draw(0, 16, tileArr[ID][9])
-        else
-          tile.Canvas.Draw(0, 16, tileArr[ID][2])
-      end;
-    end;
-
-  //Unten-Rechts
-  if buildings[x][y+1].id<>id then
-  begin
-      if buildings[x+1][y].id<>id then
-      begin
-        tile.Canvas.Draw(16, 16, tileArr[ID][14]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(16, 16, tileArr[ID][6]);
-      end;
-    end
-  else
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 16, tileArr[ID][5]);
-    end
-    else
-    begin
-      if buildings[x+1][y+1].id<>id then
-        tile.Canvas.Draw(16, 16, tileArr[ID][8])
-      else
-        tile.Canvas.Draw(16, 16, tileArr[ID][2])
-    end;
-  end;
-
-  AutoTile8Sites:=tile;
-end;
-
 function AutoTile4Sides(x, y, ID:Integer; isBuilding : Boolean): TBitmap;
 var i : Integer;
 begin
@@ -438,23 +319,24 @@ begin
   else
   begin
     case buildings[x][y].id of
-      // Straße
       3:
-        tile:=AutoTile4Sides(x, y, 3, true);
-      // Haus
+        tile:=tileArr[3][buildings[x][y].level];
       4:
-        tile:=tileArr[4][0];
-      6:
-        tile:=GetMultiTileBitmap(x, y, 2, 2, 6);
+        tile:=tileArr[4][buildings[x][y].level];
+      5:
+        tile:=tileArr[5][buildings[x][y].level];
       7:
-        tile:=AutoTile8Sites(x, y);
+        tile:=AutoTile4Sides(x, y, 7, true);
       8:
         tile:=GetMultiTileBitmap(x, y, 2, 3, 8);
+      9:
+        tile:=GetMultiTileBitmap(x, y, 2, 2, 9);
     end;
   end;
 
   GetTileBitmap:=tile;
 end;
+
 function IsBuildingPlacable(tileX, tileY, width, height:Integer):Boolean;
 var x, y:Integer;
 begin
@@ -506,20 +388,23 @@ end;
 procedure PlaceBuildingTile(x, y, id : Integer);
 begin
   case id of
-    6:
-      begin
-        if (IsBuildingPlacable(x, y, 2, 2)) then
-          PlaceMultiTile(x, y, 2, 2, 6)
-      end;
     8:
       begin
         if (IsBuildingPlacable(x, y, 2, 3)) then
           PlaceMultiTile(x, y, 2, 3, 8);
       end;
+    9:
+      begin
+        if (IsBuildingPlacable(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 9)
+      end;
     else
       begin
         if (IsBuildingPlacable(x, y, 1, 1)) then
+        begin
           buildings[x][y].id:=id;
+          buildings[x][y].level:=Random(5);
+        end;
       end;
   end;
 end;
@@ -530,10 +415,10 @@ begin
   id:=buildings[x][y].id;
   begin
     case id of
-      6:
-        DestroyMultiTile(x, y, 2, 2);
       8:
         DestroyMultiTile(x, y, 2, 3);
+      9:
+        DestroyMultiTile(x, y, 2, 2);
       else
         buildings[x][y].id:=0;
     end;
@@ -569,31 +454,32 @@ begin
   tileArr[2][0]:=TBitmap.Create;
   tileArr[2][0].LoadFromFile('gfx/tiles/2/2.bmp');
 
+  // Wohnungen
+  for i:=0 to 4 do
+  begin
+    tileArr[3][i]:=TBitmap.Create;
+    tileArr[3][i].LoadFromFile('gfx/tiles/3/3_'+IntToStr(i)+'.bmp');
+  end;
+
+  // Gewerbe
+  for i:=0 to 4 do
+  begin
+    tileArr[4][i]:=TBitmap.Create;
+    tileArr[4][i].LoadFromFile('gfx/tiles/4/4_'+IntToStr(i)+'.bmp');
+  end;
+
+  // Industrie
+  for i:=0 to 4 do
+  begin
+    tileArr[5][i]:=TBitmap.Create;
+    tileArr[5][i].LoadFromFile('gfx/tiles/5/5_'+IntToStr(i)+'.bmp');
+  end;
+
   // Straße
   for i:=0 to 15 do
   begin
-    tileArr[3][i]:=TBitmap.Create;
-    tileArr[3][i].LoadFromFile('gfx/tiles/3/3_3-'+IntToStr(i)+'.bmp');
-  end;
-
-  // Haus
-  tileArr[4][0]:=TBitmap.Create;
-  tileArr[4][0].LoadFromFile('gfx/tiles/4/4.bmp');
-
-  // Haus 2x2
-  for i:=0 to 3 do
-  begin
-    tileArr[6][i]:=TBitmap.Create;
-    tileArr[6][i].LoadFromFile('gfx/tiles/6/6_6-'+IntToStr(i)+'.bmp');
-  end;
-
-  // Fundament Wohnungen
-  tileArr[7][0]:=TBitmap.Create;
-  tileArr[7][0].LoadFromFile('gfx/tiles/7/7.bmp');
-  for i:=0 to 13 do
-  begin
-    tileArr[7][i+1]:=TBitmap.Create;
-    tileArr[7][i+1].LoadFromFile('gfx/tiles/7/7_7-'+IntToStr(i)+'.bmp');
+    tileArr[7][i]:=TBitmap.Create;
+    tileArr[7][i].LoadFromFile('gfx/tiles/7/7_7-'+IntToStr(i)+'.bmp');
   end;
 
   // TestTile 2x3
@@ -601,6 +487,12 @@ begin
   begin
     tileArr[8][i]:=TBitmap.Create;
     tileArr[8][i].LoadFromFile('gfx/tiles/8/8_8-'+IntToStr(i)+'.bmp');
+  end;
+  // TestTile 2x2
+  for i:=0 to 3 do
+  begin
+    tileArr[9][i]:=TBitmap.Create;
+    tileArr[9][i].LoadFromFile('gfx/tiles/9/9_9-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization

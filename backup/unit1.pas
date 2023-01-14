@@ -78,7 +78,7 @@ begin
   Form1.SpinEdit1.Top:=300;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=8;
+  Form1.SpinEdit1.MaxValue:=9;
   Form1.SpinEdit1.MinValue:=3;
 end;
 
@@ -175,13 +175,17 @@ begin
       end;
       case buildings[x][y].id of
           3:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(38, 43, 68);
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 200, 0);
           4:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(200, 20, 20);
-          6:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(100, 100, 100);
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 0, 200);
+          5:
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 250, 250);
           7:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 0, 255);
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(200, 200, 200);
+          8:
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(255, 255, 255);
+          9:
+            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(137, 10, 241);
         end;
       end;
     end;
@@ -300,7 +304,7 @@ begin
        else if Form1.ToggleBox2.Checked then
          begin
            DestroyBuildingTile(tilepos.x, tilepos.Y);
-           UpdateTilemapTile(tilePos.x, tilepos.y);
+           UpdateTilemapTile(tilePos.x, tilepos.y, 5);
          end
 
        // Click Tile
