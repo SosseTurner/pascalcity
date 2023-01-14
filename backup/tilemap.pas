@@ -243,125 +243,6 @@ begin
   BuildAutoTileTerrain:=tile;
 end;
 
-function AutoTile8Sites(x, y: Integer):TBitmap;
-var id : Integer;
-begin
-
-  tile.Canvas.Clear;
-  id:=buildings[x][y].id;
-
-
-  // Oben Links
-  if buildings[x][y-1].id<>id then
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[id][12]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[ID][4]);
-      end;
-    end
-  else
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 0, tileArr[ID][3]);
-      end
-      else
-      begin
-        if buildings[x-1][y-1].id<>id then
-          tile.Canvas.Draw(0, 0, tileArr[ID][10])
-        else
-          tile.Canvas.Draw(0, 0, tileArr[ID][1])
-      end;
-    end;
-
-  //Oben-Rechts
-  if buildings[x][y-1].id<>id then
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][13]);
-    end
-    else
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][4]);
-    end;
-  end
-  else
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 0, tileArr[ID][5]);
-    end
-    else
-    begin
-      if buildings[x+1][y-1].id<>id then
-        tile.Canvas.Draw(16, 0, tileArr[ID][7])
-      else
-        tile.Canvas.Draw(16, 0, tileArr[ID][1])
-    end;
-  end;
-
-  //Unten-Links
-  if buildings[x][y+1].id<>id then
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][11]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][6]);
-      end;
-    end
-  else
-  begin
-      if buildings[x-1][y].id<>id then
-      begin
-        tile.Canvas.Draw(0, 16, tileArr[ID][3]);
-      end
-      else
-      begin
-        if buildings[x-1][y+1].id<>id then
-          tile.Canvas.Draw(0, 16, tileArr[ID][9])
-        else
-          tile.Canvas.Draw(0, 16, tileArr[ID][2])
-      end;
-    end;
-
-  //Unten-Rechts
-  if buildings[x][y+1].id<>id then
-  begin
-      if buildings[x+1][y].id<>id then
-      begin
-        tile.Canvas.Draw(16, 16, tileArr[ID][14]);
-      end
-      else
-      begin
-        tile.Canvas.Draw(16, 16, tileArr[ID][6]);
-      end;
-    end
-  else
-  begin
-    if buildings[x+1][y].id<>id then
-    begin
-      tile.Canvas.Draw(16, 16, tileArr[ID][5]);
-    end
-    else
-    begin
-      if buildings[x+1][y+1].id<>id then
-        tile.Canvas.Draw(16, 16, tileArr[ID][8])
-      else
-        tile.Canvas.Draw(16, 16, tileArr[ID][2])
-    end;
-  end;
-
-  AutoTile8Sites:=tile;
-end;
-
 function AutoTile4Sides(x, y, ID:Integer; isBuilding : Boolean): TBitmap;
 var i : Integer;
 begin
@@ -455,6 +336,7 @@ begin
 
   GetTileBitmap:=tile;
 end;
+
 function IsBuildingPlacable(tileX, tileY, width, height:Integer):Boolean;
 var x, y:Integer;
 begin
@@ -615,11 +497,11 @@ begin
 end;
 initialization
 begin
-  mapHeight:=300;
-  mapWIdth:=300;
+  mapHeight:=256;
+  mapWIdth:=256;
   LoadTiles();
   screenHeight:=30;
-  screenWidth:=50;
+  screenWidth:=49;
   SetLength(terrain, mapHeight, mapWidth);
   SetLength(buildings, mapHeight, mapWidth);
 end;

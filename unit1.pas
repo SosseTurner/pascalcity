@@ -19,8 +19,54 @@ type
     Arrow3: TArrow;
     Arrow4: TArrow;
     Button1: TButton;
-    Memo1: TMemo;
+    Image1: TImage;
+    Image10: TImage;
+    Image11: TImage;
+    Image12: TImage;
+    Image13: TImage;
+    Image14: TImage;
+    Image15: TImage;
+    Image16: TImage;
+    Image17: TImage;
+    Image18: TImage;
+    Image19: TImage;
+    Image2: TImage;
+    Image20: TImage;
+    Image21: TImage;
+    Image22: TImage;
+    Image23: TImage;
+    Image24: TImage;
+    Image25: TImage;
+    Image26: TImage;
+    Image27: TImage;
+    Image28: TImage;
+    Image29: TImage;
+    Image3: TImage;
+    Image30: TImage;
+    Image31: TImage;
+    Image32: TImage;
+    Image33: TImage;
+    Image34: TImage;
+    Image35: TImage;
+    Image36: TImage;
+    Image37: TImage;
+    Image4: TImage;
+    Image5: TImage;
+    Image6: TImage;
+    Image7: TImage;
+    Image8: TImage;
+    Image9: TImage;
+    PageControl1: TPageControl;
     SpinEdit1: TSpinEdit;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    TabSheet3: TTabSheet;
+    TabSheet4: TTabSheet;
+    TabSheet5: TTabSheet;
+    TabSheet6: TTabSheet;
+    TabSheet7: TTabSheet;
+    TabSheet8: TTabSheet;
+    TabSheet9: TTabSheet;
     ToggleBox1: TToggleBox;
     ToggleBox2: TToggleBox;
     procedure Arrow1Click(Sender: TObject);
@@ -30,6 +76,8 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
   private
 
   public
@@ -47,62 +95,64 @@ implementation
 
 procedure SetUpGui();
 begin
-  // Ist notwendig da bei verschieden Monitoren sich die Gui elemente verschoben haben
+  // Ist notwendig da bei verschieden Monitoren sich die Gui-Elemente verschoben haben
 
   // Start
   Form1.Button1.Visible:=false;
 
   // Bauen
   Form1.ToggleBox1.Left:=1600;
-  Form1.ToggleBox1.Top:=300;
+  Form1.ToggleBox1.Top:=364;
   Form1.ToggleBox1.Height:=64;
   Form1.ToggleBox1.Width:=64;
   Form1.ToggleBox1.Visible:=true;
 
   // Abreisen
   Form1.ToggleBox2.Left:=1664;
-  Form1.ToggleBox2.Top:=300;
+  Form1.ToggleBox2.Top:=364;
   Form1.ToggleBox2.Height:=64;
   Form1.ToggleBox2.Width:=64;
   Form1.ToggleBox2.Visible:=true;
 
-  // Debug Memo
-  Form1.Memo1.Left:=1600;
-  Form1.Memo1.Top:=364;
-  Form1.Memo1.Height:=256;
-  Form1.Memo1.Width:=300;
-  Form1.Memo1.Visible:=true;
+  // Navigations-Pfeile
+
+     // Westen
+     Form1.Arrow1.Left:=1568;
+     Form1.Arrow1.Top:=Round(mapHeight/2)+16;
+     Form1.Arrow1.Height:=32;
+     Form1.Arrow1.Width:=32;
+
+     // Norden
+     Form1.Arrow2.Left:=1568+Round(mapWidth/2)+16;
+     Form1.Arrow2.Top:=0;
+     Form1.Arrow2.Height:=32;
+     Form1.Arrow2.Width:=32;
+
+     // Osten
+     Form1.Arrow4.Left:=1568+mapWidth+32;
+     Form1.Arrow4.Top:=Round(mapHeight/2)+16;
+     Form1.Arrow4.Height:=32;
+     Form1.Arrow4.Width:=32;
+
+     // Süden
+     Form1.Arrow3.Left:=1568+Round(mapWidth/2)+16;
+     Form1.Arrow3.Top:=mapHeight+32;
+     Form1.Arrow3.Height:=32;
+     Form1.Arrow3.Width:=32;
+
+  // BauMenu
+  Form1.PageControl1.Left:=1600;
+  Form1.PageControl1.Top:=428;
+  Form1.PageControl1.Height:=400;
+  Form1.PageControl1.Height:=320;
 
   // Tile Select (Temperär)
   Form1.SpinEdit1.Left:=1728;
-  Form1.SpinEdit1.Top:=300;
+  Form1.SpinEdit1.Top:=364;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
   Form1.SpinEdit1.MaxValue:=9;
   Form1.SpinEdit1.MinValue:=3;
-end;
-
-procedure DebugTile(x, y : Integer);
-begin
-  // Zeigt alle Warte für ein bestimmtes Gebäude an
-
-  Form1.Memo1.Lines.Clear;
-  // ID
-  Form1.Memo1.Lines.Add('Id:'#9#9+IntToStr(buildings[x][y].id));
-  // Happiness
-  Form1.Memo1.Lines.Add('Happiness:'#9+IntToStr(buildings[x][y].happiness));
-  // Health
-  Form1.Memo1.Lines.Add('Health:'#9#9+IntToStr(buildings[x][y].health));
-  // Burning
-  Form1.Memo1.Lines.Add('Burning:'#9#9+BoolToStr(buildings[x][y].isOnFire));
-  // Level
-  Form1.Memo1.Lines.Add('Level:'#9#9+IntToStr(buildings[x][y].level));
-  // MaxResidents
-  Form1.Memo1.Lines.Add('MaxResidents:'#9+IntToStr(buildings[x][y].maxResidents));
-  // Residents
-  Form1.Memo1.Lines.Add('Residents:'#9#9+IntToStr(buildings[x][y].residents));
-  // IsParentTile
-  Form1.Memo1.Lines.Add('IsParentTile:'#9+BoolToStr(buildings[x][y].isParentTile));
 end;
 
 procedure DrawMinimap();
@@ -138,14 +188,14 @@ begin
       end;
     end;
   end;
-  Form1.Canvas.Draw(32*screenWidth, 0, bmp);
+  Form1.Canvas.Draw(32*screenWidth+32, 32, bmp);
 
 
   // Der Sichtbare bereich wird durch umrandung kenntlich gemacht
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY, (offsetX+screenWidth)+32*screenWidth, offsetY);
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY, offsetX+32*screenWidth, offsetY+screenHeight);
-  Form1.Canvas.Line(offsetX+32*screenWidth+screenWidth, offsetY, (offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight);
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY+screenHeight, (offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight);
+  Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+32);
+  Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+32, (offsetX+32*screenWidth)+32, offsetY+screenHeight+32);
+  Form1.Canvas.Line((offsetX+32*screenWidth)+screenWidth+32, offsetY+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight+32);
+  Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+screenHeight+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight+32);
 end;
 
 procedure UpdateMinimapTile(tileX, tileY : Integer);
@@ -167,35 +217,29 @@ begin
         begin
                 case terrain[x][y] of
           0:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 153, 219);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 153, 219);
           1:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(62, 137, 72);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(62, 137, 72);
           2:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(184, 111, 80);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(184, 111, 80);
       end;
       case buildings[x][y].id of
           3:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 200, 0);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 200, 0);
           4:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 0, 200);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 0, 200);
           5:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(0, 250, 250);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(0, 250, 250);
           7:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(200, 200, 200);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(200, 200, 200);
           8:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(255, 255, 255);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(255, 255, 255);
           9:
-            Form1.Canvas.Pixels[32*screenWidth+x, y]:=RGBToColor(137, 10, 241);
+            Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=RGBToColor(137, 10, 241);
         end;
       end;
     end;
   end;
-
-  // Der Sichtbare bereich wird durch umrandung kenntlich gemacht
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY, (offsetX+screenWidth)+32*screenWidth, offsetY);
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY, offsetX+32*screenWidth, offsetY+screenHeight);
-  Form1.Canvas.Line(offsetX+32*screenWidth+screenWidth, offsetY, (offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight);
-  Form1.Canvas.Line(offsetX+32*screenWidth, offsetY+screenHeight, (offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight);
 end;
 
 procedure DrawMap();
@@ -269,8 +313,8 @@ begin
   // Y
   if offsetY<0 then
      offsetY:=0;
-  if offsetY>mapHeight-screenHeight-1 then
-     offsetY:=mapHeight-screenHeight-1;
+  if offsetY>mapHeight-screenHeight then
+     offsetY:=mapHeight-screenHeight;
 
   DrawMap();
 end;
@@ -304,19 +348,30 @@ begin
        else if Form1.ToggleBox2.Checked then
          begin
            DestroyBuildingTile(tilepos.x, tilepos.Y);
-           UpdateTilemapTile(tilePos.x, tilepos.y, 5);
+           UpdateTilemapTile(tilePos.x, tilepos.y, 2);
          end
 
        // Click Tile
        else
-         DebugTile(TilePos.X, TilePos.Y);
+         //DebugTile(TilePos.X, TilePos.Y);
 
        //DrawMap();
      end;
 
   // Klick in Minimap
-  if (mousePos.X > (screenWidth*32)) and (mousePos.Y < mapHeight) then
-     MoveCamera(mousePos.X-(screenWidth*32)-Round(screenWidth/2), mousePos.Y-Round(screenHeight/2));
+  if (mousePos.X > ((screenWidth*32)+32)) and (mousePos.Y < mapHeight+32) then
+      MoveCamera((mousePos.X-(screenWidth*32)-Round(screenWidth/2))-32, (mousePos.Y-Round(screenHeight/2))-32);
+
+end;
+
+procedure TForm1.Image1Click(Sender: TObject);
+begin
+  SpinEdit1.Value:=7;
+end;
+
+procedure TForm1.Image2Click(Sender: TObject);
+begin
+  SpinEdit1.Value:=9;
 end;
 
 procedure TForm1.Arrow2Click(Sender: TObject);
@@ -340,6 +395,7 @@ begin
   SetUpGui();
   GenerateMap();
   DrawMap();
+  DrawMinimap();
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);

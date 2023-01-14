@@ -497,11 +497,11 @@ begin
 end;
 initialization
 begin
-  mapHeight:=300;
-  mapWIdth:=300;
+  mapHeight:=288;
+  mapWIdth:=288;
   LoadTiles();
   screenHeight:=30;
-  screenWidth:=50;
+  screenWidth:=49;
   SetLength(terrain, mapHeight, mapWidth);
   SetLength(buildings, mapHeight, mapWidth);
 end;
