@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="38" Y="6"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,9 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <TopLine Value="166"/>
-        <CursorPos X="58" Y="205"/>
-        <UsageCount Value="57"/>
+        <TopLine Value="103"/>
+        <CursorPos X="31" Y="154"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,9 +32,9 @@
         <UnitName Value="Tilemap"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="714"/>
-        <CursorPos X="48" Y="753"/>
-        <UsageCount Value="57"/>
+        <TopLine Value="765"/>
+        <CursorPos X="19" Y="793"/>
+        <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>

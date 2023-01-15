@@ -752,11 +752,65 @@ begin
     tileArr[6][i]:=TBitmap.Create;
     tileArr[6][i].LoadFromFile('gfx/tiles/6/6_6-'+IntToStr(i)+'.bmp');
   end;
+
   // Landstraße 2-Spuren
   for i:=0 to 15 do
   begin
     tileArr[7][i]:=TBitmap.Create;
     tileArr[7][i].LoadFromFile('gfx/tiles/7/7_7-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Allee
+  for i:=0 to 15 do
+  begin
+    tileArr[8][i]:=TBitmap.Create;
+    tileArr[8][i].LoadFromFile('gfx/tiles/8/8_8-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Landstraße 4-Spuren
+  for i:=0 to 15 do
+  begin
+    tileArr[9][i]:=TBitmap.Create;
+    tileArr[9][i].LoadFromFile('gfx/tiles/9/9_9-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Schnellstraße
+  for i:=0 to 15 do
+  begin
+    tileArr[10][i]:=TBitmap.Create;
+    tileArr[10][i].LoadFromFile('gfx/tiles/10/10_10-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Solaranlage
+  tileArr[11][0]:=TBitmap.Create;
+  tileArr[11][0].LoadFromFile('gfx/tiles/11/11.bmp');
+
+  // Solaranlage groß
+  for i:=0 to 3 do
+  begin
+    tileArr[12][i]:=TBitmap.Create;
+    tileArr[12][i].LoadFromFile('gfx/tiles/12/12_12-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Wasserkraftwerk
+  for i:=0 to 3 do
+  begin
+    tileArr[13][i]:=TBitmap.Create;
+    tileArr[13][i].LoadFromFile('gfx/tiles/13/13_13-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Kohlekraftwerk
+  for i:=0 to 3 do
+  begin
+    tileArr[14][i]:=TBitmap.Create;
+    tileArr[14][i].LoadFromFile('gfx/tiles/14/14_14-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Atomkraftwerk
+  for i:=0 to 5 do
+  begin
+    tileArr[15][i]:=TBitmap.Create;
+    tileArr[15][i].LoadFromFile('gfx/tiles/15/15_15-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization
