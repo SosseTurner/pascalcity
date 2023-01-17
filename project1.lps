@@ -20,7 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
-        <TopLine Value="103"/>
+        <TopLine Value="124"/>
         <CursorPos X="31" Y="154"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
@@ -32,8 +32,8 @@
         <UnitName Value="Tilemap"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="765"/>
-        <CursorPos X="19" Y="793"/>
+        <TopLine Value="329"/>
+        <CursorPos X="41" Y="357"/>
         <UsageCount Value="59"/>
         <Loaded Value="True"/>
       </Unit2>

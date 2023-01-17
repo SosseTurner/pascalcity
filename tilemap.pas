@@ -352,9 +352,9 @@ begin
       17:
         tile:=GetMultiTileBitmap(x, y, 2, 2);
       18:
-        tile:=tileArr[0][0];
+        tile:=GetMultiTileBitmap(x, y, 2, 1);
       19:
-        tile:=tileArr[0][0];
+        tile:=GetMultiTileBitmap(x, y, 4, 1);
       20:
         tile:=tileArr[20][0];
       21:
@@ -479,6 +479,16 @@ begin
       begin
       if (IsBuildingPlacable(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 17);
+      end;
+    18:
+      begin
+      if (IsBuildingPlacable(x, y, 2, 1)) then
+        PlaceMultiTile(x, y, 2, 1, 18);
+      end;
+    19:
+      begin
+      if (IsBuildingPlacable(x, y, 4, 1)) then
+        PlaceMultiTile(x, y, 4, 1, 19);
       end;
     21:
       begin
@@ -662,6 +672,10 @@ begin
          DestroyMultiTile(x, y, 3, 2);
       17:
          DestroyMultiTile(x, y, 2, 2);
+      18:
+         DestroyMultiTile(x, y, 2, 1);
+      19:
+         DestroyMultiTile(x, y, 4, 1);
       21:
          DestroyMultiTile(x, y, 2, 2);
       22:
@@ -811,6 +825,30 @@ begin
   begin
     tileArr[15][i]:=TBitmap.Create;
     tileArr[15][i].LoadFromFile('gfx/tiles/15/15_15-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Wasserturm
+  tileArr[16][0]:=TBitmap.Create;
+  tileArr[16][0].LoadFromFile('gfx/tiles/16/16.bmp');
+
+    // Wasserturm groß
+  for i:=0 to 3 do
+  begin
+    tileArr[17][i]:=TBitmap.Create;
+    tileArr[17][i].LoadFromFile('gfx/tiles/17/17_17-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Wasserpumpe
+  tileArr[18][0]:=TBitmap.Create;
+  tileArr[18][0].LoadFromFile('gfx/tiles/18/18_18-0.bmp');
+  tileArr[18][1]:=TBitmap.Create;
+  tileArr[18][1].LoadFromFile('gfx/tiles/18/18_18-1.bmp');
+
+  // Staudamm
+    for i:=0 to 3 do
+  begin
+    tileArr[19][i]:=TBitmap.Create;
+    tileArr[19][i].LoadFromFile('gfx/tiles/19/19_19-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization

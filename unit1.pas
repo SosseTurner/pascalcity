@@ -151,7 +151,7 @@ begin
   Form1.SpinEdit1.Top:=364;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=15;
+  Form1.SpinEdit1.MaxValue:=19;
   Form1.SpinEdit1.MinValue:=3;
 end;
 
