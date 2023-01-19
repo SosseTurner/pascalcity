@@ -80,8 +80,43 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
+    procedure Image10Click(Sender: TObject);
+    procedure Image11Click(Sender: TObject);
+    procedure Image12Click(Sender: TObject);
+    procedure Image13Click(Sender: TObject);
+    procedure Image14Click(Sender: TObject);
+    procedure Image15Click(Sender: TObject);
+    procedure Image16Click(Sender: TObject);
+    procedure Image17Click(Sender: TObject);
+    procedure Image18Click(Sender: TObject);
+    procedure Image19Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
+    procedure Image20Click(Sender: TObject);
+    procedure Image21Click(Sender: TObject);
+    procedure Image22Click(Sender: TObject);
+    procedure Image23Click(Sender: TObject);
+    procedure Image24Click(Sender: TObject);
+    procedure Image25Click(Sender: TObject);
+    procedure Image27Click(Sender: TObject);
+    procedure Image29Click(Sender: TObject);
     procedure Image2Click(Sender: TObject);
+    procedure Image30Click(Sender: TObject);
+    procedure Image31Click(Sender: TObject);
+    procedure Image32Click(Sender: TObject);
+    procedure Image33Click(Sender: TObject);
+    procedure Image34Click(Sender: TObject);
+    procedure Image35Click(Sender: TObject);
+    procedure Image36Click(Sender: TObject);
+    procedure Image37Click(Sender: TObject);
+    procedure Image38Click(Sender: TObject);
+    procedure Image39Click(Sender: TObject);
+    procedure Image40Click(Sender: TObject);
+    procedure Image4Click(Sender: TObject);
+    procedure Image5Click(Sender: TObject);
+    procedure Image6Click(Sender: TObject);
+    procedure Image7Click(Sender: TObject);
+    procedure Image8Click(Sender: TObject);
+    procedure Image9Click(Sender: TObject);
   private
 
   public
@@ -90,6 +125,7 @@ type
 
 var
   Form1: TForm1;
+  selectedBuildingTile: Integer;
 
 implementation
 
@@ -561,7 +597,7 @@ begin
        // Build Tile
        if Form1.ToggleBox1.Checked then
          begin
-           PlaceBuildingTile(tilePos.X, tilePos.Y, Form1.SpinEdit1.Value);
+           PlaceBuildingTile(tilePos.X, tilePos.Y, selectedBuildingTile);
            UpdateTilemapTile(tilePos.x, tilepos.y, 4);
          end
 
@@ -586,14 +622,189 @@ begin
 
 end;
 
+procedure TForm1.Image10Click(Sender: TObject);
+begin
+  selectedBuildingTile:=15;
+end;
+
+procedure TForm1.Image11Click(Sender: TObject);
+begin
+  selectedBuildingTile:=20;
+end;
+
+procedure TForm1.Image12Click(Sender: TObject);
+begin
+  selectedBuildingTile:=21;
+end;
+
+procedure TForm1.Image13Click(Sender: TObject);
+begin
+  selectedBuildingTile:=22;
+end;
+
+procedure TForm1.Image14Click(Sender: TObject);
+begin
+  selectedBuildingTile:=23;
+end;
+
+procedure TForm1.Image15Click(Sender: TObject);
+begin
+  selectedBuildingTile:=28;
+end;
+
+procedure TForm1.Image16Click(Sender: TObject);
+begin
+  selectedBuildingTile:=29;
+end;
+
+procedure TForm1.Image17Click(Sender: TObject);
+begin
+  selectedBuildingTile:=31;
+end;
+
+procedure TForm1.Image18Click(Sender: TObject);
+begin
+  selectedBuildingTile:=30;
+end;
+
+procedure TForm1.Image19Click(Sender: TObject);
+begin
+  selectedBuildingTile:=32;
+end;
+
 procedure TForm1.Image1Click(Sender: TObject);
 begin
-  SpinEdit1.Value:=7;
+  selectedBuildingTile:=7;
+end;
+
+procedure TForm1.Image20Click(Sender: TObject);
+begin
+  selectedBuildingTile:=33;
+end;
+
+procedure TForm1.Image21Click(Sender: TObject);
+begin
+  selectedBuildingTile:=35;
+end;
+
+procedure TForm1.Image22Click(Sender: TObject);
+begin
+  selectedBuildingTile:=34;
+end;
+
+procedure TForm1.Image23Click(Sender: TObject);
+begin
+  selectedBuildingTile:=17;
+end;
+
+procedure TForm1.Image24Click(Sender: TObject);
+begin
+  selectedBuildingTile:=16;
+end;
+
+procedure TForm1.Image25Click(Sender: TObject);
+begin
+  selectedBuildingTile:=19;
+end;
+
+procedure TForm1.Image27Click(Sender: TObject);
+begin
+  selectedBuildingTile:=18;
+end;
+
+procedure TForm1.Image29Click(Sender: TObject);
+begin
+  selectedBuildingTile:=24;
 end;
 
 procedure TForm1.Image2Click(Sender: TObject);
 begin
-  SpinEdit1.Value:=9;
+  selectedBuildingTile:=12;
+end;
+
+procedure TForm1.Image30Click(Sender: TObject);
+begin
+  selectedBuildingTile:=25;
+end;
+
+procedure TForm1.Image31Click(Sender: TObject);
+begin
+  selectedBuildingTile:=27;
+end;
+
+procedure TForm1.Image32Click(Sender: TObject);
+begin
+  selectedBuildingTile:=26;
+end;
+
+procedure TForm1.Image33Click(Sender: TObject);
+begin
+  selectedBuildingTile:=36;
+end;
+
+procedure TForm1.Image34Click(Sender: TObject);
+begin
+  selectedBuildingTile:=37;
+end;
+
+procedure TForm1.Image35Click(Sender: TObject);
+begin
+  selectedBuildingTile:=38;
+end;
+
+procedure TForm1.Image36Click(Sender: TObject);
+begin
+  selectedBuildingTile:=39;
+end;
+
+procedure TForm1.Image37Click(Sender: TObject);
+begin
+  selectedBuildingTile:=40;
+end;
+
+procedure TForm1.Image38Click(Sender: TObject);
+begin
+  selectedBuildingTile:=3;
+end;
+
+procedure TForm1.Image39Click(Sender: TObject);
+begin
+  selectedBuildingTile:=4;
+end;
+
+procedure TForm1.Image40Click(Sender: TObject);
+begin
+  selectedBuildingTile:=5;
+end;
+
+procedure TForm1.Image4Click(Sender: TObject);
+begin
+  selectedBuildingTile:=8;
+end;
+
+procedure TForm1.Image5Click(Sender: TObject);
+begin
+  selectedBuildingTile:=9;
+end;
+
+procedure TForm1.Image6Click(Sender: TObject);
+begin
+  selectedBuildingTile:=10;
+end;
+
+procedure TForm1.Image7Click(Sender: TObject);
+begin
+  selectedBuildingTile:=11;
+end;
+
+procedure TForm1.Image8Click(Sender: TObject);
+begin
+  selectedBuildingTile:=13;
+end;
+
+procedure TForm1.Image9Click(Sender: TObject);
+begin
+  selectedBuildingTile:=14;
 end;
 
 procedure TForm1.Arrow2Click(Sender: TObject);
