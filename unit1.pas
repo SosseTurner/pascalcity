@@ -405,7 +405,7 @@ begin
   Form1.SpinEdit1.Top:=364;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=15;
+  Form1.SpinEdit1.MaxValue:=19;
   Form1.SpinEdit1.MinValue:=3;
 end;
 
@@ -562,7 +562,7 @@ begin
        if Form1.ToggleBox1.Checked then
          begin
            PlaceBuildingTile(tilePos.X, tilePos.Y, Form1.SpinEdit1.Value);
-           UpdateTilemapTile(tilePos.x, tilepos.y, 5);
+           UpdateTilemapTile(tilePos.x, tilepos.y, 4);
          end
 
 
@@ -570,7 +570,7 @@ begin
        else if Form1.ToggleBox2.Checked then
          begin
            DestroyBuildingTile(tilepos.x, tilepos.Y);
-           UpdateTilemapTile(tilePos.x, tilepos.y, 2);
+           UpdateTilemapTile(tilePos.x, tilepos.y, 4);
          end
 
        // Click Tile
