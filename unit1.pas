@@ -50,7 +50,10 @@ type
     Image35: TImage;
     Image36: TImage;
     Image37: TImage;
+    Image38: TImage;
+    Image39: TImage;
     Image4: TImage;
+    Image40: TImage;
     Image5: TImage;
     Image6: TImage;
     Image7: TImage;
@@ -59,6 +62,7 @@ type
     PageControl1: TPageControl;
     SpinEdit1: TSpinEdit;
     TabSheet1: TTabSheet;
+    TabSheet10: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
@@ -141,17 +145,267 @@ begin
      Form1.Arrow3.Width:=32;
 
   // BauMenu
-  Form1.PageControl1.Left:=1600;
+  Form1.PageControl1.Left:=1568;
   Form1.PageControl1.Top:=428;
-  Form1.PageControl1.Height:=400;
+  Form1.PageControl1.Width:=352;
   Form1.PageControl1.Height:=320;
+
+    //Straßen
+      // Feldweg
+      Form1.Image3.Width:=32;
+      Form1.Image3.Height:=32;
+      Form1.Image3.Left:=0;
+      Form1.Image3.Top:=0;
+
+
+      // Landstraße 2-Spuren
+      Form1.Image1.Width:=32;
+      Form1.Image1.Height:=32;
+      Form1.Image1.Left:=32;
+      Form1.Image1.Top:=0;
+
+      // Allee
+      Form1.Image4.Width:=32;
+      Form1.Image4.Height:=32;
+      Form1.Image4.Left:=64;
+      Form1.Image4.Top:=0;
+
+      // Landstraße 4-Spuren
+      Form1.Image5.Width:=32;
+      Form1.Image5.Height:=32;
+      Form1.Image5.Left:=96;
+      Form1.Image5.Top:=0;
+
+      // Schnellstraße
+      Form1.Image6.Width:=32;
+      Form1.Image6.Height:=32;
+      Form1.Image6.Left:=128;
+      Form1.Image6.Top:=0;
+
+    // Strom
+      // Solar klein
+      Form1.Image7.Width:=32;
+      Form1.Image7.Height:=32;
+      Form1.Image7.Left:=0;
+      Form1.Image7.Top:=0;
+
+      // Solar Groß
+      Form1.Image2.Width:=64;
+      Form1.Image2.Height:=64;
+      Form1.Image2.Left:=32;
+      Form1.Image2.Top:=0;
+
+      // Wasserkraftwerk
+      Form1.Image8.Width:=64;
+      Form1.Image8.Height:=64;
+      Form1.Image8.Left:=96;
+      Form1.Image8.Top:=0;
+
+      // Kohlekraftwerk
+      Form1.Image9.Width:=64;
+      Form1.Image9.Height:=64;
+      Form1.Image9.Left:=160;
+      Form1.Image9.Top:=0;
+
+      // Atomkraftwerk
+      Form1.Image10.Width:=96;
+      Form1.Image10.Height:=96;
+      Form1.Image10.Left:=0;
+      Form1.Image10.Top:=64;
+
+    // Feuerwehr
+      // Feuerwache klein
+      Form1.Image11.Width:=32;
+      Form1.Image11.Height:=32;
+      Form1.Image11.Left:=0;
+      Form1.Image11.Top:=0;
+
+      // Feuerwache groß
+      Form1.Image12.Width:=64;
+      Form1.Image12.Height:=64;
+      Form1.Image12.Left:=32;
+      Form1.Image12.Top:=0;
+
+      // Löschhubschrauberlandeplatz
+      Form1.Image13.Width:=96;
+      Form1.Image13.Height:=96;
+      Form1.Image13.Left:=0;
+      Form1.Image13.Top:=64;
+
+      // Feuerwehrzentrale
+      Form1.Image14.Width:=128;
+      Form1.Image14.Height:=128;
+      Form1.Image14.Left:=96;
+      Form1.Image14.Top:=0;
+
+    // Polizei
+      // Polizeiwache klein
+      Form1.Image15.Width:=32;
+      Form1.Image15.Height:=32;
+      Form1.Image15.Left:=0;
+      Form1.Image15.Top:=0;
+
+      // Polizeiwache groß
+      Form1.Image16.Width:=64;
+      Form1.Image16.Height:=64;
+      Form1.Image16.Left:=32;
+      Form1.Image16.Top:=0;
+
+      // Polizeizentrale
+      Form1.Image18.Width:=96;
+      Form1.Image18.Height:=96;
+      Form1.Image18.Left:=0;
+      Form1.Image18.Top:=64;
+
+      // Gefängnis
+      Form1.Image17.Width:=128;
+      Form1.Image17.Height:=128;
+      Form1.Image17.Left:=96;
+      Form1.Image17.Top:=0;
+
+    // Gesundheit
+        // Arztpraxis klein
+      Form1.Image19.Width:=32;
+      Form1.Image19.Height:=32;
+      Form1.Image19.Left:=0;
+      Form1.Image19.Top:=0;
+
+      // Arztpraxis groß
+      Form1.Image20.Width:=64;
+      Form1.Image20.Height:=64;
+      Form1.Image20.Left:=32;
+      Form1.Image20.Top:=0;
+
+      // Krankenhaus
+      Form1.Image22.Width:=96;
+      Form1.Image22.Height:=96;
+      Form1.Image22.Left:=0;
+      Form1.Image22.Top:=64;
+
+      // Medizinisches Zentrum
+      Form1.Image21.Width:=128;
+      Form1.Image21.Height:=128;
+      Form1.Image21.Left:=96;
+      Form1.Image21.Top:=0;
+    // Wasser
+      // Wasserturm klein
+      Form1.Image24.Width:=32;
+      Form1.Image24.Height:=32;
+      Form1.Image24.Left:=0;
+      Form1.Image24.Top:=0;
+
+      // Wasserturm groß
+      Form1.Image23.Width:=64;
+      Form1.Image23.Height:=64;
+      Form1.Image23.Left:=32;
+      Form1.Image23.Top:=0;
+
+      // Wasserpumpe horizontal
+      Form1.Image27.Width:=64;
+      Form1.Image27.Height:=32;
+      Form1.Image27.Left:=96;
+      Form1.Image27.Top:=0;
+
+      // Wasserpumpe vertikal
+      Form1.Image28.Width:=32;
+      Form1.Image28.Height:=64;
+      Form1.Image28.Left:=160;
+      Form1.Image28.Top:=0;
+
+      // Staudamm vertikal
+      Form1.Image26.Width:=32;
+      Form1.Image26.Height:=128;
+      Form1.Image26.Left:=192;
+      Form1.Image26.Top:=0;
+
+      // Staudamm horizontal
+      Form1.Image25.Width:=128;
+      Form1.Image25.Height:=32;
+      Form1.Image25.Left:=64;
+      Form1.Image25.Top:=64;
+
+    // Bildung
+      // Kindergarten
+      Form1.Image29.Width:=32;
+      Form1.Image29.Height:=32;
+      Form1.Image29.Left:=0;
+      Form1.Image29.Top:=0;
+
+      // Schule
+      Form1.Image30.Width:=64;
+      Form1.Image30.Height:=64;
+      Form1.Image30.Left:=32;
+      Form1.Image30.Top:=0;
+
+      // Oberschule
+      Form1.Image32.Width:=96;
+      Form1.Image32.Height:=96;
+      Form1.Image32.Left:=0;
+      Form1.Image32.Top:=64;
+
+      // Universität
+      Form1.Image31.Width:=128;
+      Form1.Image31.Height:=128;
+      Form1.Image31.Left:=96;
+      Form1.Image31.Top:=0;
+
+    // Freizeit
+      // Park
+      Form1.Image33.Width:=32;
+      Form1.Image33.Height:=32;
+      Form1.Image33.Left:=0;
+      Form1.Image33.Top:=0;
+
+      // Theater
+      Form1.Image34.Width:=32;
+      Form1.Image34.Height:=32;
+      Form1.Image34.Left:=32;
+      Form1.Image34.Top:=0;
+
+      // Kino
+      Form1.Image35.Width:=64;
+      Form1.Image35.Height:=64;
+      Form1.Image35.Left:=64;
+      Form1.Image35.Top:=0;
+
+      // Stadion
+      Form1.Image36.Width:=128;
+      Form1.Image36.Height:=96;
+      Form1.Image36.Left:=128;
+      Form1.Image36.Top:=0;
+
+    // Dekoration
+      // Pinoraurier Statue
+      Form1.Image37.Width:=32;
+      Form1.Image37.Height:=32;
+      Form1.Image37.Left:=0;
+      Form1.Image37.Top:=0;
+
+    // Zonen
+      // Wohngebiet
+      Form1.Image38.Width:=32;
+      Form1.Image38.Height:=32;
+      Form1.Image38.Left:=0;
+      Form1.Image38.Top:=0;
+
+      // Gewebegebiet
+      Form1.Image38.Width:=32;
+      Form1.Image38.Height:=32;
+      Form1.Image38.Left:=32;
+      Form1.Image38.Top:=0;
+
+      // Industriegebiet
+      Form1.Image38.Width:=32;
+      Form1.Image38.Height:=32;
+      Form1.Image38.Left:=64;
+      Form1.Image38.Top:=0;
 
   // Tile Select (Temperär)
   Form1.SpinEdit1.Left:=1728;
   Form1.SpinEdit1.Top:=364;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=19;
+  Form1.SpinEdit1.MaxValue:=15;
   Form1.SpinEdit1.MinValue:=3;
 end;
 

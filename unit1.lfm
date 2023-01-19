@@ -1,68 +1,73 @@
 object Form1: TForm1
-  Left = 716
-  Height = 1017
-  Top = 678
-  Width = 1920
+  Left = 494
+  Height = 678
+  Top = 246
+  Width = 1280
   Caption = 'Pascalcity'
-  ClientHeight = 1017
-  ClientWidth = 1920
-  DesignTimePPI = 144
+  ClientHeight = 678
+  ClientWidth = 1280
   OnClick = FormClick
-  LCLVersion = '2.2.4.0'
+  LCLVersion = '2.0.12.0'
   object ToggleBox1: TToggleBox
-    Left = 1512
-    Height = 64
-    Top = 600
-    Width = 64
+    Left = 1008
+    Height = 43
+    Top = 400
+    Width = 43
     Caption = 'Build'
+    ParentFont = False
     TabOrder = 0
     Visible = False
   end
   object ToggleBox2: TToggleBox
-    Left = 1552
-    Height = 96
-    Top = 796
-    Width = 96
+    Left = 1035
+    Height = 64
+    Top = 531
+    Width = 64
     Caption = 'Destroy'
+    ParentFont = False
     TabOrder = 1
     Visible = False
   end
   object Button1: TButton
-    Left = 165
-    Height = 38
-    Top = 166
-    Width = 113
+    Left = 110
+    Height = 25
+    Top = 111
+    Width = 75
     Caption = 'Start'
     OnClick = Button1Click
+    ParentFont = False
     TabOrder = 2
   end
   object SpinEdit1: TSpinEdit
-    Left = 398
-    Height = 33
-    Top = 138
-    Width = 75
+    Left = 265
+    Height = 23
+    Top = 92
+    Width = 50
+    ParentFont = False
     TabOrder = 3
   end
   object PageControl1: TPageControl
-    Left = 1600
-    Height = 300
-    Top = 240
-    Width = 300
-    ActivePage = TabSheet1
+    Left = 1067
+    Height = 200
+    Top = 160
+    Width = 200
+    ActivePage = TabSheet10
     MultiLine = True
-    TabIndex = 0
+    ParentFont = False
+    TabIndex = 9
     TabOrder = 4
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
       Caption = 'Straßen'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image1: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Hint = 'Landstraße (2 Spuren)'#13#10'Preis: 100€'
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image1Click
         ParentShowHint = False
         Picture.Data = {
@@ -77,42 +82,43 @@ object Form1: TForm1
         ShowHint = True
       end
       object Image3: TImage
-        Left = 32
-        Height = 32
+        Left = 21
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image1Click
         ParentShowHint = False
         ShowHint = True
       end
       object Image4: TImage
-        Left = 64
-        Height = 32
+        Left = 43
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image5: TImage
-        Left = 96
-        Height = 32
+        Left = 64
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image6: TImage
-        Left = 128
-        Height = 32
+        Left = 85
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Strom'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image2: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image2Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869636102000089504E47
@@ -139,264 +145,294 @@ object Form1: TForm1
       end
       object Image7: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image8: TImage
-        Left = 96
-        Height = 64
+        Left = 64
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image9: TImage
-        Left = 160
-        Height = 64
+        Left = 107
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image10: TImage
         Left = 0
-        Height = 64
-        Top = 64
-        Width = 96
+        Height = 43
+        Top = 43
+        Width = 64
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Wasser'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image23: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image24: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image25: TImage
-        Left = 64
-        Height = 32
-        Top = 64
-        Width = 128
+        Left = 43
+        Height = 21
+        Top = 43
+        Width = 85
       end
       object Image26: TImage
-        Left = 192
-        Height = 128
+        Left = 128
+        Height = 85
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image27: TImage
-        Left = 96
-        Height = 32
+        Left = 64
+        Height = 21
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image28: TImage
-        Left = 160
-        Height = 64
+        Left = 107
+        Height = 43
         Top = 0
-        Width = 32
+        Width = 21
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Feuerwehr'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image11: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image12: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image13: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
       end
       object Image14: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Polizei'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image15: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image16: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image17: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
       end
       object Image18: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
       end
     end
     object TabSheet6: TTabSheet
       Caption = 'Gesundheit'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image19: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image20: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image21: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
       end
       object Image22: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
       end
     end
     object TabSheet7: TTabSheet
       Caption = 'Bildung'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image29: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image30: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image31: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
       end
       object Image32: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Freizeit'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image33: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image34: TImage
-        Left = 32
-        Height = 32
+        Left = 21
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image35: TImage
-        Left = 64
-        Height = 64
+        Left = 43
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
       end
       object Image36: TImage
-        Left = 128
-        Height = 96
+        Left = 85
+        Height = 64
         Top = 0
-        Width = 128
+        Width = 85
       end
     end
     object TabSheet9: TTabSheet
       Caption = 'Dekoration'
-      ClientHeight = 202
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
+      ParentFont = False
       object Image37: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
+      end
+    end
+    object TabSheet10: TTabSheet
+      Caption = 'Zonen'
+      ClientHeight = 112
+      ClientWidth = 192
+      object Image38: TImage
+        Left = 0
+        Height = 26
+        Top = 0
+        Width = 26
+      end
+      object Image39: TImage
+        Left = 24
+        Height = 26
+        Top = 0
+        Width = 26
+      end
+      object Image40: TImage
+        Left = 48
+        Height = 26
+        Top = 0
+        Width = 26
       end
     end
   end
   object Arrow1: TArrow
-    Left = 1615
-    Height = 30
-    Top = 143
-    Width = 30
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Left = 1077
+    Height = 20
+    Top = 95
+    Width = 20
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow1Click
   end
   object Arrow2: TArrow
-    Left = 1756
-    Height = 30
+    Left = 1171
+    Height = 20
     Top = 0
-    Width = 30
+    Width = 20
     ArrowType = atUp
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow2Click
   end
   object Arrow3: TArrow
-    Left = 1883
-    Height = 30
-    Top = 117
-    Width = 30
+    Left = 1255
+    Height = 20
+    Top = 78
+    Width = 20
     ArrowType = atDown
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow3Click
   end
   object Arrow4: TArrow
-    Left = 1754
-    Height = 30
-    Top = 203
-    Width = 30
+    Left = 1169
+    Height = 20
+    Top = 135
+    Width = 20
     ArrowType = atRight
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow4Click
   end
 end
