@@ -55,7 +55,6 @@ type
     Image4: TImage;
     Image40: TImage;
     Image5: TImage;
-    Image6: TImage;
     Image7: TImage;
     Image8: TImage;
     Image9: TImage;
@@ -110,10 +109,10 @@ type
     procedure Image37Click(Sender: TObject);
     procedure Image38Click(Sender: TObject);
     procedure Image39Click(Sender: TObject);
+    procedure Image3Click(Sender: TObject);
     procedure Image40Click(Sender: TObject);
     procedure Image4Click(Sender: TObject);
     procedure Image5Click(Sender: TObject);
-    procedure Image6Click(Sender: TObject);
     procedure Image7Click(Sender: TObject);
     procedure Image8Click(Sender: TObject);
     procedure Image9Click(Sender: TObject);
@@ -211,12 +210,6 @@ begin
       Form1.Image5.Height:=32;
       Form1.Image5.Left:=96;
       Form1.Image5.Top:=0;
-
-      // Schnellstraße
-      Form1.Image6.Width:=32;
-      Form1.Image6.Height:=32;
-      Form1.Image6.Left:=128;
-      Form1.Image6.Top:=0;
 
     // Strom
       // Solar klein
@@ -425,23 +418,23 @@ begin
       Form1.Image38.Top:=0;
 
       // Gewebegebiet
-      Form1.Image38.Width:=32;
-      Form1.Image38.Height:=32;
-      Form1.Image38.Left:=32;
-      Form1.Image38.Top:=0;
+      Form1.Image39.Width:=32;
+      Form1.Image39.Height:=32;
+      Form1.Image39.Left:=32;
+      Form1.Image39.Top:=0;
 
       // Industriegebiet
-      Form1.Image38.Width:=32;
-      Form1.Image38.Height:=32;
-      Form1.Image38.Left:=64;
-      Form1.Image38.Top:=0;
+      Form1.Image40.Width:=32;
+      Form1.Image40.Height:=32;
+      Form1.Image40.Left:=64;
+      Form1.Image40.Top:=0;
 
   // Tile Select (Temperär)
   Form1.SpinEdit1.Left:=1728;
   Form1.SpinEdit1.Top:=364;
   Form1.SpinEdit1.Height:=64;
   Form1.SpinEdit1.Width:=128;
-  Form1.SpinEdit1.MaxValue:=19;
+  Form1.SpinEdit1.MaxValue:=21;
   Form1.SpinEdit1.MinValue:=3;
 end;
 
@@ -772,6 +765,11 @@ begin
   selectedBuildingTile:=4;
 end;
 
+procedure TForm1.Image3Click(Sender: TObject);
+begin
+   selectedBuildingTile:=6;
+end;
+
 procedure TForm1.Image40Click(Sender: TObject);
 begin
   selectedBuildingTile:=5;
@@ -785,11 +783,6 @@ end;
 procedure TForm1.Image5Click(Sender: TObject);
 begin
   selectedBuildingTile:=9;
-end;
-
-procedure TForm1.Image6Click(Sender: TObject);
-begin
-  selectedBuildingTile:=10;
 end;
 
 procedure TForm1.Image7Click(Sender: TObject);

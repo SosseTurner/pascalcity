@@ -845,6 +845,31 @@ begin
     tileArr[19][i]:=TBitmap.Create;
     tileArr[19][i].LoadFromFile('gfx/tiles/19/19_19-'+IntToStr(i)+'.bmp');
   end;
+
+  // Feuwehrwache klein
+  tileArr[20][0]:=TBitmap.Create;
+  tileArr[20][0].LoadFromFile('gfx/tiles/20/20.bmp');
+
+  // Feuwehrwache groß
+  for i:=0 to 3 do
+  begin
+    tileArr[21][i]:=TBitmap.Create;
+    tileArr[21][i].LoadFromFile('gfx/tiles/21/21_'+IntToStr(i)+'.bmp');
+  end;
+
+  // Löschhubschrauberlandeplatz
+  for i:=0 to 8 do
+  begin
+    tileArr[22][i]:=TBitmap.Create;
+    tileArr[22][i].LoadFromFile('gfx/tiles/22/22_'+IntToStr(i)+'.bmp');
+  end;
+
+    // Löschhubschrauberlandeplatz
+  for i:=0 to 15 do
+  begin
+    tileArr[23][i]:=TBitmap.Create;
+    tileArr[23][i].LoadFromFile('gfx/tiles/23/23_'+IntToStr(i)+'.bmp');
+  end;
 end;
 initialization
 begin
