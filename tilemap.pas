@@ -42,6 +42,10 @@ procedure WorldCellularAutomata();
 var iteratedWorld: array of array of Integer;
   x, y, i, x2, y2: Integer;
 begin
+  // Die Welt wird durch Cellular Automate generiert.
+  // Durch Zufall werden Bereichen mit viel Land mehr land gegeben, das selbe bei Wasser.
+  // Erfolgt über zählen der glrichen Nachbarn.
+
   SetLength(iteratedWorld, mapWidth, mapHeight);
   for x:=0 to mapWidth-1 do
   begin
@@ -89,6 +93,7 @@ begin
       end;
   end;
 
+  // 10-fache Ausführung um größere Inseln / Ozeana zu erhalten
   for i:=0 to 10 do
     WorldCellularAutomata();
 end;
@@ -97,7 +102,9 @@ function GetParentTilePosition(tileX, tileY, width, height: Integer):TPoint;
 var id, x, y : Integer;
 begin
   id:=buildings[tileX][tileY].id;
-
+  // Abhängig von der Höhe und Breite wird ein Quadrat nach links oben ausgehend von der
+  // TileX und Tile y position nach dem Tile mit isParent=true durchsucht. Dessen Koordinaten
+  // werden dann zurückgegeben
   for x:=0 to width-1 do
   begin
     for y:=0 to height-1 do
@@ -115,6 +122,11 @@ function GetMultiTileBitmap(tileX, tileY, width, height: Integer):TBitmap;
 var x, y, id, index: Integer;
   parentPos:TPoint;
 begin
+  // Große Tiles bestehen aus mehren Bildern, welche genau angeordnen sein müssen.
+  // Die Dateinamen sind folgt abgespeichert: 01 für Tile: xx
+  //                                          23           xx
+  // Durch ausrechnen der aktuellen Position und der Position des Parent Tiles kann der Name(index)
+  // des Bildes ermittelt werde.
   id:=buildings[tileX][tileY].id;
   parentPos:=GetParentTilePosition(tileX, tileY, width, height);
 
@@ -399,19 +411,77 @@ begin
 
   GetTileBitmap:=tile;
 end;
+function IsNearStreet(tileX, tileY, width, height:Integer):Boolean;
+var x, y, i:Integer;
+  corners:array[0..3] of TPoint;
+begin
+  // Bei Größeren Tiles wird bei jeder Ecke überprüft ob diese in der Nähe einer Straße ist
 
-function IsBuildingPlacable(tileX, tileY, width, height:Integer):Boolean;
+  corners[0]:=TPoint.Create(tilex, tiley);
+  corners[1]:=TPoint.Create(tilex+width-1, tiley);
+  corners[2]:=TPoint.Create(tilex, tiley+height-1);
+  corners[3]:=TPoint.Create(tilex+width-1, tiley+height-1);
+
+  // Anfangs wird der Wert auf Null gesetzt. Die Ecken werden nacheinander betrachtet.
+  // Falls eine Ecke in der Nähe einer Straße ist wird der Wert als true gesezt und bleibt
+  // so bis zum Ende
+  isNearStreet:=false;
+  for i:=0 to 3 do
+  begin
+      // Landstraße
+      for x:=-1 to 1 do
+      begin
+        for y:=-1 to 1 do
+        begin
+          if (buildings[corners[i].X+x][corners[i].Y+y].id=6) then
+            isNearStreet:=true;
+        end;
+      end;
+
+      // 2-Spurige
+      for x:=-2 to 2 do
+      begin
+        for y:=-2 to 2 do
+        begin
+          if (buildings[corners[i].X+x][corners[i].Y+y].id=7) then
+            isNearStreet:=true;
+        end;
+      end;
+
+      // Allee
+      for x:=-3 to 3 do
+      begin
+        for y:=-3 to 3 do
+        begin
+          if (buildings[corners[i].X+x][corners[i].Y+y].id=8) then
+            isNearStreet:=true;
+        end;
+      end;
+
+      // 4-Spurig
+      for x:=-4 to 4 do
+      begin
+        for y:=-4 to 4 do
+        begin
+          if (buildings[corners[i].X+x][corners[i].Y+y].id=9) then
+            isNearStreet:=true;
+        end;
+      end;
+  end;
+end;
+
+function IsBuildingPlaceable(tileX, tileY, width, height:Integer):Boolean;
 var x, y:Integer;
 begin
   // Wird am anfang true gesetzt
-  IsBuildingPlacable:=true;
+  IsBuildingPlaceable:=true;
   for x:=0 to width-1 do
   begin
     for y:=0 to height-1 do
     begin
-      // Innerhalb der baufläche ein gebäude erkannt wird, wird false returned
-      if (buildings[tilex+x][tiley+y].id<>0) then
-        IsBuildingPlacable:=false;
+      // Falls innerhalb der Baufläche ein Gebäude erkannt wird, wird false returned
+      if (buildings[tilex+x][tiley+y].id<>0) or (terrain[tilex+x][tiley+y]=0) then
+        IsBuildingPlaceable:=false;
     end;
   end;
 end;
@@ -419,6 +489,8 @@ end;
 procedure PlaceMultiTile(tileX, tileY, width, height, id: Integer);
 var x, y : Integer;
 begin
+  // Anhand der Breite und Höhe werden alle Tiles in einen Quadrat platziert.
+  // Das erste(oben links) erhält außerdem das Attribut ParentTile (nur ein Tile pro Gebäude)
   for x:=0 to width-1 do
   begin
     for y:=0 to height-1 do
@@ -437,6 +509,7 @@ procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 var x, y : Integer;
   parentPos:TPoint;
 begin
+  // Mit hilfe der Höhe und Breite wird ein Quadrat gelöst. Der Wert id wird auf null gesezt.
   parentPos:=GetParentTilePosition(tilex, tiley, width, height);
   for x:=0 to width-1 do
   begin
@@ -450,116 +523,124 @@ end;
 
 procedure PlaceBuildingTile(x, y, id : Integer);
 begin
-
+  // Abhängig von der Id wird das bestimmte Gebäude platziert. Durch unterschiedliche Größen
+  // muss jede ID einzeln betrachtet werden.
+  // Vor platzieren der Gebäude wird auf Nähe zu Straßen und Bauplatz überprüft.
   case id of
+    6..9:
+      begin
+        if (buildings[x][y].id=0) then
+          buildings[x][y].id:=id;
+      end;
     12:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 12);
       end;
     13:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 13);
       end;
     14:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 14);
       end;
     15:
       begin
-      if (IsBuildingPlacable(x, y, 3, 2)) then
+      if (IsBuildingPlaceable(x, y, 3, 2) and IsNearStreet(x, y, 3, 2)) then
         PlaceMultiTile(x, y, 3, 2, 15);
       end;
     17:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 17);
       end;
     18:
       begin
-      if (IsBuildingPlacable(x, y, 2, 1)) then
+      if (IsBuildingPlaceable(x, y, 2, 1) and IsNearStreet(x, y, 2, 1)) then
         PlaceMultiTile(x, y, 2, 1, 18);
       end;
     19:
       begin
-      if (IsBuildingPlacable(x, y, 4, 1)) then
+      if (IsBuildingPlaceable(x, y, 4, 1) and IsNearStreet(x, y, 4, 1)) then
         PlaceMultiTile(x, y, 4, 1, 19);
       end;
     21:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 21);
       end;
     22:
       begin
-      if (IsBuildingPlacable(x, y, 3, 3)) then
+      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
         PlaceMultiTile(x, y, 3, 3, 22);
       end;
     23:
       begin
-      if (IsBuildingPlacable(x, y, 4, 4)) then
+      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
         PlaceMultiTile(x, y, 4, 4, 23);
       end;
     25:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 25);
       end;
     26:
       begin
-      if (IsBuildingPlacable(x, y, 3, 3)) then
+      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
         PlaceMultiTile(x, y, 3, 3, 26);
       end;
     27:
       begin
-      if (IsBuildingPlacable(x, y, 4, 4)) then
+      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
         PlaceMultiTile(x, y, 4, 4, 27);
       end;
     29:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 29);
       end;
     30:
       begin
-      if (IsBuildingPlacable(x, y, 3, 3)) then
+      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
         PlaceMultiTile(x, y, 3, 3, 30);
       end;
     31:
       begin
-      if (IsBuildingPlacable(x, y, 4, 4)) then
+      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
         PlaceMultiTile(x, y, 4, 4, 31);
       end;
     33:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 33);
       end;
     34:
       begin
-      if (IsBuildingPlacable(x, y, 3, 3)) then
+      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
         PlaceMultiTile(x, y, 3, 3, 34);
       end;
     35:
       begin
-      if (IsBuildingPlacable(x, y, 4, 4)) then
+      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
         PlaceMultiTile(x, y, 4, 4, 35);
       end;
     38:
       begin
-      if (IsBuildingPlacable(x, y, 2, 2)) then
+      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
         PlaceMultiTile(x, y, 2, 2, 38);
       end;
     39:
       begin
-      if (IsBuildingPlacable(x, y, 4, 3)) then
+      if (IsBuildingPlaceable(x, y, 4, 3) and IsNearStreet(x, y, 4, 3)) then
         PlaceMultiTile(x, y, 4, 3, 39);
       end;
+    // Alle Tiles mit der Größe 1x1 können zusammen betrachtet werden.
     else
       begin
-        if (IsBuildingPlacable(x, y, 1, 1)) then
+        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
         end;
@@ -569,6 +650,7 @@ end;
 
 function GetMinimapColor(id:Integer):TColor;
 begin
+  // Zum Generieren der Minimap erhält jede Id einen eigenen Farbwert.
   case id of
     0:
       GetMinimapColor:=RGBToColor(0, 153, 219);
@@ -656,6 +738,7 @@ end;
 procedure DestroyBuildingTile(x, y: Integer);
 var id : Integer;
 begin
+  // Abhänhig von der Id wird ein Gebäude in einer bestimmten Größe zerstort
   id:=buildings[x][y].id;
   begin
     case id of
@@ -709,6 +792,8 @@ end;
 procedure LoadTiles();
 var i: Integer;
 begin
+  // Alle benötigten Grafiken werden zum Programmstart geladen.
+  // In einem 2-Dimensionales Array sind alle Bilder gespeichert.
 
   // Initialise Tile TBitmap
   tile:=TBitmap.Create;

@@ -191,25 +191,28 @@ begin
       Form1.Image3.Height:=32;
       Form1.Image3.Left:=0;
       Form1.Image3.Top:=0;
-
+      Form1.Image2.Picture.LoadFromFile('gfx/gui/build-menu/6.png');
 
       // Landstraße 2-Spuren
       Form1.Image1.Width:=32;
       Form1.Image1.Height:=32;
       Form1.Image1.Left:=32;
       Form1.Image1.Top:=0;
+      Form1.Image1.Picture.LoadFromFile('gfx/gui/build-menu/7.png');
 
       // Allee
       Form1.Image4.Width:=32;
       Form1.Image4.Height:=32;
       Form1.Image4.Left:=64;
       Form1.Image4.Top:=0;
+      Form1.Image4.Picture.LoadFromFile('gfx/gui/build-menu/8.png');
 
       // Landstraße 4-Spuren
       Form1.Image5.Width:=32;
       Form1.Image5.Height:=32;
       Form1.Image5.Left:=96;
       Form1.Image5.Top:=0;
+      Form1.Image5.Picture.LoadFromFile('gfx/gui/build-menu/9.png');
 
     // Strom
       // Solar klein
@@ -217,30 +220,35 @@ begin
       Form1.Image7.Height:=32;
       Form1.Image7.Left:=0;
       Form1.Image7.Top:=0;
+      Form1.Image7.Picture.LoadFromFile('gfx/gui/build-menu/11.png');
 
       // Solar Groß
       Form1.Image2.Width:=64;
       Form1.Image2.Height:=64;
       Form1.Image2.Left:=32;
       Form1.Image2.Top:=0;
+      Form1.Image2.Picture.LoadFromFile('gfx/gui/build-menu/12.png');
 
       // Wasserkraftwerk
       Form1.Image8.Width:=64;
       Form1.Image8.Height:=64;
       Form1.Image8.Left:=96;
       Form1.Image8.Top:=0;
+      Form1.Image8.Picture.LoadFromFile('gfx/gui/build-menu/13.png');
 
       // Kohlekraftwerk
       Form1.Image9.Width:=64;
       Form1.Image9.Height:=64;
       Form1.Image9.Left:=160;
       Form1.Image9.Top:=0;
+      Form1.Image9.Picture.LoadFromFile('gfx/gui/build-menu/14.png');
 
       // Atomkraftwerk
       Form1.Image10.Width:=96;
       Form1.Image10.Height:=96;
       Form1.Image10.Left:=0;
       Form1.Image10.Top:=64;
+      Form1.Image10.Picture.LoadFromFile('gfx/gui/build-menu/15.png');
 
     // Feuerwehr
       // Feuerwache klein
@@ -248,24 +256,28 @@ begin
       Form1.Image11.Height:=32;
       Form1.Image11.Left:=0;
       Form1.Image11.Top:=0;
+      Form1.Image11.Picture.LoadFromFile('gfx/gui/build-menu/20.png');
 
       // Feuerwache groß
       Form1.Image12.Width:=64;
       Form1.Image12.Height:=64;
       Form1.Image12.Left:=32;
       Form1.Image12.Top:=0;
+      Form1.Image12.Picture.LoadFromFile('gfx/gui/build-menu/21.png');
 
       // Löschhubschrauberlandeplatz
       Form1.Image13.Width:=96;
       Form1.Image13.Height:=96;
       Form1.Image13.Left:=0;
       Form1.Image13.Top:=64;
+      Form1.Image13.Picture.LoadFromFile('gfx/gui/build-menu/22.png');
 
       // Feuerwehrzentrale
       Form1.Image14.Width:=128;
       Form1.Image14.Height:=128;
       Form1.Image14.Left:=96;
       Form1.Image14.Top:=0;
+      Form1.Image14.Picture.LoadFromFile('gfx/gui/build-menu/23.png');
 
     // Polizei
       // Polizeiwache klein
@@ -322,18 +334,21 @@ begin
       Form1.Image24.Height:=32;
       Form1.Image24.Left:=0;
       Form1.Image24.Top:=0;
+      Form1.Image24.Picture.LoadFromFile('gfx/gui/build-menu/16.png');
 
       // Wasserturm groß
       Form1.Image23.Width:=64;
       Form1.Image23.Height:=64;
       Form1.Image23.Left:=32;
       Form1.Image23.Top:=0;
+      Form1.Image23.Picture.LoadFromFile('gfx/gui/build-menu/17.png');
 
       // Wasserpumpe horizontal
       Form1.Image27.Width:=64;
       Form1.Image27.Height:=32;
       Form1.Image27.Left:=96;
       Form1.Image27.Top:=0;
+      Form1.Image27.Picture.LoadFromFile('gfx/gui/build-menu/18.png');
 
       // Wasserpumpe vertikal
       Form1.Image28.Width:=32;
@@ -352,6 +367,7 @@ begin
       Form1.Image25.Height:=32;
       Form1.Image25.Left:=64;
       Form1.Image25.Top:=64;
+      Form1.Image25.Picture.LoadFromFile('gfx/gui/build-menu/19.png');
 
     // Bildung
       // Kindergarten
