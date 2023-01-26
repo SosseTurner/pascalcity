@@ -650,7 +650,7 @@ end;
 
 function GetMinimapColor(id:Integer):TColor;
 begin
-  // Zum Generieren der Minimap erhält jede Id einen eigenen Farbwert.
+  // Zum Generieren der Minimap erhält jedes Gebäude(Id) einen eigenen Farbwert.
   case id of
     0:
       GetMinimapColor:=RGBToColor(0, 153, 219);
