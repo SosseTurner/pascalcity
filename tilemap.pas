@@ -908,7 +908,10 @@ begin
     tileArr[15][i]:=TBitmap.Create;
     tileArr[15][i].LoadFromFile('gfx/tiles/15/15_15-'+IntToStr(i)+'.bmp');
   end;
-    tileArr[16][0]:=TBitmap.Create;
+
+
+  // Wasserturm
+  tileArr[16][0]:=TBitmap.Create;
   tileArr[16][0].LoadFromFile('gfx/tiles/16/16.bmp');
 
   // Wasserturm groß
@@ -954,6 +957,56 @@ begin
   begin
     tileArr[23][i]:=TBitmap.Create;
     tileArr[23][i].LoadFromFile('gfx/tiles/23/23_'+IntToStr(i)+'.bmp');
+  end;
+
+  // Kindergarten
+  tileArr[24][0]:=TBitmap.Create;
+  tileArr[24][0].LoadFromFile('gfx/tiles/24/24.bmp');
+
+  // Schule
+  for i:=0 to 3 do
+  begin
+    tileArr[25][i]:=TBitmap.Create;
+    tileArr[25][i].LoadFromFile('gfx/tiles/25/25_25-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Oberschule
+  for i:=0 to 8 do
+  begin
+    tileArr[26][i]:=TBitmap.Create;
+    tileArr[26][i].LoadFromFile('gfx/tiles/26/26_26-'+IntToStr(i)+'.bmp');
+  end;
+
+    // Universität
+  for i:=0 to 15 do
+  begin
+    tileArr[27][i]:=TBitmap.Create;
+    tileArr[27][i].LoadFromFile('gfx/tiles/27/27_27-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Polizeiwache klein
+  tileArr[28][0]:=TBitmap.Create;
+  tileArr[28][0].LoadFromFile('gfx/tiles/28/28.bmp');
+
+  // Polizeiwache groß
+  for i:=0 to 3 do
+  begin
+    tileArr[29][i]:=TBitmap.Create;
+    tileArr[29][i].LoadFromFile('gfx/tiles/29/29_29-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Polizeizentrale
+  for i:=0 to 8 do
+  begin
+    tileArr[30][i]:=TBitmap.Create;
+    tileArr[30][i].LoadFromFile('gfx/tiles/30/30_30-'+IntToStr(i)+'.bmp');
+  end;
+
+    // Gefängnis
+  for i:=0 to 15 do
+  begin
+    tileArr[31][i]:=TBitmap.Create;
+    tileArr[31][i].LoadFromFile('gfx/tiles/31/31_31-'+IntToStr(i)+'.bmp');
   end;
 end;
 initialization
