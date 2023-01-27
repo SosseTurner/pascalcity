@@ -9,6 +9,7 @@ uses
 type
     Building = record
       id:             Integer;
+      subId:          Integer;
       residents:      Integer;        // Bei Industrien als Arbeitsplätze
       maxResidents:   Integer;
       level:          Integer;
@@ -19,7 +20,7 @@ type
 var
   terrain: array of array of  Integer;
   buildings: array of array of Building;
-  tileArr: array[0..40] of array[0..20] of TBitmap;
+  tileArr: array[0..40] of array[0..41] of TBitmap;
   screenWidth, screenHeight:  Integer;
   offsetX, offsetY : Integer;
   mapWidth, mapHeight: Integer;
@@ -96,6 +97,39 @@ begin
   // 10-fache Ausführung um größere Inseln / Ozeana zu erhalten
   for i:=0 to 10 do
     WorldCellularAutomata();
+end;
+function GetFlatBitmap(id, subId, level: Integer):TBitmap;
+var x: Integer;
+begin
+  case level of
+    0:
+      GetFlatBitmap:=tileArr[id][0];
+    1:
+      GetFlatBitmap:=tileArr[id][1+subId];
+    2:
+      GetFlatBitmap:=tileArr[id][12+subId];
+    3:
+      GetFlatBitmap:=tileArr[id][24+subId];
+    4:
+      GetFlatBitmap:=tileArr[id][36+subId];
+  end;
+end;
+
+function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
+var x: Integer;
+begin
+  case level of
+    0:
+      GetBusinessBitmap:=tileArr[id][0];
+    1:
+      GetBusinessBitmap:=tileArr[id][1+subId];
+    2:
+      GetBusinessBitmap:=tileArr[id][6+subId];
+    3:
+      GetBusinessBitmap:=tileArr[id][12+subId];
+    4:
+      GetBusinessBitmap:=tileArr[id][18+subId];
+  end;
 end;
 
 function GetParentTilePosition(tileX, tileY, width, height: Integer):TPoint;
@@ -303,113 +337,110 @@ end;
 
 function FormCoordsToTile(x,y :Integer):TPoint;
 begin
-  result:=TPoint.Create(Floor(x/32),Floor(y/32));
+  result.X:=Floor(x/32);
+  result.Y:=Floor(y/32);
 end;
 
 function GetTileBitmap(x, y: Integer):TBitmap;
-var tile:TBitmap;
 begin
-  tile:=TBitmap.Create;
   // falls Autotiles vorhanden werden diese erstellt
   if buildings[x][y].id < 3 then
   begin
     case terrain[x][y] of
       // Wasser
       0:
-        tile:=BuildAutoTileTerrain(x, y, 0, 1);
+        GetTileBitmap:=BuildAutoTileTerrain(x, y, 0, 1);
 
       // Grass
       1:
-        tile:=tileArr[1][0];
+        GetTileBitmap:=tileArr[1][0];
 
       // Dirt
       2:
-        tile:=tileArr[2][0];
+        GetTileBitmap:=tileArr[2][0];
     end;
   end
   else
   begin
     case buildings[x][y].id of
       3:
-        tile:=tileArr[3][buildings[x][y].level];
+        GetTileBitmap:=GetFlatBitmap(3, buildings[x][y].subId, buildings[x][y].level);
       4:
-        tile:=tileArr[4][buildings[x][y].level];
+        GetTileBitmap:=GetFlatBitmap(4, buildings[x][y].subId, buildings[x][y].level);
       5:
-        tile:=tileArr[5][buildings[x][y].level];
+        GetTileBitmap:=tileArr[5][buildings[x][y].level];
       6:
-        tile:=AutoTile4Sides(x, y, 6, true);
+        GetTileBitmap:=AutoTile4Sides(x, y, 6, true);
       7:
-        tile:=AutoTile4Sides(x, y, 7, true);
+        GetTileBitmap:=AutoTile4Sides(x, y, 7, true);
       8:
-        tile:=AutoTile4Sides(x, y, 8, true);
+        GetTileBitmap:=AutoTile4Sides(x, y, 8, true);
       9:
-        tile:=AutoTile4Sides(x, y, 9, true);
+        GetTileBitmap:=AutoTile4Sides(x, y, 9, true);
       10:
-        tile:=AutoTile4Sides(x, y, 10, true);
+        GetTileBitmap:=AutoTile4Sides(x, y, 10, true);
       11:
-        tile:=tileArr[11][0];
+        GetTileBitmap:=tileArr[11][0];
       12:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       13:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       14:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       15:
-        tile:=GetMultiTileBitmap(x, y, 3, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 3, 2);
       16:
-        tile:=tileArr[16][0];
+        GetTileBitmap:=tileArr[16][0];
       17:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       18:
-        tile:=GetMultiTileBitmap(x, y, 2, 1);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 1);
       19:
-        tile:=GetMultiTileBitmap(x, y, 4, 1);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 1);
       20:
-        tile:=tileArr[20][0];
+        GetTileBitmap:=tileArr[20][0];
       21:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       22:
-        tile:=GetMultiTileBitmap(x, y, 3, 3);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 3, 3);
       23:
-        tile:=GetMultiTileBitmap(x, y, 4, 4);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 4);
       24:
-        tile:=tileArr[24][0];
+        GetTileBitmap:=tileArr[24][0];
       25:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       26:
-        tile:=GetMultiTileBitmap(x, y, 3, 3);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 3, 3);
       27:
-        tile:=GetMultiTileBitmap(x, y, 4, 4);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 4);
       28:
-        tile:=tileArr[28][0];
+        GetTileBitmap:=tileArr[28][0];
       29:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       30:
-        tile:=GetMultiTileBitmap(x, y, 3, 3);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 3, 3);
       31:
-        tile:=GetMultiTileBitmap(x, y, 4, 4);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 4);
       32:
-        tile:=tileArr[32][0];
+        GetTileBitmap:=tileArr[32][0];
       33:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       34:
-        tile:=GetMultiTileBitmap(x, y, 3, 3);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 3, 3);
       35:
-        tile:=GetMultiTileBitmap(x, y, 4, 4);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 4);
       36:
-        tile:=tileArr[36][0];
+        GetTileBitmap:=tileArr[36][0];
       37:
-        tile:=tileArr[37][0];
+        GetTileBitmap:=tileArr[37][0];
       38:
-        tile:=GetMultiTileBitmap(x, y, 2, 2);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 2, 2);
       39:
-        tile:=GetMultiTileBitmap(x, y, 4, 3);
+        GetTileBitmap:=GetMultiTileBitmap(x, y, 4, 3);
       40:
-        tile:=tileArr[40][0];
+        GetTileBitmap:=tileArr[40][0];
     end;
   end;
-
-  GetTileBitmap:=tile;
 end;
 function IsNearStreet(tileX, tileY, width, height:Integer):Boolean;
 var x, y, i:Integer;
@@ -417,10 +448,17 @@ var x, y, i:Integer;
 begin
   // Bei Größeren Tiles wird bei jeder Ecke überprüft ob diese in der Nähe einer Straße ist
 
-  corners[0]:=TPoint.Create(tilex, tiley);
-  corners[1]:=TPoint.Create(tilex+width-1, tiley);
-  corners[2]:=TPoint.Create(tilex, tiley+height-1);
-  corners[3]:=TPoint.Create(tilex+width-1, tiley+height-1);
+  corners[0].X:=tilex;
+  corners[0].Y:=tiley;
+
+  corners[1].X:=tilex+width-1;
+  corners[1].Y:=tiley;
+
+  corners[2].X:=tilex;
+  corners[2].Y:=tiley+height-1;
+
+  corners[3].X:=tilex+width-1;
+  corners[3].Y:=tiley+height-1;
 
   // Anfangs wird der Wert auf Null gesetzt. Die Ecken werden nacheinander betrachtet.
   // Falls eine Ecke in der Nähe einer Straße ist wird der Wert als true gesezt und bleibt
@@ -643,6 +681,11 @@ begin
         if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
+          if (id=3) or (id=4) or (id=5) then
+          begin
+            buildings[x][y].level:=Random(3)+1;
+            buildings[x][y].subId:=Random(12);
+          end;
         end;
       end;
   end;
@@ -785,12 +828,20 @@ begin
       39:
          DestroyMultiTile(x, y, 4, 3);
       else
-        buildings[x][y].id:=0;
+        begin
+          buildings[x][y].id:=0;
+          buildings[x][y].happiness:=0;
+          buildings[x][y].isParentTile:=false;
+          buildings[x][y].level:=0;
+          buildings[x][y].maxResidents:=0;
+          buildings[x][y].residents:=0;
+        end;
+
     end;
   end;
 end;
 procedure LoadTiles();
-var i: Integer;
+var i, n: Integer;
 begin
   // Alle benötigten Grafiken werden zum Programmstart geladen.
   // In einem 2-Dimensionales Array sind alle Bilder gespeichert.
@@ -822,10 +873,32 @@ begin
   tileArr[2][0].LoadFromFile('gfx/tiles/2/2.bmp');
 
   // Wohnungen
-  for i:=0 to 4 do
+
+  tileArr[3][0]:=TBitmap.Create;
+  tileArr[3][0].LoadFromFile('gfx/tiles/3/3_0.bmp');
+
+  for i:=0 to 11 do
   begin
-    tileArr[3][i]:=TBitmap.Create;
-    tileArr[3][i].LoadFromFile('gfx/tiles/3/3_'+IntToStr(i)+'.bmp');
+    tileArr[3][i+1]:=TBitmap.Create;
+    tileArr[3][i+1].LoadFromFile('gfx/tiles/3/3_1-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 11 do
+  begin
+    tileArr[3][i+12]:=TBitmap.Create;
+    tileArr[3][i+12].LoadFromFile('gfx/tiles/3/3_2-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 11 do
+  begin
+    tileArr[3][i+24]:=TBitmap.Create;
+    tileArr[3][i+24].LoadFromFile('gfx/tiles/3/3_3-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[3][i+36]:=TBitmap.Create;
+    tileArr[3][i+36].LoadFromFile('gfx/tiles/3/3_4-'+IntToStr(i)+'.bmp');
   end;
 
   // Gewerbe

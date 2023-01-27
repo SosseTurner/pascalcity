@@ -455,7 +455,7 @@ end;
 
 procedure DrawMinimap();
 var x, y : Integer;
-  bmp: TBitmap;
+    bmp:TBitmap;
 begin
   // Die Minimap wird Pixel für Pixel neu, anhand der Gebäudefarbe ertstellt
 
@@ -473,7 +473,7 @@ begin
     end;
   end;
   Form1.Canvas.Draw(32*screenWidth+32, 32, bmp);
-
+  bmp.Destroy;
 
   // Der Sichtbare bereich wird durch umrandung kenntlich gemacht
   Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+32);
@@ -506,6 +506,7 @@ begin
       end;
     end;
   end;
+  bmp.Destroy;
 end;
 
 procedure DrawMap();
@@ -529,6 +530,7 @@ begin
 
   // Die Tiles werden auf das Form gemalt
   Form1.Canvas.Draw(0, 0, bmp);
+  bmp.Destroy;
   DrawMinimap();
 end;
 
