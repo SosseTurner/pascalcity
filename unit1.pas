@@ -313,24 +313,29 @@ begin
       Form1.Image19.Height:=32;
       Form1.Image19.Left:=0;
       Form1.Image19.Top:=0;
+      Form1.Image19.Picture.LoadFromFile('gfx/gui/build-menu/32.bmp');
 
       // Arztpraxis groß
       Form1.Image20.Width:=64;
       Form1.Image20.Height:=64;
       Form1.Image20.Left:=32;
       Form1.Image20.Top:=0;
+      Form1.Image20.Picture.LoadFromFile('gfx/gui/build-menu/33.bmp');
 
       // Krankenhaus
       Form1.Image22.Width:=96;
       Form1.Image22.Height:=96;
       Form1.Image22.Left:=0;
       Form1.Image22.Top:=64;
+      Form1.Image22.Picture.LoadFromFile('gfx/gui/build-menu/34.bmp');
 
       // Medizinisches Zentrum
       Form1.Image21.Width:=128;
       Form1.Image21.Height:=128;
       Form1.Image21.Left:=96;
       Form1.Image21.Top:=0;
+      Form1.Image21.Picture.LoadFromFile('gfx/gui/build-menu/35.bmp');
+
     // Wasser
       // Wasserturm klein
       Form1.Image24.Width:=32;
@@ -407,24 +412,28 @@ begin
       Form1.Image33.Height:=32;
       Form1.Image33.Left:=0;
       Form1.Image33.Top:=0;
+      Form1.Image33.Picture.LoadFromFile('gfx/gui/build-menu/36.bmp');
 
       // Theater
       Form1.Image34.Width:=32;
       Form1.Image34.Height:=32;
       Form1.Image34.Left:=32;
       Form1.Image34.Top:=0;
+      Form1.Image34.Picture.LoadFromFile('gfx/gui/build-menu/37.bmp');
 
       // Kino
       Form1.Image35.Width:=64;
       Form1.Image35.Height:=64;
       Form1.Image35.Left:=64;
       Form1.Image35.Top:=0;
+      Form1.Image35.Picture.LoadFromFile('gfx/gui/build-menu/38.bmp');
 
       // Stadion
       Form1.Image36.Width:=128;
       Form1.Image36.Height:=96;
       Form1.Image36.Left:=128;
       Form1.Image36.Top:=0;
+      Form1.Image36.Picture.LoadFromFile('gfx/gui/build-menu/39.bmp');
 
     // Dekoration
       // Pinoraurier Statue
@@ -432,6 +441,7 @@ begin
       Form1.Image37.Height:=32;
       Form1.Image37.Left:=0;
       Form1.Image37.Top:=0;
+      Form1.Image37.Picture.LoadFromFile('gfx/gui/build-menu/40.bmp');
 
     // Zonen
       // Wohngebiet

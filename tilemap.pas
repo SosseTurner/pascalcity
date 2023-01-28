@@ -683,8 +683,11 @@ begin
           buildings[x][y].id:=id;
           if (id=3) or (id=4) or (id=5) then
           begin
-            buildings[x][y].level:=Random(3)+1;
-            buildings[x][y].subId:=Random(12);
+            buildings[x][y].level:=Random(4)+1;
+            if buildings[x][y].level=4 then
+              buildings[x][y].subId:=Random(6)
+            else
+              buildings[x][y].subId:=Random(12);
           end;
         end;
       end;
@@ -1075,12 +1078,63 @@ begin
     tileArr[30][i].LoadFromFile('gfx/tiles/30/30_30-'+IntToStr(i)+'.bmp');
   end;
 
-    // Gefängnis
+  // Gefängnis
   for i:=0 to 15 do
   begin
     tileArr[31][i]:=TBitmap.Create;
     tileArr[31][i].LoadFromFile('gfx/tiles/31/31_31-'+IntToStr(i)+'.bmp');
   end;
+
+  // Aztpraxis klein
+  tileArr[32][0]:=TBitmap.Create;
+  tileArr[32][0].LoadFromFile('gfx/tiles/32/32.bmp');
+
+  // Aztpraxis groß
+  for i:=0 to 3 do
+  begin
+    tileArr[33][i]:=TBitmap.Create;
+    tileArr[33][i].LoadFromFile('gfx/tiles/33/33_33-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Krankenhaus
+  for i:=0 to 8 do
+  begin
+    tileArr[34][i]:=TBitmap.Create;
+    tileArr[34][i].LoadFromFile('gfx/tiles/34/34_34-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Medizinisches Zentrum
+  for i:=0 to 15 do
+  begin
+    tileArr[35][i]:=TBitmap.Create;
+    tileArr[35][i].LoadFromFile('gfx/tiles/35/35_35-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Park
+  tileArr[36][0]:=TBitmap.Create;
+  tileArr[36][0].LoadFromFile('gfx/tiles/32/32.bmp');
+
+  // Theater
+  tileArr[37][0]:=TBitmap.Create;
+  tileArr[37][0].LoadFromFile('gfx/tiles/32/32.bmp');
+
+  // Kino
+  for i:=0 to 3 do
+  begin
+    tileArr[38][i]:=TBitmap.Create;
+    tileArr[38][i].LoadFromFile('gfx/tiles/38/38_38-'+IntToStr(i)+'.bmp');
+  end;
+
+  // Stadion
+  for i:=0 to 11 do
+  begin
+    tileArr[39][i]:=TBitmap.Create;
+    tileArr[39][i].LoadFromFile('gfx/tiles/39/39_39-'+IntToStr(i)+'.bmp');
+  end;
+
+  // PinosaurierStatue
+  tileArr[40][0]:=TBitmap.Create;
+  tileArr[40][0].LoadFromFile('gfx/tiles/40/40.bmp');
 end;
 initialization
 begin

@@ -44,10 +44,10 @@ object Form1: TForm1
     Height = 300
     Top = 240
     Width = 300
-    ActivePage = TabSheet7
+    ActivePage = TabSheet6
     MultiLine = True
     ParentFont = False
-    TabIndex = 6
+    TabIndex = 5
     TabOrder = 3
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
