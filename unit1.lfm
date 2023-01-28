@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 904
+  Left = 680
   Height = 1017
-  Top = 558
-  Width = 1920
+  Top = 420
+  Width = 1921
   Caption = 'Pascalcity'
   ClientHeight = 1017
-  ClientWidth = 1920
+  ClientWidth = 1921
   DesignTimePPI = 144
   OnClick = FormClick
   LCLVersion = '2.2.4.0'

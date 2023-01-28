@@ -366,7 +366,7 @@ begin
       3:
         GetTileBitmap:=GetFlatBitmap(3, buildings[x][y].subId, buildings[x][y].level);
       4:
-        GetTileBitmap:=GetFlatBitmap(4, buildings[x][y].subId, buildings[x][y].level);
+        GetTileBitmap:=GetBusinessBitmap(4, buildings[x][y].subId, buildings[x][y].level);
       5:
         GetTileBitmap:=tileArr[5][buildings[x][y].level];
       6:
@@ -565,7 +565,32 @@ begin
   // muss jede ID einzeln betrachtet werden.
   // Vor platzieren der Gebäude wird auf Nähe zu Straßen und Bauplatz überprüft.
   case id of
-    6..9:
+    3:
+      begin
+        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+        begin
+          buildings[x][y].id:=id;
+          buildings[x][y].level:=Random(4)+1;
+          if (buildings[x][y].level>3) then
+            buildings[x][y].subId:=Random(6)
+          else
+            buildings[x][y].subId:=Random(12);
+        end;
+      end;
+    4:
+      begin
+        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+        begin
+          buildings[x][y].id:=id;
+          buildings[x][y].level:=Random(4)+1;
+          buildings[x][y].subId:=Random(6);
+        end;
+      end;
+    6:begin
+        if (buildings[x][y].id=0) and (terrain[x][y]<>0)then
+          buildings[x][y].id:=id;
+      end;
+    7..9:
       begin
         if (buildings[x][y].id=0) then
           buildings[x][y].id:=id;
@@ -681,14 +706,6 @@ begin
         if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
-          if (id=3) or (id=4) or (id=5) then
-          begin
-            buildings[x][y].level:=Random(4)+1;
-            if buildings[x][y].level=4 then
-              buildings[x][y].subId:=Random(6)
-            else
-              buildings[x][y].subId:=Random(12);
-          end;
         end;
       end;
   end;
@@ -905,10 +922,32 @@ begin
   end;
 
   // Gewerbe
-  for i:=0 to 4 do
+
+  tileArr[4][0]:=TBitmap.Create;
+  tileArr[4][0].LoadFromFile('gfx/tiles/4/4_0.bmp');
+
+  for i:=0 to 5 do
   begin
-    tileArr[4][i]:=TBitmap.Create;
-    tileArr[4][i].LoadFromFile('gfx/tiles/4/4_'+IntToStr(i)+'.bmp');
+    tileArr[4][i+1]:=TBitmap.Create;
+    tileArr[4][i+1].LoadFromFile('gfx/tiles/4/4_1-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[4][i+6]:=TBitmap.Create;
+    tileArr[4][i+6].LoadFromFile('gfx/tiles/4/4_2-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[4][i+12]:=TBitmap.Create;
+    tileArr[4][i+12].LoadFromFile('gfx/tiles/4/4_3-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[4][i+18]:=TBitmap.Create;
+    tileArr[4][i+18].LoadFromFile('gfx/tiles/4/4_4-'+IntToStr(i)+'.bmp');
   end;
 
   // Industrie
