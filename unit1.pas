@@ -19,6 +19,7 @@ type
     Arrow3: TArrow;
     Arrow4: TArrow;
     Button1: TButton;
+    Button2: TButton;
     Image1: TImage;
     Image10: TImage;
     Image11: TImage;
@@ -58,6 +59,9 @@ type
     Image7: TImage;
     Image8: TImage;
     Image9: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet10: TTabSheet;
@@ -76,6 +80,7 @@ type
     procedure Arrow3Click(Sender: TObject);
     procedure Arrow4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
     procedure Image10Click(Sender: TObject);
@@ -177,6 +182,13 @@ begin
      Form1.Arrow3.Top:=mapHeight+32;
      Form1.Arrow3.Height:=32;
      Form1.Arrow3.Width:=32;
+
+  // Nächste Woche
+  Form1.Button2.Left:=1568;
+  Form1.Button2.Top:=748;
+  Form1.Button2.Height:=32;
+  Form1.Button2.Width:=64;
+  Form1.Button2.Visible:=true;
 
   // BauMenu
   Form1.PageControl1.Left:=1568;
@@ -461,6 +473,29 @@ begin
       Form1.Image40.Height:=32;
       Form1.Image40.Left:=64;
       Form1.Image40.Top:=0;
+
+    // Einwohner
+    Form1.Label1.Caption:='Einwohner:0';
+    Form1.Label1.Top:=screenHeight*32;
+    Form1.Label1.Left:=0;
+
+    // Water
+    Form1.Label2.Caption:='Water:0';
+    Form1.Label2.Top:=screenHeight*32;
+    Form1.Label2.Left:=128;
+
+    // Energie
+    Form1.Label3.Caption:='Energy:0';
+    Form1.Label3.Top:=screenHeight*32;
+    Form1.Label3.Left:=256;
+
+end;
+
+procedure UpdateGui();
+begin
+  Form1.Label1.Caption:='Einwohner: '+IntToStr(GetAllResidents());
+  Form1.Label2.Caption:='Water: '+IntToStr(GetWaterProduction());
+  Form1.Label3.Caption:='Energy: '+IntToStr(GetEnergyProduction());
 end;
 
 procedure DrawMinimap();
@@ -849,6 +884,13 @@ begin
   GenerateMap();
   DrawMap();
   DrawMinimap();
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  UpdateGui();
+  UpdateZones();
+  DrawMap();
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);

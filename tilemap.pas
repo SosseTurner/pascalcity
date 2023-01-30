@@ -10,7 +10,7 @@ type
     Building = record
       id:             Integer;
       subId:          Integer;
-      residents:      Integer;        // Bei Industrien als Arbeitsplätze
+      residents:      Integer;        // Bei Industrien/ Gewerbe als Arbeitsplätze
       maxResidents:   Integer;
       level:          Integer;
       happiness:      Integer;
@@ -18,6 +18,7 @@ type
   end;
 
 var
+  happiness: array of array of  Integer;
   terrain: array of array of  Integer;
   buildings: array of array of Building;
   tileArr: array[0..40] of array[0..41] of TBitmap;
@@ -35,9 +36,48 @@ procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 procedure PlaceBuildingTile(x, y, id : Integer);
 procedure DestroyBuildingTile(x, y: Integer);
 function GetMinimapColor(id:Integer):TColor;
+function GetAllResidents():Integer;
+function GetWaterProduction():Integer;
+function GetEnergyProduction():Integer;
+procedure UpdateZones();
 
 implementation
 
+procedure UpdateZones();
+var x, y:Integer;
+begin
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].id<6) and (buildings[x][y].id>2) then
+      begin
+        case buildings[x][y].id of
+          3:
+            begin
+              if (happiness[x][y]=0) and (buildings[x][y].level<4)then
+                buildings[x][y].level+=1;
+              if (buildings[x][y].level>5) then
+                buildings[x][y].subId:=Random(11)
+              else
+                buildings[x][y].subId:=Random(6);
+            end;
+          4:
+            begin
+                if (happiness[x][y]=0) and (buildings[x][y].level<4)then
+                  buildings[x][y].level+=1;
+                buildings[x][y].subId:=Random(6);
+            end;
+          5:
+            begin
+              if (happiness[x][y]=1) then
+                buildings[x][y].level+=1;
+            end;
+        end;
+      end;
+    end;
+  end;
+end;
 // World Generation durch Cellular Automata
 procedure WorldCellularAutomata();
 var iteratedWorld: array of array of Integer;
@@ -98,8 +138,24 @@ begin
   for i:=0 to 10 do
     WorldCellularAutomata();
 end;
+
+function GetAllResidents():Integer;
+var x, y, residents : Integer;
+begin
+  residents:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) then
+        residents+=buildings[x][y].residents;
+    end;
+  end;
+
+  GetAllResidents:=residents;
+end;
+
 function GetFlatBitmap(id, subId, level: Integer):TBitmap;
-var x: Integer;
 begin
   case level of
     0:
@@ -116,7 +172,6 @@ begin
 end;
 
 function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
-var x: Integer;
 begin
   case level of
     0:
@@ -150,6 +205,68 @@ begin
       end;
     end;
   end;
+end;
+
+function GetWaterProductionOfTile(id:Integer):Integer;
+begin
+  case id of
+    16:
+      GetWaterProductionOfTile:=50;
+    17:
+      GetWaterProductionOfTile:=200;
+    18:
+      GetWaterProductionOfTile:=1000;
+    19:
+      GetWaterProductionOfTile:=5000;
+  end;
+end;
+
+function GetEnergyProductionOfTile(id:Integer):Integer;
+begin
+  case id of
+    11:
+      GetEnergyProductionOfTile:=50;
+    12:
+      GetEnergyProductionOfTile:=200;
+    13:
+      GetEnergyProductionOfTile:=1000;
+    14:
+      GetEnergyProductionOfTile:=5000;
+    15:
+      GetEnergyProductionOfTile:=10000;
+  end;
+end;
+
+function GetEnergyProduction():Integer;
+var x, y, energy : Integer;
+begin
+  energy:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) and (buildings[x][y].id>10) and (buildings[x][y].id<16) then
+        energy+=GetEnergyProductionOfTile(buildings[x][y].id);
+    end;
+  end;
+
+  GetEnergyProduction:=energy;
+end;
+
+function GetWaterProduction():Integer;
+var x, y, water : Integer;
+begin
+  water:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) and (buildings[x][y].id>15) and (buildings[x][y].id<20) then
+        water+=GetWaterProductionOfTile(buildings[x][y].id);
+    end;
+  end;
+
+  GetWaterProduction:=water;
 end;
 
 function GetMultiTileBitmap(tileX, tileY, width, height: Integer):TBitmap;
@@ -570,11 +687,8 @@ begin
         if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
-          buildings[x][y].level:=Random(4)+1;
-          if (buildings[x][y].level>3) then
-            buildings[x][y].subId:=Random(6)
-          else
-            buildings[x][y].subId:=Random(12);
+          buildings[x][y].level:=0;
+          buildings[x][y].isParentTile:=true;
         end;
       end;
     4:
@@ -582,18 +696,20 @@ begin
         if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
-          buildings[x][y].level:=Random(4)+1;
-          buildings[x][y].subId:=Random(6);
+          buildings[x][y].level:=0;
+          buildings[x][y].isParentTile:=true;
         end;
       end;
     6:begin
         if (buildings[x][y].id=0) and (terrain[x][y]<>0)then
           buildings[x][y].id:=id;
+        buildings[x][y].isParentTile:=true;
       end;
     7..9:
       begin
         if (buildings[x][y].id=0) then
           buildings[x][y].id:=id;
+          buildings[x][y].isParentTile:=true;
       end;
     12:
       begin
@@ -706,9 +822,10 @@ begin
         if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
         begin
           buildings[x][y].id:=id;
+          buildings[x][y].isParentTile:=true;
         end;
       end;
-  end;
+    end;
 end;
 
 function GetMinimapColor(id:Integer):TColor;
@@ -861,7 +978,7 @@ begin
   end;
 end;
 procedure LoadTiles();
-var i, n: Integer;
+var i: Integer;
 begin
   // Alle benötigten Grafiken werden zum Programmstart geladen.
   // In einem 2-Dimensionales Array sind alle Bilder gespeichert.
@@ -1184,6 +1301,7 @@ begin
   screenWidth:=49;
   SetLength(terrain, mapHeight, mapWidth);
   SetLength(buildings, mapHeight, mapWidth);
+  SetLength(happiness, mapHeight, mapWidth);
 end;
 end.
 
