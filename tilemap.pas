@@ -25,6 +25,9 @@ var
   screenWidth, screenHeight:  Integer;
   offsetX, offsetY : Integer;
   mapWidth, mapHeight: Integer;
+  residents, workplaces: Integer;
+  numIndustrialZones, numBusinessZones : Integer;
+  demandHouses, demandBusiness, demandIndustrie : Float;
   tile: TBitmap;
 
 function FormCoordsToTile(x,y :Integer):TPoint;
@@ -36,48 +39,11 @@ procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 procedure PlaceBuildingTile(x, y, id : Integer);
 procedure DestroyBuildingTile(x, y: Integer);
 function GetMinimapColor(id:Integer):TColor;
-function GetAllResidents():Integer;
 function GetWaterProduction():Integer;
 function GetEnergyProduction():Integer;
 procedure UpdateZones();
 
 implementation
-
-procedure UpdateZones();
-var x, y:Integer;
-begin
-  for x:=0 to mapWidth-1 do
-  begin
-    for y:=0 to mapHeight-1 do
-    begin
-      if (buildings[x][y].id<6) and (buildings[x][y].id>2) then
-      begin
-        case buildings[x][y].id of
-          3:
-            begin
-              if (happiness[x][y]=0) and (buildings[x][y].level<4)then
-                buildings[x][y].level+=1;
-              if (buildings[x][y].level>5) then
-                buildings[x][y].subId:=Random(11)
-              else
-                buildings[x][y].subId:=Random(6);
-            end;
-          4:
-            begin
-                if (happiness[x][y]=0) and (buildings[x][y].level<4)then
-                  buildings[x][y].level+=1;
-                buildings[x][y].subId:=Random(6);
-            end;
-          5:
-            begin
-              if (happiness[x][y]=1) then
-                buildings[x][y].level+=1;
-            end;
-        end;
-      end;
-    end;
-  end;
-end;
 // World Generation durch Cellular Automata
 procedure WorldCellularAutomata();
 var iteratedWorld: array of array of Integer;
@@ -139,22 +105,6 @@ begin
     WorldCellularAutomata();
 end;
 
-function GetAllResidents():Integer;
-var x, y, residents : Integer;
-begin
-  residents:=0;
-  for x:=0 to mapWidth-1 do
-  begin
-    for y:=0 to mapHeight-1 do
-    begin
-      if (buildings[x][y].isParentTile) then
-        residents+=buildings[x][y].residents;
-    end;
-  end;
-
-  GetAllResidents:=residents;
-end;
-
 function GetFlatBitmap(id, subId, level: Integer):TBitmap;
 begin
   case level of
@@ -207,6 +157,109 @@ begin
   end;
 end;
 
+procedure UpdateDemant();
+begin
+  if (residents=0) then
+    demandHouses:=workplaces
+  else
+    demandHouses:=workplaces/residents;
+
+  if (numBusinessZones=0) then
+    demandBusiness:=numIndustrialZones
+  else
+    demandBusiness:=numIndustrialZones/numBusinessZones;
+
+  if (workplaces=0) then
+    demandIndustrie:=residents
+  else
+    demandIndustrie:=residents/workplaces;
+end;
+
+procedure UpdateAllResidents();
+var x, y: Integer;
+begin
+  residents:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) then
+        residents+=buildings[x][y].residents;
+    end;
+  end;
+end;
+
+procedure UpdateAllWorkplaces();
+var x, y : Integer;
+begin
+  workplaces:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) and ((buildings[x][y].id=4) or (buildings[x][y].id=5) ) then
+        workplaces+=buildings[x][y].residents;
+    end;
+  end;
+
+  workplaces:=workplaces+200;
+end;
+
+procedure UpdateNumberOfIndustrialZones();
+var x, y, zones : Integer;
+begin
+  zones:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) and (buildings[x][y].id=5) then
+        zones+=1;
+    end;
+  end;
+
+  numIndustrialZones:=zones;
+end;
+
+procedure UpdateNumberOfBusinessZones();
+var x, y, zones : Integer;
+begin
+  zones:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].isParentTile) and (buildings[x][y].id=4) then
+        zones+=1;
+    end;
+  end;
+
+  numBusinessZones:=zones;
+end;
+
+procedure ChangeNumberOfIndustrialZones(change : Integer);
+begin
+  numIndustrialZones+=change;
+  UpdateDemant();
+end;
+
+procedure ChangeNumberOfBusinessZones(change : Integer);
+begin
+  numBusinessZones+=change;
+  UpdateDemant();
+end;
+
+procedure ChangeResidents(change : Integer);
+begin
+  residents+=change;
+  UpdateDemant();
+end;
+
+procedure ChangeWorkplaces(change : Integer);
+begin
+  workplaces+=change;
+  UpdateDemant();
+end;
 function GetWaterProductionOfTile(id:Integer):Integer;
 begin
   case id of
@@ -267,6 +320,53 @@ begin
   end;
 
   GetWaterProduction:=water;
+end;
+
+procedure UpdateZones();
+var x, y:Integer;
+begin
+  UpdateAllResidents();
+  UpdateAllWorkplaces();
+  UpdateNumberOfBusinessZones();
+  UpdateDemant();
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].id<6) and (buildings[x][y].id>2) then
+      begin
+        case buildings[x][y].id of
+          3:
+            begin
+              if (Random(100)+1<=demandHouses*100) then
+              begin
+                if (buildings[x][y].level<4)then
+                  begin
+                    buildings[x][y].level+=1;
+                    buildings[x][y].residents:=Random(buildings[x][y].level*20);
+                    ChangeResidents(buildings[x][y].residents);
+                  end;
+                if (buildings[x][y].level>5) then
+                  buildings[x][y].subId:=Random(11)
+                else
+                  buildings[x][y].subId:=Random(6);
+              end;
+            end;
+          4:
+            begin
+                if (buildings[x][y].level<4)then
+                  buildings[x][y].level+=1;
+                buildings[x][y].subId:=Random(6);
+            end;
+          5:
+            begin
+              if (happiness[x][y]=1) then
+                buildings[x][y].level+=1;
+            end;
+        end;
+      end;
+    end;
+  end;
 end;
 
 function GetMultiTileBitmap(tileX, tileY, width, height: Integer):TBitmap;

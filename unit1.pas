@@ -62,6 +62,9 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet10: TTabSheet;
@@ -194,7 +197,7 @@ begin
   Form1.PageControl1.Left:=1568;
   Form1.PageControl1.Top:=428;
   Form1.PageControl1.Width:=352;
-  Form1.PageControl1.Height:=320;
+  Form1.PageControl1.Height:=256;
 
     //Straßen
       // Feldweg
@@ -489,13 +492,31 @@ begin
     Form1.Label3.Top:=screenHeight*32;
     Form1.Label3.Left:=256;
 
+    // Nachfrage Wohnungen
+    Form1.Label4.Caption:='Wohnungen Nachfrage: ';
+    Form1.Label4.Top:=screenHeight*32;
+    Form1.Label4.Left:=256+128;
+
+    // Nachfrage Gewerbe
+    Form1.Label5.Caption:='Gewerbe Nachfrage: ';
+    Form1.Label5.Top:=screenHeight*32+16;
+    Form1.Label5.Left:=256+128;
+
+    // Nachfrage Industrie
+    Form1.Label6.Caption:='Industrie Nachfrage: ';
+    Form1.Label6.Top:=screenHeight*32+32;
+    Form1.Label6.Left:=256+128;
+
 end;
 
 procedure UpdateGui();
 begin
-  Form1.Label1.Caption:='Einwohner: '+IntToStr(GetAllResidents());
+  Form1.Label1.Caption:='Einwohner: '+IntToStr(residents);
   Form1.Label2.Caption:='Water: '+IntToStr(GetWaterProduction());
   Form1.Label3.Caption:='Energy: '+IntToStr(GetEnergyProduction());
+  Form1.Label4.Caption:='Haus-Nachfrage: '+FloatToStr(demandHouses);
+  Form1.Label5.Caption:='Gewerbe-Nachfrage: '+FloatToStr(demandBusiness);
+  Form1.Label6.Caption:='Industrie-Nachfrage: '+FloatToStr(demandIndustrie);
 end;
 
 procedure DrawMinimap();
@@ -888,8 +909,8 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  UpdateGui();
   UpdateZones();
+  UpdateGui();
   DrawMap();
 end;
 
