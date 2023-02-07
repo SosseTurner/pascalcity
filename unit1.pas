@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Arrow, ComCtrls, LazLogger,
+  Arrow, ComCtrls, Menus, LazLogger,
   Tilemap;
 
 type
@@ -65,6 +65,9 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     PageControl1: TPageControl;
     TabSheet1: TTabSheet;
     TabSheet10: TTabSheet;
@@ -482,6 +485,11 @@ begin
     Form1.Label1.Top:=screenHeight*32;
     Form1.Label1.Left:=0;
 
+    // Arbeiter
+    Form1.Label7.Caption:='Arbeiter: 0';
+    Form1.Label7.Top:=screenHeight*32+16;
+    Form1.Label7.Left:=0;
+
     // Water
     Form1.Label2.Caption:='Water:0';
     Form1.Label2.Top:=screenHeight*32;
@@ -507,6 +515,16 @@ begin
     Form1.Label6.Top:=screenHeight*32+32;
     Form1.Label6.Left:=256+128;
 
+    // numBusiness
+    Form1.Label8.Caption:='numIndustrie: ';
+    Form1.Label8.Top:=screenHeight*32;
+    Form1.Label8.Left:=256+256+64;
+
+    // numIndustrie
+    Form1.Label9.Caption:='numIndustrie: ';
+    Form1.Label9.Top:=screenHeight*32+16;
+    Form1.Label9.Left:=256+256+64;
+
 end;
 
 procedure UpdateGui();
@@ -514,9 +532,12 @@ begin
   Form1.Label1.Caption:='Einwohner: '+IntToStr(residents);
   Form1.Label2.Caption:='Water: '+IntToStr(GetWaterProduction());
   Form1.Label3.Caption:='Energy: '+IntToStr(GetEnergyProduction());
-  Form1.Label4.Caption:='Haus-Nachfrage: '+FloatToStr(demandHouses);
-  Form1.Label5.Caption:='Gewerbe-Nachfrage: '+FloatToStr(demandBusiness);
-  Form1.Label6.Caption:='Industrie-Nachfrage: '+FloatToStr(demandIndustrie);
+  Form1.Label4.Caption:='Haus-Nachfrage: '+FloatToStr(demandHouses).Substring(0,6);
+  Form1.Label5.Caption:='Gewerbe-Nachfrage: '+FloatToStr(demandBusiness).Substring(0,6);
+  Form1.Label6.Caption:='Industrie-Nachfrage: '+FloatToStr(demandIndustrie).Substring(0,6);
+  Form1.Label7.Caption:='Arbeiter: '+IntToStr(workplaces);
+  Form1.Label8.Caption:='numBusiness: '+IntToStr(numBusinessZones);
+  Form1.Label9.Caption:='numIndustrialZones: '+IntToStr(numIndustrialZones);
 end;
 
 procedure DrawMinimap();
@@ -921,7 +942,6 @@ end;
 initialization
 begin
   // Wird bei Programmstart ausgeführt
-  GenerateMap();
 end;
 end.
 

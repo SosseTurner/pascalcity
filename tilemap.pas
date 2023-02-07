@@ -162,17 +162,17 @@ begin
   if (residents=0) then
     demandHouses:=workplaces
   else
-    demandHouses:=workplaces/residents;
+    demandHouses:=1.5*(workplaces/residents)-1;
 
-  if (numBusinessZones=0) then
-    demandBusiness:=numIndustrialZones
+  if (numIndustrialZones=0) or (workplaces=0) then
+    demandIndustrie:=1.5*(residents/(2*workplaces))-1
   else
-    demandBusiness:=numIndustrialZones/numBusinessZones;
+    demandIndustrie:=((numBusinessZones/numIndustrialZones)*(residents/workplaces))-1;
 
-  if (workplaces=0) then
-    demandIndustrie:=residents
+  if (numBusinessZones=0) or (workplaces=0) then
+    demandBusiness:=1.5*(residents/(2*workplaces))-1
   else
-    demandIndustrie:=residents/workplaces;
+    demandBusiness:=((numIndustrialZones/numBusinessZones)*(residents/workplaces))-1;
 end;
 
 procedure UpdateAllResidents();
@@ -183,7 +183,7 @@ begin
   begin
     for y:=0 to mapHeight-1 do
     begin
-      if (buildings[x][y].isParentTile) then
+      if (buildings[x][y].isParentTile) and (buildings[x][y].id = 3) then
         residents+=buildings[x][y].residents;
     end;
   end;
@@ -214,7 +214,7 @@ begin
     for y:=0 to mapHeight-1 do
     begin
       if (buildings[x][y].isParentTile) and (buildings[x][y].id=5) then
-        zones+=1;
+        zones+=buildings[x][y].level;
     end;
   end;
 
@@ -230,7 +230,7 @@ begin
     for y:=0 to mapHeight-1 do
     begin
       if (buildings[x][y].isParentTile) and (buildings[x][y].id=4) then
-        zones+=1;
+        zones+=buildings[x][y].level;
     end;
   end;
 
@@ -328,6 +328,7 @@ begin
   UpdateAllResidents();
   UpdateAllWorkplaces();
   UpdateNumberOfBusinessZones();
+  UpdateNumberOfIndustrialZones();
   UpdateDemant();
   for x:=0 to mapWidth-1 do
   begin
@@ -338,30 +339,37 @@ begin
         case buildings[x][y].id of
           3:
             begin
-              if (Random(100)+1<=demandHouses*100) then
+              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) then
               begin
-                if (buildings[x][y].level<4)then
-                  begin
-                    buildings[x][y].level+=1;
-                    buildings[x][y].residents:=Random(buildings[x][y].level*20);
-                    ChangeResidents(buildings[x][y].residents);
-                  end;
-                if (buildings[x][y].level>5) then
-                  buildings[x][y].subId:=Random(11)
-                else
-                  buildings[x][y].subId:=Random(6);
+                buildings[x][y].level+=1;
+                buildings[x][y].residents:=buildings[x][y].level*40;
+                buildings[x][y].subId:=Random(11);
+                ChangeResidents(buildings[x][y].residents);
+
+                if (buildings[x][y].level=4) and (buildings[x][y].subId>5)then
+                  buildings[x][y].subId-=6
               end;
             end;
           4:
             begin
-                if (buildings[x][y].level<4)then
-                  buildings[x][y].level+=1;
+              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4)then
+              begin
+                buildings[x][y].level+=1;
+                buildings[x][y].residents:=buildings[x][y].level*20;
                 buildings[x][y].subId:=Random(6);
+                ChangeWorkplaces(buildings[x][y].residents);
+                ChangeNumberOfBusinessZones(1);
+              end;
             end;
           5:
             begin
-              if (happiness[x][y]=1) then
+              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) then
+              begin
                 buildings[x][y].level+=1;
+                buildings[x][y].residents:=buildings[x][y].level*20;
+                ChangeWorkplaces(buildings[x][y].residents);
+                ChangeNumberOfIndustrialZones(1);
+              end;
             end;
         end;
       end;
