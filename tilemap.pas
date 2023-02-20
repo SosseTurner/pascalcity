@@ -104,7 +104,6 @@ begin
   for i:=0 to 10 do
     WorldCellularAutomata();
 end;
-
 function GetFlatBitmap(id, subId, level: Integer):TBitmap;
 begin
   case level of
@@ -372,6 +371,139 @@ begin
               end;
             end;
         end;
+      end;
+    end;
+  end;
+end;
+
+function GetHappinessBuildingRange(id, level:Integer):Integer;
+begin
+  case id of
+    5:
+      GetHappinessBuildingRange:=level;
+    13:
+      GetHappinessBuildingRange:=4;
+    14:
+      GetHappinessBuildingRange:=6;
+    15:
+      GetHappinessBuildingRange:=10;
+    18:
+      GetHappinessBuildingRange:=6;
+    20:
+      GetHappinessBuildingRange:=2;
+    21:
+      GetHappinessBuildingRange:=4;
+    22:
+      GetHappinessBuildingRange:=8;
+    23:
+      GetHappinessBuildingRange:=16;
+    24:
+      GetHappinessBuildingRange:=2;
+    25:
+      GetHappinessBuildingRange:=4;
+    26:
+      GetHappinessBuildingRange:=8;
+    27:
+      GetHappinessBuildingRange:=16;
+    28:
+      GetHappinessBuildingRange:=2;
+    29:
+      GetHappinessBuildingRange:=4;
+    30:
+      GetHappinessBuildingRange:=8;
+    31:
+      GetHappinessBuildingRange:=16;
+    32:
+      GetHappinessBuildingRange:=2;
+    33:
+      GetHappinessBuildingRange:=4;
+    34:
+      GetHappinessBuildingRange:=8;
+    35:
+      GetHappinessBuildingRange:=16;
+    36:
+      GetHappinessBuildingRange:=2;
+    37:
+      GetHappinessBuildingRange:=4;
+    38:
+      GetHappinessBuildingRange:=8;
+    39:
+      GetHappinessBuildingRange:=16;
+    40:
+      GetHappinessBuildingRange:=4;
+  end;
+end;
+
+function GetBuildingHappiness(id:Integer):Integer;
+begin
+  case id of
+    5:
+      GetBuildingHappiness:=level;
+    13:
+      GetBuildingHappiness:=4;
+    14:
+      GetBuildingHappiness:=6;
+    15:
+      GetBuildingHappiness:=10;
+    18:
+      GetBuildingHappiness:=6;
+    20:
+      GetBuildingHappiness:=2;
+    21:
+      GetBuildingHappiness:=4;
+    22:
+      GetBuildingHappiness:=8;
+    23:
+      GetBuildingHappiness:=16;
+    24:
+      GetBuildingHappiness:=2;
+    25:
+      GetBuildingHappiness:=4;
+    26:
+      GetBuildingHappiness:=8;
+    27:
+      GetBuildingHappiness:=16;
+    28:
+      GetBuildingHappiness:=2;
+    29:
+      GetBuildingHappiness:=4;
+    30:
+      GetBuildingHappiness:=8;
+    31:
+      GetBuildingHappiness:=16;
+    32:
+      GetBuildingHappiness:=2;
+    33:
+      GetBuildingHappiness:=4;
+    34:
+      GetBuildingHappiness:=8;
+    35:
+      GetBuildingHappiness:=16;
+    36:
+      GetBuildingHappiness:=2;
+    37:
+      GetBuildingHappiness:=4;
+    38:
+      GetBuildingHappiness:=8;
+    39:
+      GetBuildingHappiness:=16;
+    40:
+      GetBuildingHappiness:=4;
+  end;
+end;
+
+procedure CalculateHappiness();
+var x, y, ix, iy : Integer;
+begin
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      ix:=GetHappinessBuildingRange(buildings[x][y].id);
+      iy:=ix;
+      for (i*-1) to i do
+      begin
+
       end;
     end;
   end;
