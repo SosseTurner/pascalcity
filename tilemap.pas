@@ -29,6 +29,7 @@ var
   numIndustrialZones, numBusinessZones : Integer;
   demandHouses, demandBusiness, demandIndustrie : Float;
   tile: TBitmap;
+  totalH:integer;
 
 function FormCoordsToTile(x,y :Integer):TPoint;
 function GetTileBitmap(x, y: Integer):TBitmap;
@@ -42,6 +43,7 @@ function GetMinimapColor(id:Integer):TColor;
 function GetWaterProduction():Integer;
 function GetEnergyProduction():Integer;
 procedure UpdateZones();
+procedure CalculateHappiness();
 
 implementation
 // World Generation durch Cellular Automata
@@ -379,8 +381,8 @@ end;
 function GetHappinessBuildingRange(id, level:Integer):Integer;
 begin
   case id of
-    5:
-      GetHappinessBuildingRange:=level;
+    5:                                              //building id
+      GetHappinessBuildingRange:=level;             //
     13:
       GetHappinessBuildingRange:=4;
     14:
@@ -431,10 +433,12 @@ begin
       GetHappinessBuildingRange:=16;
     40:
       GetHappinessBuildingRange:=4;
+    else
+      GetHappinessBuildingRange:=0;
   end;
 end;
 
-function GetBuildingHappiness(id:Integer):Integer;
+function GetBuildingHappiness(id, level :Integer):Integer;       //Werte anpassen -> abfallende reichweite, Gebäudegrößenabhängigkeit
 begin
   case id of
     5:
@@ -489,21 +493,29 @@ begin
       GetBuildingHappiness:=16;
     40:
       GetBuildingHappiness:=4;
+    else
+      GetBuildingHappiness:=0;
   end;
 end;
 
 procedure CalculateHappiness();
-var x, y, ix, iy : Integer;
+var x, y, range,offsetdX, offsetdY : Integer;
 begin
+  totalh:=0;
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
     begin
-      ix:=GetHappinessBuildingRange(buildings[x][y].id);
-      iy:=ix;
-      for (i*-1) to i do
+      if (buildings[x][y].id<>0) then
       begin
-
+        range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);
+        for offsetdX:=(range*-1) to range do
+        begin
+          for offsetdY:=(range*-1) to range do
+          begin
+            totalH+= GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+          end;
+        end;
       end;
     end;
   end;

@@ -60,6 +60,7 @@ type
     Image8: TImage;
     Image9: TImage;
     Label1: TLabel;
+    Label10: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -525,6 +526,11 @@ begin
     Form1.Label9.Top:=screenHeight*32+16;
     Form1.Label9.Left:=256+256+64;
 
+    // Happiness (Test)
+    Form1.Label10.Caption:='Zufriedenheit ';
+    Form1.Label10.Top:=screenHeight*32+32;
+    Form1.Label10.Left:=256+256+64;
+
 end;
 
 procedure UpdateGui();
@@ -538,6 +544,7 @@ begin
   Form1.Label7.Caption:='Arbeiter: '+IntToStr(workplaces);
   Form1.Label8.Caption:='numBusiness: '+IntToStr(numBusinessZones);
   Form1.Label9.Caption:='numIndustrialZones: '+IntToStr(numIndustrialZones);
+  Form1.Label10.Caption:='Zufriedenheit '+IntToStr(totalH);
 end;
 
 procedure DrawMinimap();
@@ -930,9 +937,11 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
+  CalculateHappiness();
   UpdateZones();
   UpdateGui();
   DrawMap();
+
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);
