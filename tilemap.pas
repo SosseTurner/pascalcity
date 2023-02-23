@@ -14,6 +14,8 @@ type
       maxResidents:   Integer;
       level:          Integer;
       happiness:      Integer;
+      localincome:    Integer;
+      buildprice:     Integer;
       isParentTile:   Boolean;
   end;
 
@@ -30,8 +32,10 @@ var
   demandHouses, demandBusiness, demandIndustrie : Float;
   tile: TBitmap;
   totalH:integer;
+  BankAccount:integer;
+  TotalIncome:integer;
 
-function FormCoordsToTile(x,y :Integer):TPoint;
+function FormCoordsToTile(x,y :Integer):TPoint;                             //Funktionen und Procedures für Unit1
 function GetTileBitmap(x, y: Integer):TBitmap;
 procedure LoadTiles();
 procedure GenerateMap();
@@ -44,6 +48,8 @@ function GetWaterProduction():Integer;
 function GetEnergyProduction():Integer;
 procedure UpdateZones();
 procedure CalculateHappiness();
+procedure CalculateTaxIncome();
+procedure UpdateBankAccount();
 
 implementation
 // World Generation durch Cellular Automata
@@ -53,7 +59,7 @@ var iteratedWorld: array of array of Integer;
 begin
   // Die Welt wird durch Cellular Automate generiert.
   // Durch Zufall werden Bereichen mit viel Land mehr land gegeben, das selbe bei Wasser.
-  // Erfolgt über zählen der glrichen Nachbarn.
+  // Erfolgt über zählen der gleichen Nachbarn.
 
   SetLength(iteratedWorld, mapWidth, mapHeight);
   for x:=0 to mapWidth-1 do
@@ -88,7 +94,7 @@ end;
 procedure GenerateMap();
 var x, y, i: Integer;
 begin
-
+  //randomize; //für Später
   // Karte wird zufällig Generiert
   for x:=0 to mapWidth-1 do
   begin
@@ -502,23 +508,48 @@ procedure CalculateHappiness();
 var x, y, range,offsetdX, offsetdY : Integer;
 begin
   totalh:=0;
-  for x:=0 to mapWidth-1 do
+  for x:=0 to mapWidth-1 do                                    //Karte durchgehen
   begin
     for y:=0 to mapHeight-1 do
     begin
-      if (buildings[x][y].id<>0) then
+      buildings[x][y].happiness:=0;
+      if (buildings[x][y].id<>0) then                         //wenn Gebäude
       begin
-        range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);
-        for offsetdX:=(range*-1) to range do
+        range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
+        for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
         begin
           for offsetdY:=(range*-1) to range do
           begin
-            totalH+= GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+            totalH+= GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);             //Gesamtzufriedenheit
+            buildings[x][y].happiness:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);               //Zufriedenheit je gabäude
           end;
         end;
       end;
     end;
   end;
+end;
+
+procedure CalculateTaxIncome();
+var x, y :integer;
+begin
+  TotalIncome:=0;
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      buildings[x][y].localincome:=0;
+      if (buildings[x][y].id<>0) then
+      begin
+        buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
+        TotalIncome+=buildings[x][y].localincome;
+      end;
+    end;
+  end;
+end;
+
+procedure UpdateBankAccount();
+begin
+  BankAccount+=TotalIncome;
 end;
 
 function GetMultiTileBitmap(tileX, tileY, width, height: Integer):TBitmap;
@@ -1554,6 +1585,7 @@ begin
   SetLength(terrain, mapHeight, mapWidth);
   SetLength(buildings, mapHeight, mapWidth);
   SetLength(happiness, mapHeight, mapWidth);
+  BankAccount:=50000;
 end;
 end.
 

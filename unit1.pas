@@ -61,6 +61,9 @@ type
     Image9: TImage;
     Label1: TLabel;
     Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -531,6 +534,15 @@ begin
     Form1.Label10.Top:=screenHeight*32+32;
     Form1.Label10.Left:=256+256+64;
 
+    // Steuereinnahmen (Test)
+    Form1.Label11.Caption:='Einnahmen ';
+    Form1.Label11.Top:=screenHeight*32;
+    Form1.Label11.Left:=256+256+256;
+
+    // Kontostand (Test)
+    Form1.Label12.Caption:='Kontostand ';
+    Form1.Label12.Top:=screenHeight*32+16;
+    Form1.Label12.Left:=256+256+256;
 end;
 
 procedure UpdateGui();
@@ -545,6 +557,8 @@ begin
   Form1.Label8.Caption:='numBusiness: '+IntToStr(numBusinessZones);
   Form1.Label9.Caption:='numIndustrialZones: '+IntToStr(numIndustrialZones);
   Form1.Label10.Caption:='Zufriedenheit '+IntToStr(totalH);
+  Form1.Label11.Caption:='Einnahmen '+IntToStr(TotalIncome)+'€';
+  Form1.Label12.Caption:='Kontostand '+IntToStr(BankAccount)+'€';
 end;
 
 procedure DrawMinimap();
@@ -938,10 +952,11 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   CalculateHappiness();
+  CalculateTaxIncome();
+  UpdateBankAccount();
   UpdateZones();
   UpdateGui();
   DrawMap();
-
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);
