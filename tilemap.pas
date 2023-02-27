@@ -50,6 +50,7 @@ procedure UpdateZones();
 procedure CalculateHappiness();
 procedure CalculateTaxIncome();
 procedure UpdateBankAccount();
+function GetBuildingPrice(id:Integer):Integer;
 
 implementation
 // World Generation durch Cellular Automata
@@ -346,20 +347,20 @@ begin
         case buildings[x][y].id of
           3:
             begin
-              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
+              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*40;
                 buildings[x][y].subId:=Random(11);
                 ChangeResidents(buildings[x][y].residents);
 
-                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*100)  then
+                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*10)  then
                   buildings[x][y].subId-=6
               end;
             end;
           4:
             begin
-              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
+              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -370,7 +371,7 @@ begin
             end;
           5:
             begin
-              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
+              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -501,6 +502,87 @@ begin
       GetBuildingHappiness:=4;
     else
       GetBuildingHappiness:=0;
+  end;
+end;
+
+function GetBuildingPrice(id:Integer):Integer;
+begin
+  // Zum Generieren der Minimap erhält jedes Gebäude(Id) einen eigenen Farbwert.
+  case id of
+    3:
+      GetBuildingPrice:=100;
+    4:
+      GetBuildingPrice:=100;
+    5:
+      GetBuildingPrice:=100;
+    6:
+      GetBuildingPrice:=50;
+    7:
+      GetBuildingPrice:=200;
+    8:
+      GetBuildingPrice:=500;
+    9:
+      GetBuildingPrice:=1000;
+    11:
+      GetBuildingPrice:=5000;
+    12:
+      GetBuildingPrice:=12500;
+    13:
+      GetBuildingPrice:=50000;
+    14:
+      GetBuildingPrice:=75000;
+    15:
+      GetBuildingPrice:=100000;
+    16:
+      GetBuildingPrice:=5000;
+    17:
+      GetBuildingPrice:=12500;
+    18:
+      GetBuildingPrice:=50000;
+    19:
+      GetBuildingPrice:=150000;
+    20:
+      GetBuildingPrice:=15000;
+    21:
+      GetBuildingPrice:=50000;
+    22:
+      GetBuildingPrice:=100000;
+    23:
+      GetBuildingPrice:=300000;
+    24:
+      GetBuildingPrice:=20000;
+    25:
+      GetBuildingPrice:=40000;
+    26:
+      GetBuildingPrice:=80000;
+    27:
+      GetBuildingPrice:=160000;
+    28:
+      GetBuildingPrice:=15000;
+    29:
+      GetBuildingPrice:=50000;
+    30:
+      GetBuildingPrice:=100000;
+    31:
+      GetBuildingPrice:=300000;
+    32:
+      GetBuildingPrice:=15000;
+    33:
+      GetBuildingPrice:=50000;
+    34:
+      GetBuildingPrice:=100000;
+    35:
+      GetBuildingPrice:=300000;
+    36:
+      GetBuildingPrice:=10000;
+    37:
+      GetBuildingPrice:=75000;
+    38:
+      GetBuildingPrice:=165000;
+    39:
+      GetBuildingPrice:=500000;
+    40:
+      GetBuildingPrice:=3141592;
   end;
 end;
 
@@ -928,7 +1010,7 @@ procedure PlaceMultiTile(tileX, tileY, width, height, id: Integer);
 var x, y : Integer;
 begin
   // Anhand der Breite und Höhe werden alle Tiles in einen Quadrat platziert.
-  // Das erste(oben links) erhält außerdem das Attribut ParentTile (nur ein Tile pro Gebäude)
+  // Das erste(oben links) erhält außerdem das Attribut ParentTile (nur ein Tile pro Gebäude)     //
   for x:=0 to width-1 do
   begin
     for y:=0 to height-1 do
@@ -964,148 +1046,152 @@ begin
   // Abhängig von der Id wird das bestimmte Gebäude platziert. Durch unterschiedliche Größen
   // muss jede ID einzeln betrachtet werden.
   // Vor platzieren der Gebäude wird auf Nähe zu Straßen und Bauplatz überprüft.
-  case id of
-    3:
-      begin
-        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+  if GetBuildingPrice(id)<=BankAccount then
+  begin
+    BankAccount-=GetBuildingPrice(id);
+    case id of
+      3:
         begin
-          buildings[x][y].id:=id;
-          buildings[x][y].level:=0;
+          if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+          begin
+            buildings[x][y].id:=id;
+            buildings[x][y].level:=0;
+            buildings[x][y].isParentTile:=true;
+          end;
+        end;
+      4:
+        begin
+          if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+          begin
+            buildings[x][y].id:=id;
+            buildings[x][y].level:=0;
+            buildings[x][y].isParentTile:=true;
+          end;
+        end;
+      6:begin
+          if (buildings[x][y].id=0) and (terrain[x][y]<>0)then
+            buildings[x][y].id:=id;
           buildings[x][y].isParentTile:=true;
         end;
-      end;
-    4:
-      begin
-        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+      7..9:
         begin
-          buildings[x][y].id:=id;
-          buildings[x][y].level:=0;
-          buildings[x][y].isParentTile:=true;
+          if (buildings[x][y].id=0) then
+            buildings[x][y].id:=id;
+            buildings[x][y].isParentTile:=true;
         end;
-      end;
-    6:begin
-        if (buildings[x][y].id=0) and (terrain[x][y]<>0)then
-          buildings[x][y].id:=id;
-        buildings[x][y].isParentTile:=true;
-      end;
-    7..9:
-      begin
-        if (buildings[x][y].id=0) then
-          buildings[x][y].id:=id;
-          buildings[x][y].isParentTile:=true;
-      end;
-    12:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 12);
-      end;
-    13:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 13);
-      end;
-    14:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 14);
-      end;
-    15:
-      begin
-      if (IsBuildingPlaceable(x, y, 3, 2) and IsNearStreet(x, y, 3, 2)) then
-        PlaceMultiTile(x, y, 3, 2, 15);
-      end;
-    17:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 17);
-      end;
-    18:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 1) and IsNearStreet(x, y, 2, 1)) then
-        PlaceMultiTile(x, y, 2, 1, 18);
-      end;
-    19:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 1) and IsNearStreet(x, y, 4, 1)) then
-        PlaceMultiTile(x, y, 4, 1, 19);
-      end;
-    21:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 21);
-      end;
-    22:
-      begin
-      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
-        PlaceMultiTile(x, y, 3, 3, 22);
-      end;
-    23:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
-        PlaceMultiTile(x, y, 4, 4, 23);
-      end;
-    25:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 25);
-      end;
-    26:
-      begin
-      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
-        PlaceMultiTile(x, y, 3, 3, 26);
-      end;
-    27:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
-        PlaceMultiTile(x, y, 4, 4, 27);
-      end;
-    29:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 29);
-      end;
-    30:
-      begin
-      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
-        PlaceMultiTile(x, y, 3, 3, 30);
-      end;
-    31:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
-        PlaceMultiTile(x, y, 4, 4, 31);
-      end;
-    33:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 33);
-      end;
-    34:
-      begin
-      if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
-        PlaceMultiTile(x, y, 3, 3, 34);
-      end;
-    35:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
-        PlaceMultiTile(x, y, 4, 4, 35);
-      end;
-    38:
-      begin
-      if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
-        PlaceMultiTile(x, y, 2, 2, 38);
-      end;
-    39:
-      begin
-      if (IsBuildingPlaceable(x, y, 4, 3) and IsNearStreet(x, y, 4, 3)) then
-        PlaceMultiTile(x, y, 4, 3, 39);
-      end;
-    // Alle Tiles mit der Größe 1x1 können zusammen betrachtet werden.
-    else
-      begin
-        if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+      12:
         begin
-          buildings[x][y].id:=id;
-          buildings[x][y].isParentTile:=true;
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 12);
+        end;
+      13:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 13);
+        end;
+      14:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 14);
+        end;
+      15:
+        begin
+        if (IsBuildingPlaceable(x, y, 3, 2) and IsNearStreet(x, y, 3, 2)) then
+          PlaceMultiTile(x, y, 3, 2, 15);
+        end;
+      17:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 17);
+        end;
+      18:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 1) and IsNearStreet(x, y, 2, 1)) then
+          PlaceMultiTile(x, y, 2, 1, 18);
+        end;
+      19:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 1) and IsNearStreet(x, y, 4, 1)) then
+          PlaceMultiTile(x, y, 4, 1, 19);
+        end;
+      21:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 21);
+        end;
+      22:
+        begin
+        if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
+          PlaceMultiTile(x, y, 3, 3, 22);
+        end;
+      23:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
+          PlaceMultiTile(x, y, 4, 4, 23);
+        end;
+      25:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 25);
+        end;
+      26:
+        begin
+        if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
+          PlaceMultiTile(x, y, 3, 3, 26);
+        end;
+      27:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
+          PlaceMultiTile(x, y, 4, 4, 27);
+        end;
+      29:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 29);
+        end;
+      30:
+        begin
+        if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
+          PlaceMultiTile(x, y, 3, 3, 30);
+        end;
+      31:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
+          PlaceMultiTile(x, y, 4, 4, 31);
+        end;
+      33:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 33);
+        end;
+      34:
+        begin
+        if (IsBuildingPlaceable(x, y, 3, 3) and IsNearStreet(x, y, 3, 3)) then
+          PlaceMultiTile(x, y, 3, 3, 34);
+        end;
+      35:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 4) and IsNearStreet(x, y, 4, 4)) then
+          PlaceMultiTile(x, y, 4, 4, 35);
+        end;
+      38:
+        begin
+        if (IsBuildingPlaceable(x, y, 2, 2) and IsNearStreet(x, y, 2, 2)) then
+          PlaceMultiTile(x, y, 2, 2, 38);
+        end;
+      39:
+        begin
+        if (IsBuildingPlaceable(x, y, 4, 3) and IsNearStreet(x, y, 4, 3)) then
+          PlaceMultiTile(x, y, 4, 3, 39);
+        end;
+      // Alle Tiles mit der Größe 1x1 können zusammen betrachtet werden.
+      else
+        begin
+          if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+          begin
+            buildings[x][y].id:=id;
+            buildings[x][y].isParentTile:=true;
+          end;
         end;
       end;
     end;
