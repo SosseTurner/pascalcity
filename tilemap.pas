@@ -346,20 +346,20 @@ begin
         case buildings[x][y].id of
           3:
             begin
-              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) then
+              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*40;
                 buildings[x][y].subId:=Random(11);
                 ChangeResidents(buildings[x][y].residents);
 
-                if (buildings[x][y].level=4) and (buildings[x][y].subId>5)then
+                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*100)  then
                   buildings[x][y].subId-=6
               end;
             end;
           4:
             begin
-              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4)then
+              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -370,7 +370,7 @@ begin
             end;
           5:
             begin
-              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) then
+              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
