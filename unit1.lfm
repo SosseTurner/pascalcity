@@ -41,13 +41,12 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 1064
     Height = 200
-    Hint = 'Pinosaurier Statue'
     Top = 160
     Width = 200
-    ActivePage = TabSheet7
+    ActivePage = TabSheet1
     MultiLine = True
     ParentFont = False
-    TabIndex = 6
+    TabIndex = 0
     TabOrder = 3
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
@@ -77,7 +76,6 @@ object Form1: TForm1
       object Image3: TImage
         Left = 0
         Height = 21
-        Hint = 'Feldweg'
         Top = 0
         Width = 21
         OnClick = Image3Click
@@ -113,11 +111,9 @@ object Form1: TForm1
       object Image4: TImage
         Left = 43
         Height = 21
-        Hint = 'Allee'
         Top = 0
         Width = 21
         OnClick = Image4Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963C902000089504E47
           0D0A1A0A0000000D4948445200000020000000200802000000FC18EDA3000000
@@ -144,16 +140,13 @@ object Form1: TForm1
           EE1DAE831DFF2FA1F1BC2875413E22C45FE36C95C1357FE2110000000049454E
           44AE426082
         }
-        ShowHint = True
       end
       object Image5: TImage
         Left = 64
         Height = 21
-        Hint = 'Landstraße (4 Spuren)'
         Top = 0
         Width = 21
         OnClick = Image5Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963C902000089504E47
           0D0A1A0A0000000D4948445200000020000000200802000000FC18EDA3000000
@@ -180,18 +173,16 @@ object Form1: TForm1
           EE1DAE831DFF2FA1F1BC2875413E22C45FE36C95C1357FE2110000000049454E
           44AE426082
         }
-        ShowHint = True
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Strom'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image2: TImage
         Left = 21
         Height = 43
-        Hint = 'Solaranlage (groß)'
         Top = 0
         Width = 43
         OnClick = Image2Click
@@ -199,7 +190,6 @@ object Form1: TForm1
       object Image7: TImage
         Left = 0
         Height = 21
-        Hint = 'Solaranlage (klein)'
         Top = 0
         Width = 21
         OnClick = Image7Click
@@ -250,21 +240,16 @@ object Form1: TForm1
       object Image8: TImage
         Left = 64
         Height = 43
-        Hint = 'Geothermalkraftwerk'
         Top = 0
         Width = 43
         OnClick = Image8Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image9: TImage
         Left = 107
         Height = 43
-        Hint = 'Kohlekraftwerk'
         Top = 0
         Width = 43
         OnClick = Image9Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869634121000089504E47
           0D0A1A0A0000000D4948445200000040000000400802000000250BE689000000
@@ -538,11 +523,9 @@ object Form1: TForm1
       object Image10: TImage
         Left = 0
         Height = 43
-        Hint = 'Atomkraftwerk'
         Top = 43
         Width = 64
         OnClick = Image10Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963D52D000089504E47
           0D0A1A0A0000000D49484452000000600000004008020000006A56E559000000
@@ -913,22 +896,19 @@ object Form1: TForm1
           8B89EB833B68FD2199F4E4203B3E2259E944DE636A5CEA0560B7D5FA7FEE74E0
           C95FBFA94C0000000049454E44AE426082
         }
-        ShowHint = True
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Wasser'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image23: TImage
         Left = 21
         Height = 43
-        Hint = 'Wasserturm (groß)'
         Top = 0
         Width = 43
         OnClick = Image23Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963B31D000089504E47
           0D0A1A0A0000000D4948445200000040000000400802000000250BE689000000
@@ -1170,16 +1150,13 @@ object Form1: TForm1
           64A260A9A95C5E0B065650B85C2F952D6E6C36862697A7262FFE0F7BA0529D67
           19F4920000000049454E44AE426082
         }
-        ShowHint = True
       end
       object Image24: TImage
         Left = 0
         Height = 21
-        Hint = 'Wasserturm (klein)'
         Top = 0
         Width = 21
         OnClick = Image24Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869634307000089504E47
           0D0A1A0A0000000D4948445200000020000000200802000000FC18EDA3000000
@@ -1241,16 +1218,13 @@ object Form1: TForm1
           1976960B9CC6E1C8854B162E645E5D0DAA6BEE78323C39EDB6BA2377D4689F9F
           0EC741757DE5F9FE3FFF077E15DCC956196EC40000000049454E44AE426082
         }
-        ShowHint = True
       end
       object Image25: TImage
-        Left = 64
+        Left = 43
         Height = 21
-        Hint = 'Wasserpumpe (groß)'
-        Top = 22
+        Top = 43
         Width = 85
         OnClick = Image25Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869633525000089504E47
           0D0A1A0A0000000D49484452000000800000002008020000005540E772000000
@@ -1552,16 +1526,19 @@ object Form1: TForm1
           0DB624BED00F473EB14FE6812C4437EEFED4457583B62CE3FCF356FD17ED2026
           3E3C08FDFB0000000049454E44AE426082
         }
-        ShowHint = True
+      end
+      object Image26: TImage
+        Left = 128
+        Height = 85
+        Top = 0
+        Width = 21
       end
       object Image27: TImage
         Left = 64
         Height = 21
-        Hint = 'Wasserpumpe (klein)'
         Top = 0
         Width = 43
         OnClick = Image27Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963F30B000089504E47
           0D0A1A0A0000000D49484452000000400000002008020000002DFFE9D3000000
@@ -1662,20 +1639,24 @@ object Form1: TForm1
           9813E90000000049454E44AE426082
         }
       end
+      object Image28: TImage
+        Left = 107
+        Height = 43
+        Top = 0
+        Width = 21
+      end
     end
     object TabSheet4: TTabSheet
       Caption = 'Feuerwehr'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image11: TImage
         Left = 0
         Height = 21
-        Hint = 'Feuerwehr (klein)'
         Top = 0
         Width = 21
         OnClick = Image11Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635B09000089504E47
           0D0A1A0A0000000D4948445200000020000000200802000000FC18EDA3000000
@@ -1754,16 +1735,13 @@ object Form1: TForm1
           C0F74498F851E2F891F0434A60F2C74E0057E285495C4B29855E43F2FC85F2CC
           EBFF02731BD50681134CC50000000049454E44AE426082
         }
-        ShowHint = True
       end
       object Image12: TImage
         Left = 21
         Height = 43
-        Hint = 'Feuerwehr (groß)'
         Top = 0
         Width = 43
         OnClick = Image12Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869630520000089504E47
           0D0A1A0A0000000D4948445200000040000000400802000000250BE689000000
@@ -2024,16 +2002,13 @@ object Form1: TForm1
           A1BD78E5A873EE5CEFB9E7FE0F068AE24BDD31D3850000000049454E44AE4260
           82
         }
-        ShowHint = True
       end
       object Image13: TImage
         Left = 0
         Height = 64
-        Hint = 'Löschhubschrauber'
         Top = 43
         Width = 64
         OnClick = Image13Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963031C000089504E47
           0D0A1A0A0000000D49484452000000600000006008020000006DFAE06F000000
@@ -2261,16 +2236,13 @@ object Form1: TForm1
           BBD5E9387DC282C21AF436A2204B2B43F9D08A183B6F57A99B5D60F00F1AA831
           8585B402138E7AE1B8FF031F6D8417B5E077B50000000049454E44AE426082
         }
-        ShowHint = True
       end
       object Image14: TImage
         Left = 59
         Height = 85
-        Hint = 'Feuerwehrzentrale'
         Top = -5
         Width = 85
         OnClick = Image14Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635894000089504E47
           0D0A1A0A0000000D49484452000000800000008008020000004C5CF69C000000
@@ -3461,18 +3433,16 @@ object Form1: TForm1
           F103C688AA2987C6F8A6971ECAA30F64925F002EB05155A0C677ACECBAEEFF01
           7FBB2A5B31A0FAE20000000049454E44AE426082
         }
-        ShowHint = True
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Polizei'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image15: TImage
         Left = 0
         Height = 21
-        Hint = 'Polizeiwache (klein)'
         Top = 0
         Width = 21
         OnClick = Image15Click
@@ -3480,7 +3450,6 @@ object Form1: TForm1
       object Image16: TImage
         Left = 21
         Height = 43
-        Hint = 'Feuerwache (groß)'
         Top = 0
         Width = 43
         OnClick = Image16Click
@@ -3488,22 +3457,16 @@ object Form1: TForm1
       object Image17: TImage
         Left = 64
         Height = 85
-        Hint = 'Gefängnis'
         Top = 0
         Width = 85
         OnClick = Image17Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image18: TImage
         Left = 0
         Height = 64
-        Hint = 'Feuerwehrzentrale'
         Top = 43
         Width = 64
         OnClick = Image18Click
-        ParentShowHint = False
-        ShowHint = True
       end
     end
     object TabSheet6: TTabSheet
@@ -3514,88 +3477,64 @@ object Form1: TForm1
       object Image19: TImage
         Left = 0
         Height = 21
-        Hint = 'Arztpraxis (klein)'
         Top = 0
         Width = 21
         OnClick = Image19Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image20: TImage
         Left = 21
         Height = 43
-        Hint = 'Arztpraxis (groß)'
         Top = 0
         Width = 43
         OnClick = Image20Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image21: TImage
         Left = 64
         Height = 85
-        Hint = 'Medizinisches Zentrum'
         Top = 0
         Width = 85
         OnClick = Image21Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image22: TImage
         Left = 0
         Height = 64
-        Hint = 'Krankenhaus'
         Top = 43
         Width = 64
         OnClick = Image22Click
-        ParentShowHint = False
-        ShowHint = True
       end
     end
     object TabSheet7: TTabSheet
       Caption = 'Bildung'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image29: TImage
         Left = 0
         Height = 21
-        Hint = 'Kindergarten'
         Top = 0
         Width = 21
         OnClick = Image29Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image30: TImage
         Left = 21
         Height = 43
-        Hint = 'Schule'
         Top = 0
         Width = 43
         OnClick = Image30Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image31: TImage
         Left = 64
         Height = 85
-        Hint = 'Universität'
         Top = 0
         Width = 85
         OnClick = Image31Click
-        ParentShowHint = False
-        ShowHint = True
       end
       object Image32: TImage
         Left = 0
         Height = 64
-        Hint = 'Oberschule'
         Top = 43
         Width = 64
         OnClick = Image32Click
-        ParentShowHint = False
-        ShowHint = True
       end
     end
     object TabSheet8: TTabSheet
@@ -3634,8 +3573,8 @@ object Form1: TForm1
     end
     object TabSheet9: TTabSheet
       Caption = 'Dekoration'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image37: TImage
         Left = 0
@@ -3647,17 +3586,15 @@ object Form1: TForm1
     end
     object TabSheet10: TTabSheet
       Caption = 'Zonen'
-      ClientHeight = 112
-      ClientWidth = 192
+      ClientHeight = 172
+      ClientWidth = 292
       ParentFont = False
       object Image38: TImage
         Left = 0
         Height = 26
-        Hint = 'Wohngebiet'
         Top = 0
         Width = 26
         OnClick = Image38Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963E600000089504E47
           0D0A1A0A0000000D4948445200000020000000200403000000815467C7000000
@@ -3669,16 +3606,13 @@ object Form1: TForm1
           C93681453AF8EC54F942BC86E80220C30F4DD1F522240000000049454E44AE42
           6082
         }
-        ShowHint = True
       end
       object Image39: TImage
         Left = 24
         Height = 26
-        Hint = 'Gewerbegebiet'
         Top = 0
         Width = 26
         OnClick = Image39Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963E700000089504E47
           0D0A1A0A0000000D4948445200000020000000200403000000815467C7000000
@@ -3690,16 +3624,13 @@ object Form1: TForm1
           6E0D71A68F6CFBF2A22F82D7A474002EAD0F4B2F9CB4E50000000049454E44AE
           426082
         }
-        ShowHint = True
       end
       object Image40: TImage
         Left = 48
         Height = 26
-        Hint = 'Industriegebiet'
         Top = 0
         Width = 26
         OnClick = Image40Click
-        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963EA00000089504E47
           0D0A1A0A0000000D4948445200000020000000200403000000815467C7000000
@@ -3711,7 +3642,6 @@ object Form1: TForm1
           EBE34ACDAB8148F7A4238F4FDB0296237201E84111C1F38D0CB3000000004945
           4E44AE426082
         }
-        ShowHint = True
       end
     end
   end
