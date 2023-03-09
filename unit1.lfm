@@ -3813,4 +3813,12 @@ object Form1: TForm1
     Caption = 'Label13'
     ParentColor = False
   end
+  object Label14: TLabel
+    Left = 195
+    Height = 15
+    Top = 590
+    Width = 122
+    Caption = 'Happiness per Building'
+    ParentColor = False
+  end
 end

@@ -64,6 +64,7 @@ type
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
+    Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -543,6 +544,11 @@ begin
     Form1.Label12.Caption:='Kontostand ';
     Form1.Label12.Top:=screenHeight*32+16;
     Form1.Label12.Left:=256+256+256;
+
+    // Happiness Tile
+    Form1.Label14.Caption:='TileHapp ';
+    Form1.Label14.Top:=screenHeight*32;
+    Form1.Label14.Left:=256+256+256+256;
 end;
 
 procedure UpdateGui();
@@ -729,6 +735,7 @@ begin
 
        // Click Tile
        else
+           Form1.Label14.Caption:=IntToStr(buildings[tilePos.X][tilePos.Y].happiness);
          //DebugTile(TilePos.X, TilePos.Y);
 
        //DrawMap();

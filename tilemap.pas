@@ -20,7 +20,6 @@ type
   end;
 
 var
-  happiness: array of array of  Integer;
   terrain: array of array of  Integer;
   buildings: array of array of Building;
   tileArr: array[0..40] of array[0..41] of TBitmap;
@@ -587,23 +586,26 @@ begin
 end;
 
 procedure CalculateHappiness();
-var x, y, range,offsetdX, offsetdY : Integer;
+var x, y, range,offsetdX, offsetdY, happinessFromBuilding : Integer;
 begin
   totalh:=0;
+
   for x:=0 to mapWidth-1 do                                    //Karte durchgehen
   begin
     for y:=0 to mapHeight-1 do
     begin
-      buildings[x][y].happiness:=0;
       if (buildings[x][y].id<>0) then                         //wenn Gebäude
       begin
+        buildings[x][y].happiness:=0;
+        happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
         range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
+
         for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
         begin
           for offsetdY:=(range*-1) to range do
           begin
-            totalH+= GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);             //Gesamtzufriedenheit
-            buildings[x][y].happiness:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);               //Zufriedenheit je gabäude
+            totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
+            buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
           end;
         end;
       end;
@@ -1019,6 +1021,7 @@ begin
       if (x=0) and (y=0) then
       begin
         buildings[tilex+x][tiley+y].isParentTile:=true;
+        buildings[tilex+x][tiley+y].happiness:=100;
       end
       else
     end;
@@ -1670,8 +1673,7 @@ begin
   screenWidth:=49;
   SetLength(terrain, mapHeight, mapWidth);
   SetLength(buildings, mapHeight, mapWidth);
-  SetLength(happiness, mapHeight, mapWidth);
-  BankAccount:=50000;
+  BankAccount:=2000000000;
 end;
 end.
 
