@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
     <Units Count="7">
       <Unit0>
@@ -32,8 +32,8 @@
         <UnitName Value="Tilemap"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="310"/>
-        <CursorPos X="45" Y="1675"/>
+        <TopLine Value="342"/>
+        <CursorPos X="57" Y="378"/>
         <UsageCount Value="96"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -191,7 +191,7 @@
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode=""/>
+      <Modes ActiveMode=""/>
     </RunParams>
   </ProjectSession>
 </CONFIG>

@@ -374,6 +374,7 @@ begin
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
+                buildings[x][y].subId:=Random(6);
                 ChangeWorkplaces(buildings[x][y].residents);
                 ChangeNumberOfIndustrialZones(1);
               end;
@@ -852,7 +853,7 @@ begin
       4:
         GetTileBitmap:=GetBusinessBitmap(4, buildings[x][y].subId, buildings[x][y].level);
       5:
-        GetTileBitmap:=tileArr[5][buildings[x][y].level];
+        GetTileBitmap:=GetBusinessBitmap(5, buildings[x][y].subId, buildings[x][y].level);
       6:
         GetTileBitmap:=AutoTile4Sides(x, y, 6, true);
       7:
@@ -1063,6 +1064,15 @@ begin
           end;
         end;
       4:
+        begin
+          if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
+          begin
+            buildings[x][y].id:=id;
+            buildings[x][y].level:=0;
+            buildings[x][y].isParentTile:=true;
+          end;
+        end;
+      5:
         begin
           if (IsBuildingPlaceable(x, y, 1, 1) and IsNearStreet(x, y, 1, 1)) then
           begin
@@ -1440,10 +1450,31 @@ begin
   end;
 
   // Industrie
-  for i:=0 to 4 do
+  tileArr[5][0]:=TBitmap.Create;
+  tileArr[5][0].LoadFromFile('gfx/tiles/5/5_0.bmp');
+
+  for i:=0 to 5 do
   begin
-    tileArr[5][i]:=TBitmap.Create;
-    tileArr[5][i].LoadFromFile('gfx/tiles/5/5_'+IntToStr(i)+'.bmp');
+    tileArr[5][i+1]:=TBitmap.Create;
+    tileArr[5][i+1].LoadFromFile('gfx/tiles/5/5_1-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[5][i+6]:=TBitmap.Create;
+    tileArr[5][i+6].LoadFromFile('gfx/tiles/5/5_2-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[5][i+12]:=TBitmap.Create;
+    tileArr[5][i+12].LoadFromFile('gfx/tiles/5/5_3-'+IntToStr(i)+'.bmp');
+  end;
+
+  for i:=0 to 5 do
+  begin
+    tileArr[5][i+18]:=TBitmap.Create;
+    tileArr[5][i+18].LoadFromFile('gfx/tiles/5/5_4-'+IntToStr(i)+'.bmp');
   end;
 
   // Feldweg
