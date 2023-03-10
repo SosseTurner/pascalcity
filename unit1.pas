@@ -19,7 +19,6 @@ type
     Arrow3: TArrow;
     Arrow4: TArrow;
     Button1: TButton;
-    Button2: TButton;
     Image1: TImage;
     Image10: TImage;
     Image11: TImage;
@@ -56,6 +55,7 @@ type
     Image4: TImage;
     Image40: TImage;
     Image5: TImage;
+    Image6: TImage;
     Image7: TImage;
     Image8: TImage;
     Image9: TImage;
@@ -64,6 +64,7 @@ type
     Label11: TLabel;
     Label12: TLabel;
     Label13: TLabel;
+    Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -90,7 +91,6 @@ type
     procedure Arrow3Click(Sender: TObject);
     procedure Arrow4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
     procedure Image10Click(Sender: TObject);
@@ -127,6 +127,7 @@ type
     procedure Image40Click(Sender: TObject);
     procedure Image4Click(Sender: TObject);
     procedure Image5Click(Sender: TObject);
+    procedure Image6Click(Sender: TObject);
     procedure Image7Click(Sender: TObject);
     procedure Image8Click(Sender: TObject);
     procedure Image9Click(Sender: TObject);
@@ -139,6 +140,8 @@ type
 var
   Form1: TForm1;
   selectedBuildingTile: Integer;
+  statusBarGfx: Array[0..6] of TBitmap;
+  date:Integer;
 
 implementation
 
@@ -192,13 +195,6 @@ begin
      Form1.Arrow3.Top:=mapHeight+32;
      Form1.Arrow3.Height:=32;
      Form1.Arrow3.Width:=32;
-
-  // Nächste Woche
-  Form1.Button2.Left:=1568;
-  Form1.Button2.Top:=748;
-  Form1.Button2.Height:=32;
-  Form1.Button2.Width:=64;
-  Form1.Button2.Visible:=true;
 
   // BauMenu
   Form1.PageControl1.Left:=1568;
@@ -486,70 +482,109 @@ begin
 
     // Einwohner
     Form1.Label1.Caption:='Einwohner:0';
-    Form1.Label1.Top:=screenHeight*32;
-    Form1.Label1.Left:=0;
+    Form1.Label1.Top:=977;
+    Form1.Label1.Left:=400;
 
     // Arbeiter
     Form1.Label7.Caption:='Arbeiter: 0';
-    Form1.Label7.Top:=screenHeight*32+16;
-    Form1.Label7.Left:=0;
+    Form1.Label7.Top:=720;
+    Form1.Label7.Left:=1600;
 
     // Water
     Form1.Label2.Caption:='Water:0';
-    Form1.Label2.Top:=screenHeight*32;
-    Form1.Label2.Left:=128;
+    Form1.Label2.Top:=977;
+    Form1.Label2.Left:=900;
 
     // Energie
     Form1.Label3.Caption:='Energy:0';
-    Form1.Label3.Top:=screenHeight*32;
-    Form1.Label3.Left:=256;
+    Form1.Label3.Top:=977;
+    Form1.Label3.Left:=600;
 
     // Nachfrage Wohnungen
     Form1.Label4.Caption:='Wohnungen Nachfrage: ';
-    Form1.Label4.Top:=screenHeight*32;
-    Form1.Label4.Left:=256+128;
+    Form1.Label4.Top:=780;
+    Form1.Label4.Left:=1600;
 
     // Nachfrage Gewerbe
     Form1.Label5.Caption:='Gewerbe Nachfrage: ';
-    Form1.Label5.Top:=screenHeight*32+16;
-    Form1.Label5.Left:=256+128;
+    Form1.Label5.Top:=800;
+    Form1.Label5.Left:=1600;
 
     // Nachfrage Industrie
     Form1.Label6.Caption:='Industrie Nachfrage: ';
-    Form1.Label6.Top:=screenHeight*32+32;
-    Form1.Label6.Left:=256+128;
+    Form1.Label6.Top:=820;
+    Form1.Label6.Left:=1600;
 
     // numBusiness
     Form1.Label8.Caption:='numIndustrie: ';
-    Form1.Label8.Top:=screenHeight*32;
-    Form1.Label8.Left:=256+256+64;
+    Form1.Label8.Top:=840;
+    Form1.Label8.Left:=1600;
 
     // numIndustrie
     Form1.Label9.Caption:='numIndustrie: ';
-    Form1.Label9.Top:=screenHeight*32+16;
-    Form1.Label9.Left:=256+256+64;
+    Form1.Label9.Top:=860;
+    Form1.Label9.Left:=1600;
 
     // Happiness (Test)
     Form1.Label10.Caption:='Zufriedenheit ';
-    Form1.Label10.Top:=screenHeight*32+32;
-    Form1.Label10.Left:=256+256+64;
+    Form1.Label10.Top:=880;
+    Form1.Label10.Left:=1600;
 
     // Steuereinnahmen (Test)
     Form1.Label11.Caption:='Einnahmen ';
-    Form1.Label11.Top:=screenHeight*32;
-    Form1.Label11.Left:=256+256+256;
+    Form1.Label11.Top:=977;
+    Form1.Label11.Left:=206;
 
     // Kontostand (Test)
     Form1.Label12.Caption:='Kontostand ';
-    Form1.Label12.Top:=screenHeight*32+16;
-    Form1.Label12.Left:=256+256+256;
+    Form1.Label12.Top:=977;
+    Form1.Label12.Left:=50;
+
+    // Happiness Tile
+    Form1.Label14.Caption:='TileHapp ';
+    Form1.Label14.Top:=940;
+    Form1.Label14.Left:=1600;
+
+    statusBarGfx[0]:=TBitmap.Create;
+    statusBarGfx[0].LoadFromFile('gfx/gui/status-bar/income.bmp');
+    Form1.Canvas.Draw(0, 960, statusBarGfx[0]);
+
+    statusBarGfx[1]:=TBitmap.Create;
+    statusBarGfx[1].LoadFromFile('gfx/gui/status-bar/residents.bmp');
+    Form1.Canvas.Draw(315, 960, statusBarGfx[1]);
+
+    statusBarGfx[2]:=TBitmap.Create;
+    statusBarGfx[2].LoadFromFile('gfx/gui/status-bar/energyCapacity.bmp');
+    Form1.Canvas.Draw(551, 960, statusBarGfx[2]);
+
+    statusBarGfx[3]:=TBitmap.Create;
+    statusBarGfx[3].LoadFromFile('gfx/gui/status-bar/waterCapacity.bmp');
+    Form1.Canvas.Draw(770, 960, statusBarGfx[3]);
+
+    statusBarGfx[4]:=TBitmap.Create;
+    statusBarGfx[4].LoadFromFile('gfx/gui/status-bar/demand.bmp');
+    Form1.Canvas.Draw(989, 960, statusBarGfx[4]);
+
+    statusBarGfx[5]:=TBitmap.Create;
+    statusBarGfx[5].LoadFromFile('gfx/gui/status-bar/date.bmp');
+    Form1.Canvas.Draw(1163, 960, statusBarGfx[5]);
+
+    statusBarGfx[6]:=TBitmap.Create;
+    Form1.Image6.Left:=1399;
+    Form1.Image6.Top:=960;
+    Form1.Image6.Height:=57;
+    Form1.Image6.Width:=169;
+    Form1.Image6.Picture.LoadFromFile('gfx/gui/status-bar/nextWeek.bmp');
 end;
 
 procedure UpdateGui();
 begin
   Form1.Label1.Caption:='Einwohner: '+IntToStr(residents);
-  Form1.Label2.Caption:='Water: '+IntToStr(GetWaterProduction());
-  Form1.Label3.Caption:='Energy: '+IntToStr(GetEnergyProduction());
+  if (residents<>0) then
+    begin
+      Form1.Label2.Caption:='Water: '+IntToStr(Round(waterCapacity*100/(residents+workplaces)));
+      Form1.Label3.Caption:='Energy: '+IntToStr(Round(energyCapacity*100/(residents+workplaces)));
+    end;
   Form1.Label4.Caption:='Haus-Nachfrage: '+FloatToStr(demandHouses).Substring(0,6);
   Form1.Label5.Caption:='Gewerbe-Nachfrage: '+FloatToStr(demandBusiness).Substring(0,6);
   Form1.Label6.Caption:='Industrie-Nachfrage: '+FloatToStr(demandIndustrie).Substring(0,6);
@@ -557,8 +592,26 @@ begin
   Form1.Label8.Caption:='numBusiness: '+IntToStr(numBusinessZones);
   Form1.Label9.Caption:='numIndustrialZones: '+IntToStr(numIndustrialZones);
   Form1.Label10.Caption:='Zufriedenheit '+IntToStr(totalH);
-  Form1.Label11.Caption:='Einnahmen '+IntToStr(TotalIncome)+'€';
-  Form1.Label12.Caption:='Kontostand '+IntToStr(BankAccount)+'€';
+  Form1.Label11.Caption:=IntToStr(TotalIncome)+'€';
+  Form1.Label12.Caption:=IntToStr(BankAccount)+'€';
+
+  // Nachfrage
+     //Clear
+     Form1.Canvas.Brush.Color:=RGBToColor(192, 203, 220);
+     Form1.Canvas.Pen.Color:=RGBToColor(192, 203, 220);
+     Form1.Canvas.Rectangle(1054, 969, 1054+100, 969+39);
+     //Wohnungen
+     Form1.Canvas.Brush.Color:=RGBToColor(62, 137, 72);
+     Form1.Canvas.Pen.Color:=RGBToColor(62, 137, 72);
+     Form1.Canvas.Rectangle(1054, 969, 1054+Round(demandHouses*100), 969+13);
+     //Gewerbe
+     Form1.Canvas.Brush.Color:=RGBToColor(0, 153, 219);
+     Form1.Canvas.Pen.Color:=RGBToColor(0, 153, 219);
+     Form1.Canvas.Rectangle(1054, 981, 1054+Round(demandBusiness*100), 981+13);
+     //Industriek
+     Form1.Canvas.Brush.Color:=RGBToColor(254, 174, 52);
+     Form1.Canvas.Pen.Color:=RGBToColor(254, 174, 52);
+     Form1.Canvas.Rectangle(1054, 995, 1054+Round(demandIndustrie*100), 995+13);
 end;
 
 procedure DrawMinimap();
@@ -729,6 +782,7 @@ begin
 
        // Click Tile
        else
+           Form1.Label14.Caption:=IntToStr(buildings[tilePos.X][tilePos.Y].happiness);
          //DebugTile(TilePos.X, TilePos.Y);
 
        //DrawMap();
@@ -910,6 +964,19 @@ begin
   selectedBuildingTile:=9;
 end;
 
+procedure TForm1.Image6Click(Sender: TObject);
+begin
+  inc(date);
+  CalculateHappiness();
+  CalculateTaxIncome();
+  UpdateBankAccount();
+  UpdateZones();
+  UpdateEnergyProduction();
+  UpdateWaterProduction();
+  UpdateGui();
+  DrawMap();
+end;
+
 procedure TForm1.Image7Click(Sender: TObject);
 begin
   selectedBuildingTile:=11;
@@ -947,16 +1014,6 @@ begin
   GenerateMap();
   DrawMap();
   DrawMinimap();
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-  CalculateHappiness();
-  CalculateTaxIncome();
-  UpdateBankAccount();
-  UpdateZones();
-  UpdateGui();
-  DrawMap();
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);
