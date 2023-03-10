@@ -19,6 +19,8 @@ type
     Arrow3: TArrow;
     Arrow4: TArrow;
     Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
     Image1: TImage;
     Image10: TImage;
     Image11: TImage;
@@ -73,7 +75,9 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
+    SaveDialog1: TSaveDialog;
     TabSheet1: TTabSheet;
     TabSheet10: TTabSheet;
     TabSheet2: TTabSheet;
@@ -91,6 +95,7 @@ type
     procedure Arrow3Click(Sender: TObject);
     procedure Arrow4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormClick(Sender: TObject);
     procedure Image10Click(Sender: TObject);
@@ -637,6 +642,7 @@ begin
   bmp.Destroy;
 
   // Der Sichtbare bereich wird durch umrandung kenntlich gemacht
+  Form1.Canvas.Pen.Color:=clBlack;
   Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+32);
   Form1.Canvas.Line((offsetX+32*screenWidth)+32, offsetY+32, (offsetX+32*screenWidth)+32, offsetY+screenHeight+32);
   Form1.Canvas.Line((offsetX+32*screenWidth)+screenWidth+32, offsetY+32, (32+offsetX+screenWidth)+32*screenWidth, offsetY+screenHeight+32);
@@ -658,7 +664,7 @@ begin
     begin
 
       // Falls nach einer Koordinate außerhalb des Arrays gefragt wird
-      if (x>=0) or (x<=screenWidth-1) or (y>=0) or (y<=screenHeight-1)then
+      if (x>=0) and (x<=screenWidth-1) and (y>=0) and (y<=screenHeight-1)then
       begin
         if (buildings[x][y].id<3) then
           Form1.Canvas.Pixels[32*screenWidth+x+32, y+32]:=GetMinimapColor(terrain[x][y])
@@ -720,9 +726,96 @@ begin
   UpdateMinimapTile(tileX, tileY);
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure LoadGame();
+var saveFileString:TStringList;
+    line:String;
+    splitLine:Array of String;
+    x, y:Integer;
+begin
+  if Form1.OpenDialog1.Execute then
+    begin
+      saveFileString:=TStringList.Create;
+      saveFileString.LoadFromFile(Form1.OpenDialog1.FileName);
+      for line in saveFileString do
+      begin
+           splitLine:=line.Split(';');
+      case splitline[0] of
+        'b':
+          begin
+            x:=StrToInt(splitLine[1]);
+            y:=StrToInt(splitLine[2]);
+            buildings[x][y].id:=StrToInt(splitLine[3]);
+            buildings[x][y].subId:=StrToInt(splitLine[4]);
+            buildings[x][y].residents:=StrToInt(splitLine[5]);
+            buildings[x][y].maxResidents:=StrToInt(splitLine[6]);
+            buildings[x][y].level:=StrToInt(splitLine[7]);
+            buildings[x][y].happiness:=StrToInt(splitLine[8]);
+            buildings[x][y].localincome:=StrToInt(splitLine[9]);
+            buildings[x][y].buildprice:=StrToInt(splitLine[10]);
+            buildings[x][y].isParentTile:=StrToBool(splitLine[11]);
+          end;
+        't':
+          begin
+            x:=StrToInt(splitLine[1]);
+            y:=StrToInt(splitLine[2]);
+            terrain[x][y]:=StrToInt(splitLine[3]);
+          end;
+        'm':
+          bankAccount:=StrToInt(splitLine[1]);
+        'd':
+          date:=StrToInt(splitLine[1]);
+      end;
+    end;
+  end;
+  UpdateEnergyProduction();
+  UpdateWaterProduction();
+  UpdateAllResidents();
+  UpdateAllWorkplaces();
+  UpdateNumberOfBusinessZones();
+  UpdateNumberOfIndustrialZones();
+  UpdateDemant();
+  UpdateGui();
+  DrawMap();
+end;
+
+procedure SaveGame();
+var saveString:TStringList;
+    x, y:Integer;
 begin
 
+  if Form1.SaveDialog1.Execute then
+    begin
+      saveString:=TStringList.Create;
+      saveString.Add('m;'+IntToSTr(bankAccount));
+      saveString.Add('d;'+IntToSTr(date));
+
+      // buildings
+      for x:=0 to mapWidth-1 do
+      begin
+        for y:=0 to mapHeight-1 do
+        begin
+          saveString.Add('b;'+IntToStr(x)+';'+IntToStr(y)+';'+IntToStr(buildings[x][y].id)+';'+IntToStr(buildings[x][y].subId)+';'+IntToStr(buildings[x][y].residents)+';'+IntToStr(buildings[x][y].maxResidents)+';'+IntToStr(buildings[x][y].level)+';'+IntToStr(buildings[x][y].happiness)+';'+IntToStr(buildings[x][y].localincome)+';'+IntToStr(buildings[x][y].buildprice)+';'+BoolToSTr(buildings[x][y].isParentTile));
+        end;
+      end;
+
+      //terrain
+      for x:=0 to mapWidth-1 do
+      begin
+        for y:=0 to mapHeight-1 do
+        begin
+          saveString.Add('t;'+IntToStr(x)+';'+IntToStr(y)+';'+IntToStr(terrain[x][y]));
+        end;
+      end;
+
+      saveString.SaveToFile(Form1.SaveDialog1.FileName);
+      saveString.Free;
+    end;
+
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+begin
+  LoadGame();
 end;
 
 procedure MoveCamera(x, y: Integer);
@@ -1014,6 +1107,11 @@ begin
   GenerateMap();
   DrawMap();
   DrawMinimap();
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  SaveGame();
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);

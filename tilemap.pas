@@ -32,8 +32,8 @@ var
   waterCapacity, energyCapacity:Integer;
   tile: TBitmap;
   totalH:integer;
-  BankAccount:integer;
-  TotalIncome:integer;
+  bankAccount:integer;
+  totalIncome:integer;
 
 function FormCoordsToTile(x,y :Integer):TPoint;                             //Funktionen und Procedures für Unit1
 function GetTileBitmap(x, y: Integer):TBitmap;
@@ -47,6 +47,11 @@ function GetMinimapColor(id:Integer):TColor;
 procedure UpdateZones();
 procedure UpdateWaterProduction();
 procedure UpdateEnergyProduction();
+procedure UpdateDemant();
+procedure UpdateAllResidents();
+procedure UpdateAllWorkplaces();
+procedure UpdateNumberOfBusinessZones();
+procedure UpdateNumberOfIndustrialZones();
 procedure CalculateHappiness();
 procedure CalculateTaxIncome();
 procedure UpdateBankAccount();
@@ -685,25 +690,28 @@ begin
     begin
       if (buildings[x][y].id<>0) then                         //wenn Gebäude
       begin
-        if ((waterCapacity*100/(residents+workplaces))>Random(100)+1) and ((energyCapacity*100/(residents+workplaces))>Random(100)+1) then
+        if (residents<>0) and (workplaces<>0) then
         begin
-          buildings[x][y].happiness:=0;
-          happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
-          range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
-
-          for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
+          if (Round(waterCapacity*100/(residents+workplaces))>Random(100)+1) and (Round(energyCapacity*100/(residents+workplaces))>Random(100)+1) then
           begin
-            for offsetdY:=(range*-1) to range do
+            buildings[x][y].happiness:=0;
+            happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+            range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
+            for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
             begin
-              totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
-              buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
+              for offsetdY:=(range*-1) to range do
+              begin
+                totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
+                buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
+              end;
             end;
+          end
+          else
+          begin
+            buildings[x][y].happiness:=0;
           end;
-        end
-        else
-        begin
-          buildings[x][y].happiness:=0;
         end;
+
       end;
     end;
   end;
@@ -712,16 +720,16 @@ end;
 procedure CalculateTaxIncome();
 var x, y :integer;
 begin
-  TotalIncome:=0;
+  totalIncome:=0;
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
     begin
       if (buildings[x][y].id=3) then
-        TotalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+        totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin
-          TotalIncome+=GetUpkeepCost(buildings[x][y].id);
+          totalIncome+=GetUpkeepCost(buildings[x][y].id);
         end;
     end;
   end;
@@ -882,10 +890,10 @@ begin
   // Für Gebäude
   if (isBuilding) then
   begin
-    if (buildings[x][y-1].id=ID) and (y>0) then
+    if (y>0) and (buildings[x][y-1].id=ID) then
       i+=8;
 
-    if (buildings[x-1][y].id=ID) and (x>0) then
+    if (x>0) and (buildings[x-1][y].id=ID)then
       i+=4;
 
     if (buildings[x+1][y].id=ID) and (x<mapWidth-1) then
