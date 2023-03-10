@@ -29,6 +29,7 @@ var
   residents, workplaces: Integer;
   numIndustrialZones, numBusinessZones : Integer;
   demandHouses, demandBusiness, demandIndustrie : Float;
+  waterCapacity, energyCapacity:Integer;
   tile: TBitmap;
   totalH:integer;
   BankAccount:integer;
@@ -43,9 +44,9 @@ procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 procedure PlaceBuildingTile(x, y, id : Integer);
 procedure DestroyBuildingTile(x, y: Integer);
 function GetMinimapColor(id:Integer):TColor;
-function GetWaterProduction():Integer;
-function GetEnergyProduction():Integer;
 procedure UpdateZones();
+procedure UpdateWaterProduction();
+procedure UpdateEnergyProduction();
 procedure CalculateHappiness();
 procedure CalculateTaxIncome();
 procedure UpdateBankAccount();
@@ -180,6 +181,20 @@ begin
     demandBusiness:=1.5*(residents/(2*workplaces))-1
   else
     demandBusiness:=((numIndustrialZones/numBusinessZones)*(residents/workplaces))-1;
+
+  if (demandHouses>1) then
+    demandHouses:=1;
+  if (demandBusiness>1) then
+    demandBusiness:=1;
+  if (demandIndustrie>1) then
+    demandIndustrie:=1;
+
+  if (demandHouses<0) then
+    demandHouses:=0;
+  if (demandBusiness<0) then
+    demandBusiness:=0;
+  if (demandIndustrie<0) then
+    demandIndustrie:=0;
 end;
 
 procedure UpdateAllResidents();
@@ -297,7 +312,7 @@ begin
   end;
 end;
 
-function GetEnergyProduction():Integer;
+procedure UpdateEnergyProduction();
 var x, y, energy : Integer;
 begin
   energy:=0;
@@ -310,10 +325,10 @@ begin
     end;
   end;
 
-  GetEnergyProduction:=energy;
+  energyCapacity:=energy;
 end;
 
-function GetWaterProduction():Integer;
+procedure UpdateWaterProduction();
 var x, y, water : Integer;
 begin
   water:=0;
@@ -326,7 +341,7 @@ begin
     end;
   end;
 
-  GetWaterProduction:=water;
+  waterCapacity:=water;
 end;
 
 procedure UpdateZones();
@@ -507,7 +522,6 @@ end;
 
 function GetBuildingPrice(id:Integer):Integer;
 begin
-  // Zum Generieren der Minimap erhält jedes Gebäude(Id) einen eigenen Farbwert.
   case id of
     3:
       GetBuildingPrice:=100;
@@ -586,6 +600,80 @@ begin
   end;
 end;
 
+function GetUpkeepCost(id:Integer):Integer;
+begin
+  case id of
+    6:
+      GetUpkeepCost:=-100;
+    7:
+      GetUpkeepCost:=-100;
+    8:
+      GetUpkeepCost:=-100;
+    9:
+      GetUpkeepCost:=-100;
+    11:
+      GetUpkeepCost:=-100;
+    12:
+      GetUpkeepCost:=-100;
+    13:
+      GetUpkeepCost:=-100;
+    14:
+      GetUpkeepCost:=-100;
+    15:
+      GetUpkeepCost:=-100;
+    16:
+      GetUpkeepCost:=-100;
+    17:
+      GetUpkeepCost:=-100;
+    18:
+      GetUpkeepCost:=-100;
+    19:
+      GetUpkeepCost:=-100;
+    20:
+      GetUpkeepCost:=-100;
+    21:
+      GetUpkeepCost:=-100;
+    22:
+      GetUpkeepCost:=-100;
+    23:
+      GetUpkeepCost:=-100;
+    24:
+      GetUpkeepCost:=-100;
+    25:
+      GetUpkeepCost:=-100;
+    26:
+      GetUpkeepCost:=-100;
+    27:
+      GetUpkeepCost:=-100;
+    28:
+      GetUpkeepCost:=-100;
+    29:
+      GetUpkeepCost:=-100;
+    30:
+      GetUpkeepCost:=-100;
+    31:
+      GetUpkeepCost:=-100;
+    32:
+      GetUpkeepCost:=-100;
+    33:
+      GetUpkeepCost:=-100;
+    34:
+      GetUpkeepCost:=-100;
+    35:
+      GetUpkeepCost:=-100;
+    36:
+      GetUpkeepCost:=-100;
+    37:
+      GetUpkeepCost:=-100;
+    38:
+      GetUpkeepCost:=-100;
+    39:
+      GetUpkeepCost:=-100;
+    40:
+      GetUpkeepCost:=-100;
+  end;
+end;
+
 procedure CalculateHappiness();
 var x, y, range,offsetdX, offsetdY, happinessFromBuilding : Integer;
 begin
@@ -597,17 +685,24 @@ begin
     begin
       if (buildings[x][y].id<>0) then                         //wenn Gebäude
       begin
-        buildings[x][y].happiness:=0;
-        happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
-        range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
-
-        for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
+        if ((waterCapacity*100/(residents+workplaces))>Random(100)+1) and ((energyCapacity*100/(residents+workplaces))>Random(100)+1) then
         begin
-          for offsetdY:=(range*-1) to range do
+          buildings[x][y].happiness:=0;
+          happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+          range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
+
+          for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
           begin
-            totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
-            buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
+            for offsetdY:=(range*-1) to range do
+            begin
+              totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
+              buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
+            end;
           end;
+        end
+        else
+        begin
+          buildings[x][y].happiness:=0;
         end;
       end;
     end;
@@ -622,12 +717,12 @@ begin
   begin
     for y:=0 to mapHeight-1 do
     begin
-      buildings[x][y].localincome:=0;
-      if (buildings[x][y].id<>0) then
-      begin
-        buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
-        TotalIncome+=buildings[x][y].localincome;
-      end;
+      if (buildings[x][y].id=3) then
+        TotalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+      if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
+        begin
+          TotalIncome+=GetUpkeepCost(buildings[x][y].id);
+        end;
     end;
   end;
 end;
