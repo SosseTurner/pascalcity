@@ -56,6 +56,8 @@ procedure CalculateHappiness();
 procedure CalculateTaxIncome();
 procedure UpdateBankAccount();
 function GetBuildingPrice(id:Integer):Integer;
+function GetFlatBitmap(id, subId, level: Integer):TBitmap;
+function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
 
 implementation
 // World Generation durch Cellular Automata
@@ -726,6 +728,7 @@ begin
     for y:=0 to mapHeight-1 do
     begin
       if (buildings[x][y].id=3) then
+        buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
         totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin
@@ -1774,11 +1777,11 @@ begin
 
   // Park
   tileArr[36][0]:=TBitmap.Create;
-  tileArr[36][0].LoadFromFile('gfx/tiles/32/32.bmp');
+  tileArr[36][0].LoadFromFile('gfx/tiles/36/36.bmp');
 
   // Theater
   tileArr[37][0]:=TBitmap.Create;
-  tileArr[37][0].LoadFromFile('gfx/tiles/32/32.bmp');
+  tileArr[37][0].LoadFromFile('gfx/tiles/37/37.bmp');
 
   // Kino
   for i:=0 to 3 do
