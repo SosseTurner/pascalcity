@@ -1,19 +1,18 @@
 object Form1: TForm1
-  Left = 1198
-  Height = 1017
-  Top = 539
-  Width = 1920
+  Left = 273
+  Height = 678
+  Top = 846
+  Width = 1280
   Caption = 'Pascalcity'
-  ClientHeight = 1017
-  ClientWidth = 1920
-  DesignTimePPI = 144
+  ClientHeight = 678
+  ClientWidth = 1280
   OnClick = FormClick
-  LCLVersion = '2.2.4.0'
+  LCLVersion = '2.2.6.0'
   object ToggleBox1: TToggleBox
-    Left = 1200
-    Height = 64
-    Top = 368
-    Width = 64
+    Left = 800
+    Height = 43
+    Top = 245
+    Width = 43
     Caption = 'Build'
     OnChange = ToggleBox1Change
     ParentFont = False
@@ -21,10 +20,10 @@ object Form1: TForm1
     Visible = False
   end
   object ToggleBox2: TToggleBox
-    Left = 640
-    Height = 96
-    Top = 368
-    Width = 96
+    Left = 427
+    Height = 64
+    Top = 245
+    Width = 64
     Caption = 'Destroy'
     OnChange = ToggleBox2Change
     ParentFont = False
@@ -32,20 +31,20 @@ object Form1: TForm1
     Visible = False
   end
   object Button1: TButton
-    Left = 1000
-    Height = 38
-    Top = 408
-    Width = 112
+    Left = 667
+    Height = 25
+    Top = 272
+    Width = 75
     Caption = 'Start'
     OnClick = Button1Click
     ParentFont = False
     TabOrder = 2
   end
   object PageControl1: TPageControl
-    Left = 1596
-    Height = 300
-    Top = 240
-    Width = 300
+    Left = 1064
+    Height = 200
+    Top = 160
+    Width = 200
     ActivePage = TabSheet8
     MultiLine = True
     ParentFont = False
@@ -54,15 +53,15 @@ object Form1: TForm1
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
       Caption = 'Straßen'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image1: TImage
-        Left = 36
-        Height = 32
+        Left = 24
+        Height = 21
         Hint = 'Landstraße (2 Spuren)'#13#10'Preis: 100€'
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image1Click
         ParentShowHint = False
         Picture.Data = {
@@ -78,9 +77,9 @@ object Form1: TForm1
       end
       object Image3: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image3Click
         ParentShowHint = False
         Picture.Data = {
@@ -112,10 +111,10 @@ object Form1: TForm1
         ShowHint = True
       end
       object Image4: TImage
-        Left = 64
-        Height = 32
+        Left = 43
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image4Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963C902000089504E47
@@ -145,10 +144,10 @@ object Form1: TForm1
         }
       end
       object Image5: TImage
-        Left = 96
-        Height = 32
+        Left = 64
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image5Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963C902000089504E47
@@ -180,21 +179,21 @@ object Form1: TForm1
     end
     object TabSheet2: TTabSheet
       Caption = 'Strom'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image2: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image2Click
       end
       object Image7: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image7Click
         Picture.Data = {
           07544269746D61700E050000424D0E050000000000000E010000280000002000
@@ -241,17 +240,17 @@ object Form1: TForm1
         }
       end
       object Image8: TImage
-        Left = 96
-        Height = 64
+        Left = 64
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image8Click
       end
       object Image9: TImage
-        Left = 160
-        Height = 64
+        Left = 107
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image9Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869634121000089504E47
@@ -525,9 +524,9 @@ object Form1: TForm1
       end
       object Image10: TImage
         Left = 0
-        Height = 64
-        Top = 64
-        Width = 96
+        Height = 43
+        Top = 43
+        Width = 64
         OnClick = Image10Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963D52D000089504E47
@@ -903,14 +902,14 @@ object Form1: TForm1
     end
     object TabSheet3: TTabSheet
       Caption = 'Wasser'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image23: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image23Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963B31D000089504E47
@@ -1156,9 +1155,9 @@ object Form1: TForm1
       end
       object Image24: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image24Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869634307000089504E47
@@ -1223,10 +1222,10 @@ object Form1: TForm1
         }
       end
       object Image25: TImage
-        Left = 64
-        Height = 32
-        Top = 64
-        Width = 128
+        Left = 43
+        Height = 21
+        Top = 43
+        Width = 85
         OnClick = Image25Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869633525000089504E47
@@ -1531,16 +1530,16 @@ object Form1: TForm1
         }
       end
       object Image26: TImage
-        Left = 192
-        Height = 128
+        Left = 128
+        Height = 85
         Top = 0
-        Width = 32
+        Width = 21
       end
       object Image27: TImage
-        Left = 96
-        Height = 32
+        Left = 64
+        Height = 21
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image27Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963F30B000089504E47
@@ -1643,22 +1642,22 @@ object Form1: TForm1
         }
       end
       object Image28: TImage
-        Left = 160
-        Height = 64
+        Left = 107
+        Height = 43
         Top = 0
-        Width = 32
+        Width = 21
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Feuerwehr'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image11: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image11Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635B09000089504E47
@@ -1740,10 +1739,10 @@ object Form1: TForm1
         }
       end
       object Image12: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image12Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869630520000089504E47
@@ -2008,9 +2007,9 @@ object Form1: TForm1
       end
       object Image13: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
         OnClick = Image13Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963031C000089504E47
@@ -2241,10 +2240,10 @@ object Form1: TForm1
         }
       end
       object Image14: TImage
-        Left = 88
-        Height = 128
-        Top = -8
-        Width = 128
+        Left = 59
+        Height = 85
+        Top = -5
+        Width = 85
         OnClick = Image14Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635894000089504E47
@@ -3440,163 +3439,163 @@ object Form1: TForm1
     end
     object TabSheet5: TTabSheet
       Caption = 'Polizei'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image15: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image15Click
       end
       object Image16: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image16Click
       end
       object Image17: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
         OnClick = Image17Click
       end
       object Image18: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
         OnClick = Image18Click
       end
     end
     object TabSheet6: TTabSheet
       Caption = 'Gesundheit'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image19: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image19Click
       end
       object Image20: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image20Click
       end
       object Image21: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
         OnClick = Image21Click
       end
       object Image22: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
         OnClick = Image22Click
       end
     end
     object TabSheet7: TTabSheet
       Caption = 'Bildung'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image29: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image29Click
       end
       object Image30: TImage
-        Left = 32
-        Height = 64
+        Left = 21
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image30Click
       end
       object Image31: TImage
-        Left = 96
-        Height = 128
+        Left = 64
+        Height = 85
         Top = 0
-        Width = 128
+        Width = 85
         OnClick = Image31Click
       end
       object Image32: TImage
         Left = 0
-        Height = 96
-        Top = 64
-        Width = 96
+        Height = 64
+        Top = 43
+        Width = 64
         OnClick = Image32Click
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Freizeit'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image33: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image33Click
       end
       object Image34: TImage
-        Left = 32
-        Height = 32
+        Left = 21
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image34Click
       end
       object Image35: TImage
-        Left = 64
-        Height = 64
+        Left = 43
+        Height = 43
         Top = 0
-        Width = 64
+        Width = 43
         OnClick = Image35Click
       end
       object Image36: TImage
-        Left = 128
-        Height = 96
+        Left = 85
+        Height = 64
         Top = 0
-        Width = 128
+        Width = 85
         OnClick = Image36Click
       end
     end
     object TabSheet9: TTabSheet
       Caption = 'Dekoration'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image37: TImage
         Left = 0
-        Height = 32
+        Height = 21
         Top = 0
-        Width = 32
+        Width = 21
         OnClick = Image37Click
       end
     end
     object TabSheet10: TTabSheet
       Caption = 'Zonen'
-      ClientHeight = 172
-      ClientWidth = 292
+      ClientHeight = 112
+      ClientWidth = 192
       ParentFont = False
       object Image38: TImage
         Left = 0
-        Height = 39
+        Height = 26
         Top = 0
-        Width = 39
+        Width = 26
         OnClick = Image38Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963E600000089504E47
@@ -3611,10 +3610,10 @@ object Form1: TForm1
         }
       end
       object Image39: TImage
-        Left = 36
-        Height = 39
+        Left = 24
+        Height = 26
         Top = 0
-        Width = 39
+        Width = 26
         OnClick = Image39Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963E700000089504E47
@@ -3629,10 +3628,10 @@ object Form1: TForm1
         }
       end
       object Image40: TImage
-        Left = 72
-        Height = 39
+        Left = 48
+        Height = 26
         Top = 0
-        Width = 39
+        Width = 26
         OnClick = Image40Click
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963EA00000089504E47
@@ -3649,172 +3648,172 @@ object Form1: TForm1
     end
   end
   object Arrow1: TArrow
-    Left = 1616
-    Height = 30
-    Top = 142
-    Width = 30
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Left = 1077
+    Height = 20
+    Top = 95
+    Width = 20
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow1Click
   end
   object Arrow2: TArrow
-    Left = 1756
-    Height = 30
+    Left = 1171
+    Height = 20
     Top = 0
-    Width = 30
+    Width = 20
     ArrowType = atUp
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow2Click
   end
   object Arrow3: TArrow
-    Left = 1882
-    Height = 30
-    Top = 117
-    Width = 30
+    Left = 1255
+    Height = 20
+    Top = 78
+    Width = 20
     ArrowType = atDown
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow3Click
   end
   object Arrow4: TArrow
-    Left = 1754
-    Height = 30
-    Top = 202
-    Width = 30
+    Left = 1169
+    Height = 20
+    Top = 135
+    Width = 20
     ArrowType = atRight
-    Constraints.MinHeight = 12
-    Constraints.MinWidth = 12
+    Constraints.MinHeight = 8
+    Constraints.MinWidth = 8
     OnClick = Arrow4Click
   end
   object Image6: TImage
-    Left = 1086
-    Height = 135
-    Top = 718
-    Width = 135
+    Left = 724
+    Height = 90
+    Top = 479
+    Width = 90
     OnClick = Image6Click
   end
   object Button2: TButton
-    Left = 992
-    Height = 38
-    Top = 280
-    Width = 113
+    Left = 661
+    Height = 25
+    Top = 187
+    Width = 75
     Caption = 'Save'
     OnClick = Button2Click
     TabOrder = 4
   end
   object Button3: TButton
-    Left = 824
-    Height = 38
-    Top = 296
-    Width = 113
+    Left = 549
+    Height = 25
+    Top = 197
+    Width = 75
     Caption = 'Load'
     OnClick = Button3Click
     TabOrder = 5
   end
   object Image41: TImage
-    Left = 438
-    Height = 135
-    Top = 574
-    Width = 135
+    Left = 292
+    Height = 90
+    Top = 383
+    Width = 90
   end
   object Label15: TLabel
-    Left = 10
-    Height = 25
-    Top = 10
-    Width = 61
+    Left = 7
+    Height = 15
+    Top = 7
+    Width = 40
     Caption = 'Label15'
     ParentColor = False
   end
   object StaticText1: TStaticText
-    Left = 1392
-    Height = 26
-    Top = 504
-    Width = 98
+    Left = 928
+    Height = 17
+    Top = 336
+    Width = 65
     Caption = 'Bank Account'
     TabOrder = 6
   end
   object StaticText2: TStaticText
-    Left = 1390
-    Height = 26
-    Top = 553
-    Width = 98
+    Left = 927
+    Height = 17
+    Top = 369
+    Width = 65
     Caption = 'EInwohner'
     TabOrder = 7
   end
   object StaticText3: TStaticText
-    Left = 1395
-    Height = 26
-    Top = 616
-    Width = 98
+    Left = 930
+    Height = 17
+    Top = 411
+    Width = 65
     Caption = 'Wasserversorgung'
     TabOrder = 8
   end
   object StaticText4: TStaticText
-    Left = 1397
-    Height = 26
-    Top = 666
-    Width = 98
+    Left = 931
+    Height = 17
+    Top = 444
+    Width = 65
     Caption = 'Energie'
     TabOrder = 9
   end
   object StaticText5: TStaticText
-    Left = 1405
-    Height = 26
-    Top = 720
-    Width = 98
+    Left = 937
+    Height = 17
+    Top = 480
+    Width = 65
     Caption = 'Einnahmen'
     TabOrder = 10
   end
   object StaticText6: TStaticText
-    Left = 1398
-    Height = 26
-    Top = 793
-    Width = 98
+    Left = 932
+    Height = 17
+    Top = 529
+    Width = 65
     Caption = 'Datum'
     TabOrder = 11
   end
   object StaticText7: TStaticText
-    Left = 1614
-    Height = 26
-    Top = 591
-    Width = 291
+    Left = 1076
+    Height = 17
+    Top = 394
+    Width = 194
     Caption = 'StaticText7'
     TabOrder = 12
   end
   object StaticText8: TStaticText
-    Left = 1615
-    Height = 26
-    Top = 644
-    Width = 289
+    Left = 1077
+    Height = 17
+    Top = 429
+    Width = 193
     Caption = 'StaticText8'
     TabOrder = 13
   end
   object StaticText9: TStaticText
-    Left = 1613
-    Height = 26
-    Top = 696
-    Width = 282
+    Left = 1075
+    Height = 17
+    Top = 464
+    Width = 188
     Caption = 'StaticText9'
     TabOrder = 14
   end
   object StaticText10: TStaticText
-    Left = 1609
-    Height = 26
-    Top = 741
-    Width = 282
+    Left = 1073
+    Height = 17
+    Top = 494
+    Width = 188
     Caption = 'StaticText10'
     TabOrder = 15
   end
   object SaveDialog1: TSaveDialog
     FileName = 'new-city.pasc'
     Filter = 'Pascalcity|*.pasc'
-    Left = 64
-    Top = 64
+    Left = 43
+    Top = 43
   end
   object OpenDialog1: TOpenDialog
     Filter = 'Pascalcity|*.pasc'
-    Left = 171
-    Top = 61
+    Left = 114
+    Top = 41
   end
 end

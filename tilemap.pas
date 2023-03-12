@@ -308,13 +308,13 @@ begin
   // Gibt die Wasserproduktion eines Gebäudes wieder
   case id of
     16:
-      GetWaterProductionOfTile:=200;
+      GetWaterProductionOfTile:=400;
     17:
-      GetWaterProductionOfTile:=750;
+      GetWaterProductionOfTile:=1500;
     18:
-      GetWaterProductionOfTile:=4000;
+      GetWaterProductionOfTile:=80000;
     19:
-      GetWaterProductionOfTile:=7500;
+      GetWaterProductionOfTile:=15000;
   end;
 end;
 
@@ -323,15 +323,15 @@ begin
   // Gibt die Energieproduktion eines Gebäudes wieder
   case id of
     11:
-      GetEnergyProductionOfTile:=200;
+      GetEnergyProductionOfTile:=400;
     12:
-      GetEnergyProductionOfTile:=500;
+      GetEnergyProductionOfTile:=1000;
     13:
-      GetEnergyProductionOfTile:=1500;
+      GetEnergyProductionOfTile:=3000;
     14:
-      GetEnergyProductionOfTile:=4000;
+      GetEnergyProductionOfTile:=8000;
     15:
-      GetEnergyProductionOfTile:=7500;
+      GetEnergyProductionOfTile:=15000;
   end;
 end;
 
@@ -761,6 +761,9 @@ begin
     begin
       if (buildings[x][y].id=3) then
         buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
+        totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+      if (buildings[x][y].id=4) or (buildings[x][y].id=5) then
+        buildings[x][y].localincome:=((buildings[x][y].residents)div 2)*(buildings[x][y].level);
         totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin

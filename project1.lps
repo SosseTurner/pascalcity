@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="6"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="120"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -22,7 +22,7 @@
         <UnitName Value="Unit1"/>
         <TopLine Value="1073"/>
         <CursorPos Y="1095"/>
-        <UsageCount Value="119"/>
+        <UsageCount Value="120"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,9 +32,9 @@
         <UnitName Value="Tilemap"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="270"/>
-        <CursorPos X="132" Y="325"/>
-        <UsageCount Value="119"/>
+        <TopLine Value="749"/>
+        <CursorPos X="70" Y="766"/>
+        <UsageCount Value="120"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -225,11 +225,11 @@
       </Position28>
       <Position29>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="739" TopLine="703"/>
+        <Caret Line="767" Column="68" TopLine="747"/>
       </Position29>
       <Position30>
         <Filename Value="tilemap.pas"/>
-        <Caret Line="737" TopLine="703"/>
+        <Caret Line="766" Column="68" TopLine="749"/>
       </Position30>
     </JumpHistory>
     <RunParams>
