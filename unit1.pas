@@ -39,9 +39,7 @@ type
     Image23: TImage;
     Image24: TImage;
     Image25: TImage;
-    Image26: TImage;
     Image27: TImage;
-    Image28: TImage;
     Image29: TImage;
     Image3: TImage;
     Image30: TImage;
@@ -228,21 +226,21 @@ begin
       Form1.Image3.Height:=32;
       Form1.Image3.Left:=0;
       Form1.Image3.Top:=0;
-      Form1.Image2.Picture.LoadFromFile('gfx\gui\build-menu/6.bmp');
+      Form1.Image3.Picture.LoadFromFile('gfx/gui/build-menu/6.bmp');
 
       // Landstraße 2-Spuren
       Form1.Image1.Width:=32;
       Form1.Image1.Height:=32;
       Form1.Image1.Left:=32;
       Form1.Image1.Top:=0;
-      Form1.Image1.Picture.LoadFromFile('gfx\gui\build-menu/7.bmp');
+      Form1.Image1.Picture.LoadFromFile('gfx/gui/build-menu/7.bmp');
 
       // Allee
       Form1.Image4.Width:=32;
       Form1.Image4.Height:=32;
       Form1.Image4.Left:=64;
       Form1.Image4.Top:=0;
-      Form1.Image4.Picture.LoadFromFile('gfx\gui\build-menu/8.bmp');
+      Form1.Image4.Picture.LoadFromFile('gfx/gui/build-menu/8.bmp');
 
       // Landstraße 4-Spuren
       Form1.Image5.Width:=32;
@@ -395,18 +393,6 @@ begin
       Form1.Image27.Left:=96;
       Form1.Image27.Top:=0;
       Form1.Image27.Picture.LoadFromFile('gfx/gui/build-menu/18.bmp');
-
-      // Wasserpumpe vertikal
-      Form1.Image28.Width:=32;
-      Form1.Image28.Height:=64;
-      Form1.Image28.Left:=160;
-      Form1.Image28.Top:=0;
-
-      // Staudamm vertikal
-      Form1.Image26.Width:=32;
-      Form1.Image26.Height:=128;
-      Form1.Image26.Left:=192;
-      Form1.Image26.Top:=0;
 
       // Staudamm horizontal
       Form1.Image25.Width:=128;
@@ -935,7 +921,11 @@ begin
 
        // Click Tile
        else
-         UpdateInspector(tilePos.x, tilepos.y);
+         begin
+           UpdateInspector(tilePos.x, tilepos.y);
+           StaticText1.Caption:=IntToStr(BankAccount)+'€';
+         end;
+
      end;
 
   // Klick in Minimap
