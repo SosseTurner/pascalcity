@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 1234
+  Left = 1198
   Height = 1017
-  Top = 458
+  Top = 539
   Width = 1920
   Caption = 'Pascalcity'
   ClientHeight = 1017
@@ -10,29 +10,31 @@ object Form1: TForm1
   OnClick = FormClick
   LCLVersion = '2.2.4.0'
   object ToggleBox1: TToggleBox
-    Left = 1512
+    Left = 1200
     Height = 64
-    Top = 600
+    Top = 368
     Width = 64
     Caption = 'Build'
+    OnChange = ToggleBox1Change
     ParentFont = False
     TabOrder = 0
     Visible = False
   end
   object ToggleBox2: TToggleBox
-    Left = 1552
+    Left = 640
     Height = 96
-    Top = 796
+    Top = 368
     Width = 96
     Caption = 'Destroy'
+    OnChange = ToggleBox2Change
     ParentFont = False
     TabOrder = 1
     Visible = False
   end
   object Button1: TButton
-    Left = 1656
+    Left = 1000
     Height = 38
-    Top = 745
+    Top = 408
     Width = 112
     Caption = 'Start'
     OnClick = Button1Click
@@ -44,10 +46,10 @@ object Form1: TForm1
     Height = 300
     Top = 240
     Width = 300
-    ActivePage = TabSheet1
+    ActivePage = TabSheet8
     MultiLine = True
     ParentFont = False
-    TabIndex = 0
+    TabIndex = 7
     TabOrder = 3
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
@@ -3685,167 +3687,134 @@ object Form1: TForm1
     Constraints.MinWidth = 12
     OnClick = Arrow4Click
   end
-  object Label1: TLabel
-    Left = 1760
-    Height = 25
-    Top = 712
-    Width = 101
-    Caption = 'Einwohner: 0'
-    Color = clWhite
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -18
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label2: TLabel
-    Left = 1788
-    Height = 25
-    Top = 640
-    Width = 65
-    Caption = 'Water: 0'
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label3: TLabel
-    Left = 1624
-    Height = 25
-    Top = 920
-    Width = 73
-    Caption = 'Energy: 0'
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label4: TLabel
-    Left = 1536
-    Height = 25
-    Top = 718
-    Width = 137
-    Caption = 'Haus-Nachfrage: '
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label5: TLabel
-    Left = 1792
-    Height = 25
-    Top = 888
-    Width = 166
-    Caption = 'Gewerbe-Nachfrage: '
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label6: TLabel
-    Left = 1689
-    Height = 25
-    Top = 832
-    Width = 164
-    Caption = 'Industrie Nachfrage: '
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label7: TLabel
-    Left = 1616
-    Height = 25
-    Top = 560
-    Width = 82
-    Caption = 'Arbeiter: 0'
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label8: TLabel
-    Left = 1600
-    Height = 25
-    Top = 680
-    Width = 125
-    Caption = 'NumBusiness: 0'
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label9: TLabel
-    Left = 1685
-    Height = 25
-    Top = 616
-    Width = 101
-    Caption = 'numIndustr: '
-    Color = clWhite
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object Label10: TLabel
-    Left = 1776
-    Height = 25
-    Top = 552
-    Width = 61
-    Caption = 'Label10'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
-  object Label11: TLabel
-    Left = 1788
-    Height = 25
-    Top = 752
-    Width = 61
-    Alignment = taRightJustify
-    Caption = 'Label11'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
-  object Label12: TLabel
-    Left = 1688
-    Height = 25
-    Top = 576
-    Width = 61
-    Caption = 'Label12'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
-  object Label13: TLabel
-    Left = 1792
-    Height = 25
-    Top = 592
-    Width = 61
-    Caption = 'Label13'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
-  object Label14: TLabel
-    Left = 1672
-    Height = 25
-    Top = 856
-    Width = 183
-    Caption = 'Happiness per Building'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
   object Image6: TImage
     Left = 1086
     Height = 135
     Top = 718
     Width = 135
     OnClick = Image6Click
+  end
+  object Button2: TButton
+    Left = 992
+    Height = 38
+    Top = 280
+    Width = 113
+    Caption = 'Save'
+    OnClick = Button2Click
+    TabOrder = 4
+  end
+  object Button3: TButton
+    Left = 824
+    Height = 38
+    Top = 296
+    Width = 113
+    Caption = 'Load'
+    OnClick = Button3Click
+    TabOrder = 5
+  end
+  object Image41: TImage
+    Left = 438
+    Height = 135
+    Top = 574
+    Width = 135
+  end
+  object Label15: TLabel
+    Left = 10
+    Height = 25
+    Top = 10
+    Width = 61
+    Caption = 'Label15'
+    ParentColor = False
+  end
+  object StaticText1: TStaticText
+    Left = 1392
+    Height = 26
+    Top = 504
+    Width = 98
+    Caption = 'Bank Account'
+    TabOrder = 6
+  end
+  object StaticText2: TStaticText
+    Left = 1390
+    Height = 26
+    Top = 553
+    Width = 98
+    Caption = 'EInwohner'
+    TabOrder = 7
+  end
+  object StaticText3: TStaticText
+    Left = 1395
+    Height = 26
+    Top = 616
+    Width = 98
+    Caption = 'Wasserversorgung'
+    TabOrder = 8
+  end
+  object StaticText4: TStaticText
+    Left = 1397
+    Height = 26
+    Top = 666
+    Width = 98
+    Caption = 'Energie'
+    TabOrder = 9
+  end
+  object StaticText5: TStaticText
+    Left = 1405
+    Height = 26
+    Top = 720
+    Width = 98
+    Caption = 'Einnahmen'
+    TabOrder = 10
+  end
+  object StaticText6: TStaticText
+    Left = 1398
+    Height = 26
+    Top = 793
+    Width = 98
+    Caption = 'Datum'
+    TabOrder = 11
+  end
+  object StaticText7: TStaticText
+    Left = 1614
+    Height = 26
+    Top = 591
+    Width = 291
+    Caption = 'StaticText7'
+    TabOrder = 12
+  end
+  object StaticText8: TStaticText
+    Left = 1615
+    Height = 26
+    Top = 644
+    Width = 289
+    Caption = 'StaticText8'
+    TabOrder = 13
+  end
+  object StaticText9: TStaticText
+    Left = 1613
+    Height = 26
+    Top = 696
+    Width = 282
+    Caption = 'StaticText9'
+    TabOrder = 14
+  end
+  object StaticText10: TStaticText
+    Left = 1609
+    Height = 26
+    Top = 741
+    Width = 282
+    Caption = 'StaticText10'
+    TabOrder = 15
+  end
+  object SaveDialog1: TSaveDialog
+    FileName = 'new-city.pasc'
+    Filter = 'Pascalcity|*.pasc'
+    Left = 64
+    Top = 64
+  end
+  object OpenDialog1: TOpenDialog
+    Filter = 'Pascalcity|*.pasc'
+    Left = 171
+    Top = 61
   end
 end

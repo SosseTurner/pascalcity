@@ -32,8 +32,8 @@ var
   waterCapacity, energyCapacity:Integer;
   tile: TBitmap;
   totalH:integer;
-  BankAccount:integer;
-  TotalIncome:integer;
+  bankAccount:integer;
+  totalIncome:integer;
 
 function FormCoordsToTile(x,y :Integer):TPoint;                             //Funktionen und Procedures für Unit1
 function GetTileBitmap(x, y: Integer):TBitmap;
@@ -47,10 +47,17 @@ function GetMinimapColor(id:Integer):TColor;
 procedure UpdateZones();
 procedure UpdateWaterProduction();
 procedure UpdateEnergyProduction();
+procedure UpdateDemant();
+procedure UpdateAllResidents();
+procedure UpdateAllWorkplaces();
+procedure UpdateNumberOfBusinessZones();
+procedure UpdateNumberOfIndustrialZones();
 procedure CalculateHappiness();
 procedure CalculateTaxIncome();
 procedure UpdateBankAccount();
 function GetBuildingPrice(id:Integer):Integer;
+function GetFlatBitmap(id, subId, level: Integer):TBitmap;
+function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
 
 implementation
 // World Generation durch Cellular Automata
@@ -59,7 +66,7 @@ var iteratedWorld: array of array of Integer;
   x, y, i, x2, y2: Integer;
 begin
   // Die Welt wird durch Cellular Automate generiert.
-  // Durch Zufall werden Bereichen mit viel Land mehr land gegeben, das selbe bei Wasser.
+  // Durch Zufall werden Bereichen mit viel Land; ZU mehr land gegeben, das selbe bei Wasser.
   // Erfolgt über zählen der gleichen Nachbarn.
 
   SetLength(iteratedWorld, mapWidth, mapHeight);
@@ -95,8 +102,7 @@ end;
 procedure GenerateMap();
 var x, y, i: Integer;
 begin
-  //randomize; //für Später
-  // Karte wird zufällig Generiert
+  // die Karte wird Zufällig erstellt
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
@@ -109,12 +115,14 @@ begin
       end;
   end;
 
-  // 10-fache Ausführung um größere Inseln / Ozeana zu erhalten
+  // 10-fache Ausführung um größere Inseln / Seen zu erhalten
   for i:=0 to 10 do
     WorldCellularAutomata();
 end;
 function GetFlatBitmap(id, subId, level: Integer):TBitmap;
 begin
+  // In abhängigkeit von dem Level und dem Stil(subid) wird die Grafik ausgesucht
+  // Nur für Wohnungen
   case level of
     0:
       GetFlatBitmap:=tileArr[id][0];
@@ -131,6 +139,8 @@ end;
 
 function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
 begin
+  // In abhängigkeit von dem Level und dem Stil(subid) wird die Grafik ausgesucht
+  // Nur für Gewerbe und Industrie
   case level of
     0:
       GetBusinessBitmap:=tileArr[id][0];
@@ -167,6 +177,7 @@ end;
 
 procedure UpdateDemant();
 begin
+  // Die Nachfrage nach Häusern, Gewerbe und Industrie wird berechnet
   if (residents=0) then
     demandHouses:=workplaces
   else
@@ -200,6 +211,7 @@ end;
 procedure UpdateAllResidents();
 var x, y: Integer;
 begin
+  // Alle Einwohner in den Häusern werden gezählt
   residents:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -214,6 +226,7 @@ end;
 procedure UpdateAllWorkplaces();
 var x, y : Integer;
 begin
+  // Alle Arbeitsplätze werden gezählt in Gewerbe und Industrie
   workplaces:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -230,6 +243,8 @@ end;
 procedure UpdateNumberOfIndustrialZones();
 var x, y, zones : Integer;
 begin
+  // Die Anzahl der Industriezonen wird ermittelt
+  // Wird für die Nachfrage berechnung genutzt
   zones:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -246,6 +261,8 @@ end;
 procedure UpdateNumberOfBusinessZones();
 var x, y, zones : Integer;
 begin
+  // Die Anzahl der Gewerbezonen wird ermittelt
+  // Wird für die Nachfrage berechnung genutzt
   zones:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -261,60 +278,67 @@ end;
 
 procedure ChangeNumberOfIndustrialZones(change : Integer);
 begin
+  // Ändert die Anzahl der Industriezonen
   numIndustrialZones+=change;
   UpdateDemant();
 end;
 
 procedure ChangeNumberOfBusinessZones(change : Integer);
 begin
+  // Ändert die Anzahl der Gewerbezonen
   numBusinessZones+=change;
   UpdateDemant();
 end;
 
 procedure ChangeResidents(change : Integer);
 begin
+  // Ändert die Anzahl der Einwohner
   residents+=change;
   UpdateDemant();
 end;
 
 procedure ChangeWorkplaces(change : Integer);
 begin
+  // Ändert die Anzahl der Arbeitsplätze
   workplaces+=change;
   UpdateDemant();
 end;
 function GetWaterProductionOfTile(id:Integer):Integer;
 begin
+  // Gibt die Wasserproduktion eines Gebäudes wieder
   case id of
     16:
-      GetWaterProductionOfTile:=50;
-    17:
       GetWaterProductionOfTile:=200;
+    17:
+      GetWaterProductionOfTile:=750;
     18:
-      GetWaterProductionOfTile:=1000;
+      GetWaterProductionOfTile:=4000;
     19:
-      GetWaterProductionOfTile:=5000;
+      GetWaterProductionOfTile:=7500;
   end;
 end;
 
 function GetEnergyProductionOfTile(id:Integer):Integer;
 begin
+  // Gibt die Energieproduktion eines Gebäudes wieder
   case id of
     11:
-      GetEnergyProductionOfTile:=50;
-    12:
       GetEnergyProductionOfTile:=200;
+    12:
+      GetEnergyProductionOfTile:=500;
     13:
-      GetEnergyProductionOfTile:=1000;
+      GetEnergyProductionOfTile:=1500;
     14:
-      GetEnergyProductionOfTile:=5000;
+      GetEnergyProductionOfTile:=4000;
     15:
-      GetEnergyProductionOfTile:=10000;
+      GetEnergyProductionOfTile:=7500;
   end;
 end;
 
 procedure UpdateEnergyProduction();
 var x, y, energy : Integer;
 begin
+  // Die insgesammte Energieproduktion wird ermittelt
   energy:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -331,6 +355,7 @@ end;
 procedure UpdateWaterProduction();
 var x, y, water : Integer;
 begin
+  // Die gesammte Wasserproduktion wird ermittelt
   water:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -347,6 +372,9 @@ end;
 procedure UpdateZones();
 var x, y:Integer;
 begin
+  // Die Zonen werden geupdatet (=Levelaufstieg der Gebäude)
+  // Die Einwohner werden auch Aktuallisiert
+  // In Abhängigkeit von Nachfrage und Zufriedenheit können Gebäude im Level Aufsteigen
   UpdateAllResidents();
   UpdateAllWorkplaces();
   UpdateNumberOfBusinessZones();
@@ -361,20 +389,20 @@ begin
         case buildings[x][y].id of
           3:
             begin
-              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*40;
                 buildings[x][y].subId:=Random(11);
                 ChangeResidents(buildings[x][y].residents);
 
-                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*10)  then
+                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*100)  then
                   buildings[x][y].subId-=6
               end;
             end;
           4:
             begin
-              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -385,7 +413,7 @@ begin
             end;
           5:
             begin
-              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -402,59 +430,60 @@ end;
 
 function GetHappinessBuildingRange(id, level:Integer):Integer;
 begin
+  // Die Reichweite der Happiness wird mithilfe der Id zurückgegeben
   case id of
-    5:                                              //building id
-      GetHappinessBuildingRange:=level;             //
     13:
       GetHappinessBuildingRange:=4;
     14:
       GetHappinessBuildingRange:=6;
     15:
-      GetHappinessBuildingRange:=10;
+      GetHappinessBuildingRange:=8;
     18:
+      GetHappinessBuildingRange:=4;
+    19:
       GetHappinessBuildingRange:=6;
     20:
       GetHappinessBuildingRange:=2;
     21:
       GetHappinessBuildingRange:=4;
     22:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     23:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     24:
       GetHappinessBuildingRange:=2;
     25:
       GetHappinessBuildingRange:=4;
     26:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     27:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     28:
       GetHappinessBuildingRange:=2;
     29:
       GetHappinessBuildingRange:=4;
     30:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     31:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     32:
       GetHappinessBuildingRange:=2;
     33:
       GetHappinessBuildingRange:=4;
     34:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     35:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     36:
       GetHappinessBuildingRange:=2;
     37:
       GetHappinessBuildingRange:=4;
     38:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     39:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     40:
-      GetHappinessBuildingRange:=4;
+      GetHappinessBuildingRange:=10;
     else
       GetHappinessBuildingRange:=0;
   end;
@@ -462,59 +491,60 @@ end;
 
 function GetBuildingHappiness(id, level :Integer):Integer;       //Werte anpassen -> abfallende reichweite, Gebäudegrößenabhängigkeit
 begin
+  // Der Einfluss auf die Happiness von ein Gebäude wird mithilfe der Id zurückgegeben
   case id of
-    5:
-      GetBuildingHappiness:=level;
     13:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=-50;
     14:
-      GetBuildingHappiness:=6;
+      GetBuildingHappiness:=-50;
     15:
-      GetBuildingHappiness:=10;
+      GetBuildingHappiness:=-100;
     18:
-      GetBuildingHappiness:=6;
+      GetBuildingHappiness:=-100;
+    19:
+      GetBuildingHappiness:=-75;
     20:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     21:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     22:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     23:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     24:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     25:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     26:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     27:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     28:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     29:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     30:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     31:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     32:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     33:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     34:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     35:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     36:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     37:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=100;
     38:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=38;
     39:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=17;
     40:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=500;
     else
       GetBuildingHappiness:=0;
   end;
@@ -522,6 +552,7 @@ end;
 
 function GetBuildingPrice(id:Integer):Integer;
 begin
+  // Der Baupreis von Gebäuden wird zurückgegeben
   case id of
     3:
       GetBuildingPrice:=100;
@@ -532,11 +563,11 @@ begin
     6:
       GetBuildingPrice:=50;
     7:
-      GetBuildingPrice:=200;
+      GetBuildingPrice:=250;
     8:
-      GetBuildingPrice:=500;
-    9:
       GetBuildingPrice:=1000;
+    9:
+      GetBuildingPrice:=2500;
     11:
       GetBuildingPrice:=5000;
     12:
@@ -544,9 +575,9 @@ begin
     13:
       GetBuildingPrice:=50000;
     14:
-      GetBuildingPrice:=75000;
-    15:
       GetBuildingPrice:=100000;
+    15:
+      GetBuildingPrice:=150000;
     16:
       GetBuildingPrice:=5000;
     17:
@@ -560,23 +591,23 @@ begin
     21:
       GetBuildingPrice:=50000;
     22:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     23:
       GetBuildingPrice:=300000;
     24:
-      GetBuildingPrice:=20000;
+      GetBuildingPrice:=15000;
     25:
-      GetBuildingPrice:=40000;
+      GetBuildingPrice:=50000;
     26:
-      GetBuildingPrice:=80000;
+      GetBuildingPrice:=150000;
     27:
-      GetBuildingPrice:=160000;
+      GetBuildingPrice:=300000;
     28:
       GetBuildingPrice:=15000;
     29:
       GetBuildingPrice:=50000;
     30:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     31:
       GetBuildingPrice:=300000;
     32:
@@ -584,7 +615,7 @@ begin
     33:
       GetBuildingPrice:=50000;
     34:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     35:
       GetBuildingPrice:=300000;
     36:
@@ -597,112 +628,123 @@ begin
       GetBuildingPrice:=500000;
     40:
       GetBuildingPrice:=3141592;
+    else
+      GetBuildingPrice:=0;
   end;
 end;
 
 function GetUpkeepCost(id:Integer):Integer;
 begin
+  // Die Unterhaltskosten für ein Gebäude wird zurückgegeben
   case id of
     6:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-9;
     7:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50;
     8:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-150;
     9:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-325;
     11:
       GetUpkeepCost:=-100;
     12:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-500;
     13:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     14:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-10000;
     15:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-25000;
     16:
       GetUpkeepCost:=-100;
     17:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-1250;
     18:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-10000;
     19:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-25000;
     20:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     21:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     22:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     23:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     24:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     25:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     26:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     27:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     28:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     29:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     30:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     31:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     32:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     33:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     34:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     35:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     36:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     37:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-3250;
     38:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-17500;
     39:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     40:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=0;
+    else
+      GetUpkeepCost:=0;
   end;
 end;
 
 procedure CalculateHappiness();
 var x, y, range,offsetdX, offsetdY, happinessFromBuilding : Integer;
 begin
-  totalh:=0;
 
-  for x:=0 to mapWidth-1 do                                    //Karte durchgehen
+  // Zurücksetzen der Happiness
+  for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
     begin
-      if (buildings[x][y].id<>0) then                         //wenn Gebäude
-      begin
-        if ((waterCapacity*100/(residents+workplaces))>Random(100)+1) and ((energyCapacity*100/(residents+workplaces))>Random(100)+1) then
-        begin
-          buildings[x][y].happiness:=0;
-          happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
-          range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
+      buildings[x][y].happiness:=0;
+    end;
+  end;
 
-          for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].id>0) then
+      begin
+        if (residents<>0) and (workplaces<>0) then
+        begin
+          happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+          if (waterCapacity/(residents+workplaces)<1) then
+            happinessFromBuilding:=Round(happinessFromBuilding*(waterCapacity/(residents+workplaces)));
+          if (energyCapacity/(residents+workplaces)<1) then
+            happinessFromBuilding:=Round(happinessFromBuilding*(energyCapacity/(residents+workplaces)));
+
+          range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);
+          for offsetdX:=(range*-1) to range do
           begin
             for offsetdY:=(range*-1) to range do
             begin
-              totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
               buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
             end;
           end;
-        end
-        else
-        begin
-          buildings[x][y].happiness:=0;
         end;
       end;
     end;
@@ -712,16 +754,17 @@ end;
 procedure CalculateTaxIncome();
 var x, y :integer;
 begin
-  TotalIncome:=0;
+  totalIncome:=0;
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
     begin
       if (buildings[x][y].id=3) then
-        TotalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+        buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
+        totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin
-          TotalIncome+=GetUpkeepCost(buildings[x][y].id);
+          totalIncome+=GetUpkeepCost(buildings[x][y].id);
         end;
     end;
   end;
@@ -760,6 +803,8 @@ begin
   // Oben Links
   if terrain[x][y-1]=targedId then
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 0, tileArr[ID][12]);
@@ -769,8 +814,13 @@ begin
         tile.Canvas.Draw(0, 0, tileArr[ID][4]);
       end;
     end
+    else
+      tile.Canvas.Draw(0, 0, tileArr[ID][4]);
+  end
   else
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 0, tileArr[ID][3]);
@@ -782,7 +832,10 @@ begin
         else
           tile.Canvas.Draw(0, 0, tileArr[ID][1])
       end;
-    end;
+    end
+    else
+      tile.Canvas.Draw(0, 0, tileArr[ID][1])
+  end;
 
   //Oben-Rechts
   if terrain[x][y-1]=targedId then
@@ -814,6 +867,8 @@ begin
   //Unten-Links
   if terrain[x][y+1]=targedId then
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 16, tileArr[ID][11]);
@@ -823,8 +878,13 @@ begin
         tile.Canvas.Draw(0, 16, tileArr[ID][6]);
       end;
     end
+    else
+      tile.Canvas.Draw(0, 16, tileArr[ID][6]);
+  end
   else
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 16, tileArr[ID][3]);
@@ -836,7 +896,10 @@ begin
         else
           tile.Canvas.Draw(0, 16, tileArr[ID][2])
       end;
-    end;
+    end
+    else
+      tile.Canvas.Draw(0, 16, tileArr[ID][2])
+  end;
 
   //Unten-Rechts
   if terrain[x][y+1]=targedId then
@@ -882,10 +945,10 @@ begin
   // Für Gebäude
   if (isBuilding) then
   begin
-    if (buildings[x][y-1].id=ID) and (y>0) then
+    if (y>0) and (buildings[x][y-1].id=ID) then
       i+=8;
 
-    if (buildings[x-1][y].id=ID) and (x>0) then
+    if (x>0) and (buildings[x-1][y].id=ID)then
       i+=4;
 
     if (buildings[x+1][y].id=ID) and (x<mapWidth-1) then
@@ -1766,11 +1829,11 @@ begin
 
   // Park
   tileArr[36][0]:=TBitmap.Create;
-  tileArr[36][0].LoadFromFile('gfx/tiles/32/32.bmp');
+  tileArr[36][0].LoadFromFile('gfx/tiles/36/36.bmp');
 
   // Theater
   tileArr[37][0]:=TBitmap.Create;
-  tileArr[37][0].LoadFromFile('gfx/tiles/32/32.bmp');
+  tileArr[37][0].LoadFromFile('gfx/tiles/37/37.bmp');
 
   // Kino
   for i:=0 to 3 do
