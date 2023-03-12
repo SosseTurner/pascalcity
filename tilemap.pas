@@ -308,13 +308,13 @@ begin
   // Gibt die Wasserproduktion eines Gebäudes wieder
   case id of
     16:
-      GetWaterProductionOfTile:=50;
-    17:
       GetWaterProductionOfTile:=200;
+    17:
+      GetWaterProductionOfTile:=750;
     18:
-      GetWaterProductionOfTile:=1000;
+      GetWaterProductionOfTile:=4000;
     19:
-      GetWaterProductionOfTile:=5000;
+      GetWaterProductionOfTile:=7500;
   end;
 end;
 
@@ -323,15 +323,15 @@ begin
   // Gibt die Energieproduktion eines Gebäudes wieder
   case id of
     11:
-      GetEnergyProductionOfTile:=50;
-    12:
       GetEnergyProductionOfTile:=200;
+    12:
+      GetEnergyProductionOfTile:=500;
     13:
-      GetEnergyProductionOfTile:=1000;
+      GetEnergyProductionOfTile:=1500;
     14:
-      GetEnergyProductionOfTile:=5000;
+      GetEnergyProductionOfTile:=4000;
     15:
-      GetEnergyProductionOfTile:=10000;
+      GetEnergyProductionOfTile:=7500;
   end;
 end;
 
@@ -432,58 +432,58 @@ function GetHappinessBuildingRange(id, level:Integer):Integer;
 begin
   // Die Reichweite der Happiness wird mithilfe der Id zurückgegeben
   case id of
-    5:
-      GetHappinessBuildingRange:=level;
     13:
       GetHappinessBuildingRange:=4;
     14:
       GetHappinessBuildingRange:=6;
     15:
-      GetHappinessBuildingRange:=10;
+      GetHappinessBuildingRange:=8;
     18:
+      GetHappinessBuildingRange:=4;
+    19:
       GetHappinessBuildingRange:=6;
     20:
       GetHappinessBuildingRange:=2;
     21:
       GetHappinessBuildingRange:=4;
     22:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     23:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     24:
       GetHappinessBuildingRange:=2;
     25:
       GetHappinessBuildingRange:=4;
     26:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     27:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     28:
       GetHappinessBuildingRange:=2;
     29:
       GetHappinessBuildingRange:=4;
     30:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     31:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     32:
       GetHappinessBuildingRange:=2;
     33:
       GetHappinessBuildingRange:=4;
     34:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     35:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     36:
       GetHappinessBuildingRange:=2;
     37:
       GetHappinessBuildingRange:=4;
     38:
-      GetHappinessBuildingRange:=8;
+      GetHappinessBuildingRange:=6;
     39:
-      GetHappinessBuildingRange:=16;
+      GetHappinessBuildingRange:=8;
     40:
-      GetHappinessBuildingRange:=4;
+      GetHappinessBuildingRange:=10;
     else
       GetHappinessBuildingRange:=0;
   end;
@@ -493,58 +493,58 @@ function GetBuildingHappiness(id, level :Integer):Integer;       //Werte anpasse
 begin
   // Der Einfluss auf die Happiness von ein Gebäude wird mithilfe der Id zurückgegeben
   case id of
-    5:
-      GetBuildingHappiness:=level;
     13:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=-50;
     14:
-      GetBuildingHappiness:=6;
+      GetBuildingHappiness:=-50;
     15:
-      GetBuildingHappiness:=10;
+      GetBuildingHappiness:=-100;
     18:
-      GetBuildingHappiness:=6;
+      GetBuildingHappiness:=-100;
+    19:
+      GetBuildingHappiness:=-75;
     20:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     21:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     22:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     23:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     24:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     25:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     26:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     27:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     28:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     29:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     30:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     31:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     32:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     33:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=25;
     34:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=17;
     35:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=13;
     36:
-      GetBuildingHappiness:=2;
+      GetBuildingHappiness:=50;
     37:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=100;
     38:
-      GetBuildingHappiness:=8;
+      GetBuildingHappiness:=38;
     39:
-      GetBuildingHappiness:=16;
+      GetBuildingHappiness:=17;
     40:
-      GetBuildingHappiness:=4;
+      GetBuildingHappiness:=500;
     else
       GetBuildingHappiness:=0;
   end;
@@ -563,11 +563,11 @@ begin
     6:
       GetBuildingPrice:=50;
     7:
-      GetBuildingPrice:=200;
+      GetBuildingPrice:=250;
     8:
-      GetBuildingPrice:=500;
-    9:
       GetBuildingPrice:=1000;
+    9:
+      GetBuildingPrice:=2500;
     11:
       GetBuildingPrice:=5000;
     12:
@@ -575,9 +575,9 @@ begin
     13:
       GetBuildingPrice:=50000;
     14:
-      GetBuildingPrice:=75000;
-    15:
       GetBuildingPrice:=100000;
+    15:
+      GetBuildingPrice:=150000;
     16:
       GetBuildingPrice:=5000;
     17:
@@ -591,23 +591,23 @@ begin
     21:
       GetBuildingPrice:=50000;
     22:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     23:
       GetBuildingPrice:=300000;
     24:
-      GetBuildingPrice:=20000;
+      GetBuildingPrice:=15000;
     25:
-      GetBuildingPrice:=40000;
+      GetBuildingPrice:=50000;
     26:
-      GetBuildingPrice:=80000;
+      GetBuildingPrice:=150000;
     27:
-      GetBuildingPrice:=160000;
+      GetBuildingPrice:=300000;
     28:
       GetBuildingPrice:=15000;
     29:
       GetBuildingPrice:=50000;
     30:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     31:
       GetBuildingPrice:=300000;
     32:
@@ -615,7 +615,7 @@ begin
     33:
       GetBuildingPrice:=50000;
     34:
-      GetBuildingPrice:=100000;
+      GetBuildingPrice:=150000;
     35:
       GetBuildingPrice:=300000;
     36:
@@ -628,6 +628,8 @@ begin
       GetBuildingPrice:=500000;
     40:
       GetBuildingPrice:=3141592;
+    else
+      GetBuildingPrice:=0;
   end;
 end;
 
@@ -636,73 +638,75 @@ begin
   // Die Unterhaltskosten für ein Gebäude wird zurückgegeben
   case id of
     6:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-9;
     7:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50;
     8:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-150;
     9:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-325;
     11:
       GetUpkeepCost:=-100;
     12:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-500;
     13:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     14:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-10000;
     15:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-25000;
     16:
       GetUpkeepCost:=-100;
     17:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-1250;
     18:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-10000;
     19:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-25000;
     20:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     21:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     22:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     23:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     24:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     25:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     26:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     27:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     28:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     29:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     30:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     31:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     32:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     33:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-2500;
     34:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-15000;
     35:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     36:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-200;
     37:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-3250;
     38:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-17500;
     39:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=-50000;
     40:
-      GetUpkeepCost:=-100;
+      GetUpkeepCost:=0;
+    else
+      GetUpkeepCost:=0;
   end;
 end;
 
