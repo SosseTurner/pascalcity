@@ -3687,17 +3687,6 @@ object Form1: TForm1
     Constraints.MinWidth = 12
     OnClick = Arrow4Click
   end
-  object Label11: TLabel
-    Left = 816
-    Height = 25
-    Top = 232
-    Width = 61
-    Alignment = taRightJustify
-    Caption = 'Label11'
-    Color = clWhite
-    ParentColor = False
-    Transparent = False
-  end
   object Image6: TImage
     Left = 1086
     Height = 135

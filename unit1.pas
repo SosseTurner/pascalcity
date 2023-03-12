@@ -62,7 +62,6 @@ type
     Image7: TImage;
     Image8: TImage;
     Image9: TImage;
-    Label11: TLabel;
     Label15: TLabel;
     OpenDialog1: TOpenDialog;
     PageControl1: TPageControl;
@@ -619,13 +618,13 @@ begin
      Form1.Canvas.Pen.Color:=RGBToColor(254, 174, 52);
      Form1.Canvas.Rectangle(1054, 995, 1054+Round(demandIndustrie*100), 995+13);
 
-  Form1.StaticText2.Caption:='Einwohner: '+IntToStr(residents);
+  Form1.StaticText2.Caption:=IntToStr(residents);
   Form1.StaticText2.BringToFront;
   if (residents<>0) then
     begin
-      Form1.StaticText3.Caption:='Water: '+IntToStr(Round(waterCapacity*100/(residents+workplaces)));
+      Form1.StaticText3.Caption:=IntToStr(Round(waterCapacity*100/(residents+workplaces)));
       Form1.StaticText3.BringToFront;
-      Form1.StaticText4.Caption:='Energy: '+IntToStr(Round(energyCapacity*100/(residents+workplaces)));
+      Form1.StaticText4.Caption:=IntToStr(Round(energyCapacity*100/(residents+workplaces)));
       Form1.StaticText4.BringToFront;
     end;
   Form1.StaticText5.Caption:=IntToStr(TotalIncome)+'€';
@@ -1156,6 +1155,7 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   SaveGame();
+  ShowMessage('Speichern erfolgreich!');
 end;
 
 procedure TForm1.Arrow1Click(Sender: TObject);

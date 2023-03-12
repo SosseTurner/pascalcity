@@ -66,7 +66,7 @@ var iteratedWorld: array of array of Integer;
   x, y, i, x2, y2: Integer;
 begin
   // Die Welt wird durch Cellular Automate generiert.
-  // Durch Zufall werden Bereichen mit viel Land mehr land gegeben, das selbe bei Wasser.
+  // Durch Zufall werden Bereichen mit viel Land; ZU mehr land gegeben, das selbe bei Wasser.
   // Erfolgt über zählen der gleichen Nachbarn.
 
   SetLength(iteratedWorld, mapWidth, mapHeight);
@@ -102,8 +102,7 @@ end;
 procedure GenerateMap();
 var x, y, i: Integer;
 begin
-  //randomize; //für Später
-  // Karte wird zufällig Generiert
+  // die Karte wird Zufällig erstellt
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
@@ -116,12 +115,14 @@ begin
       end;
   end;
 
-  // 10-fache Ausführung um größere Inseln / Ozeana zu erhalten
+  // 10-fache Ausführung um größere Inseln / Seen zu erhalten
   for i:=0 to 10 do
     WorldCellularAutomata();
 end;
 function GetFlatBitmap(id, subId, level: Integer):TBitmap;
 begin
+  // In abhängigkeit von dem Level und dem Stil(subid) wird die Grafik ausgesucht
+  // Nur für Wohnungen
   case level of
     0:
       GetFlatBitmap:=tileArr[id][0];
@@ -138,6 +139,8 @@ end;
 
 function GetBusinessBitmap(id, subId, level: Integer):TBitmap;
 begin
+  // In abhängigkeit von dem Level und dem Stil(subid) wird die Grafik ausgesucht
+  // Nur für Gewerbe und Industrie
   case level of
     0:
       GetBusinessBitmap:=tileArr[id][0];
@@ -174,6 +177,7 @@ end;
 
 procedure UpdateDemant();
 begin
+  // Die Nachfrage nach Häusern, Gewerbe und Industrie wird berechnet
   if (residents=0) then
     demandHouses:=workplaces
   else
@@ -207,6 +211,7 @@ end;
 procedure UpdateAllResidents();
 var x, y: Integer;
 begin
+  // Alle Einwohner in den Häusern werden gezählt
   residents:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -221,6 +226,7 @@ end;
 procedure UpdateAllWorkplaces();
 var x, y : Integer;
 begin
+  // Alle Arbeitsplätze werden gezählt in Gewerbe und Industrie
   workplaces:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -237,6 +243,8 @@ end;
 procedure UpdateNumberOfIndustrialZones();
 var x, y, zones : Integer;
 begin
+  // Die Anzahl der Industriezonen wird ermittelt
+  // Wird für die Nachfrage berechnung genutzt
   zones:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -253,6 +261,8 @@ end;
 procedure UpdateNumberOfBusinessZones();
 var x, y, zones : Integer;
 begin
+  // Die Anzahl der Gewerbezonen wird ermittelt
+  // Wird für die Nachfrage berechnung genutzt
   zones:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -268,29 +278,34 @@ end;
 
 procedure ChangeNumberOfIndustrialZones(change : Integer);
 begin
+  // Ändert die Anzahl der Industriezonen
   numIndustrialZones+=change;
   UpdateDemant();
 end;
 
 procedure ChangeNumberOfBusinessZones(change : Integer);
 begin
+  // Ändert die Anzahl der Gewerbezonen
   numBusinessZones+=change;
   UpdateDemant();
 end;
 
 procedure ChangeResidents(change : Integer);
 begin
+  // Ändert die Anzahl der Einwohner
   residents+=change;
   UpdateDemant();
 end;
 
 procedure ChangeWorkplaces(change : Integer);
 begin
+  // Ändert die Anzahl der Arbeitsplätze
   workplaces+=change;
   UpdateDemant();
 end;
 function GetWaterProductionOfTile(id:Integer):Integer;
 begin
+  // Gibt die Wasserproduktion eines Gebäudes wieder
   case id of
     16:
       GetWaterProductionOfTile:=50;
@@ -305,6 +320,7 @@ end;
 
 function GetEnergyProductionOfTile(id:Integer):Integer;
 begin
+  // Gibt die Energieproduktion eines Gebäudes wieder
   case id of
     11:
       GetEnergyProductionOfTile:=50;
@@ -322,6 +338,7 @@ end;
 procedure UpdateEnergyProduction();
 var x, y, energy : Integer;
 begin
+  // Die insgesammte Energieproduktion wird ermittelt
   energy:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -338,6 +355,7 @@ end;
 procedure UpdateWaterProduction();
 var x, y, water : Integer;
 begin
+  // Die gesammte Wasserproduktion wird ermittelt
   water:=0;
   for x:=0 to mapWidth-1 do
   begin
@@ -354,6 +372,9 @@ end;
 procedure UpdateZones();
 var x, y:Integer;
 begin
+  // Die Zonen werden geupdatet (=Levelaufstieg der Gebäude)
+  // Die Einwohner werden auch Aktuallisiert
+  // In Abhängigkeit von Nachfrage und Zufriedenheit können Gebäude im Level Aufsteigen
   UpdateAllResidents();
   UpdateAllWorkplaces();
   UpdateNumberOfBusinessZones();
@@ -368,20 +389,20 @@ begin
         case buildings[x][y].id of
           3:
             begin
-              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandHouses*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*40;
                 buildings[x][y].subId:=Random(11);
                 ChangeResidents(buildings[x][y].residents);
 
-                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*10)  then
+                if (buildings[x][y].level=4) and (buildings[x][y].subId>5) and (buildings[x][y].happiness>=buildings[x][y].level*100)  then
                   buildings[x][y].subId-=6
               end;
             end;
           4:
             begin
-              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandBusiness*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -392,7 +413,7 @@ begin
             end;
           5:
             begin
-              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*10) then
+              if (Random(100)+1<=demandIndustrie*100) and (buildings[x][y].level<4) and (buildings[x][y].happiness>=buildings[x][y].level*100) then
               begin
                 buildings[x][y].level+=1;
                 buildings[x][y].residents:=buildings[x][y].level*20;
@@ -409,9 +430,10 @@ end;
 
 function GetHappinessBuildingRange(id, level:Integer):Integer;
 begin
+  // Die Reichweite der Happiness wird mithilfe der Id zurückgegeben
   case id of
-    5:                                              //building id
-      GetHappinessBuildingRange:=level;             //
+    5:
+      GetHappinessBuildingRange:=level;
     13:
       GetHappinessBuildingRange:=4;
     14:
@@ -469,6 +491,7 @@ end;
 
 function GetBuildingHappiness(id, level :Integer):Integer;       //Werte anpassen -> abfallende reichweite, Gebäudegrößenabhängigkeit
 begin
+  // Der Einfluss auf die Happiness von ein Gebäude wird mithilfe der Id zurückgegeben
   case id of
     5:
       GetBuildingHappiness:=level;
@@ -529,6 +552,7 @@ end;
 
 function GetBuildingPrice(id:Integer):Integer;
 begin
+  // Der Baupreis von Gebäuden wird zurückgegeben
   case id of
     3:
       GetBuildingPrice:=100;
@@ -609,6 +633,7 @@ end;
 
 function GetUpkeepCost(id:Integer):Integer;
 begin
+  // Die Unterhaltskosten für ein Gebäude wird zurückgegeben
   case id of
     6:
       GetUpkeepCost:=-100;
@@ -684,36 +709,39 @@ end;
 procedure CalculateHappiness();
 var x, y, range,offsetdX, offsetdY, happinessFromBuilding : Integer;
 begin
-  totalh:=0;
 
-  for x:=0 to mapWidth-1 do                                    //Karte durchgehen
+  // Zurücksetzen der Happiness
+  for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
     begin
-      if (buildings[x][y].id<>0) then                         //wenn Gebäude
+      buildings[x][y].happiness:=0;
+    end;
+  end;
+
+  for x:=0 to mapWidth-1 do
+  begin
+    for y:=0 to mapHeight-1 do
+    begin
+      if (buildings[x][y].id>0) then
       begin
         if (residents<>0) and (workplaces<>0) then
         begin
-          if (Round(waterCapacity*100/(residents+workplaces))>Random(100)+1) and (Round(energyCapacity*100/(residents+workplaces))>Random(100)+1) then
+          happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
+          if (waterCapacity/(residents+workplaces)<1) then
+            happinessFromBuilding:=Round(happinessFromBuilding*(waterCapacity/(residents+workplaces)));
+          if (energyCapacity/(residents+workplaces)<1) then
+            happinessFromBuilding:=Round(happinessFromBuilding*(energyCapacity/(residents+workplaces)));
+
+          range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);
+          for offsetdX:=(range*-1) to range do
           begin
-            buildings[x][y].happiness:=0;
-            happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
-            range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);  //Reichweite
-            for offsetdX:=(range*-1) to range do                                          //Reichweite durchgehen
+            for offsetdY:=(range*-1) to range do
             begin
-              for offsetdY:=(range*-1) to range do
-              begin
-                totalH+=happinessFromBuilding;             //Gesamtzufriedenheit
-                buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
-              end;
+              buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
             end;
-          end
-          else
-          begin
-            buildings[x][y].happiness:=0;
           end;
         end;
-
       end;
     end;
   end;
@@ -771,6 +799,8 @@ begin
   // Oben Links
   if terrain[x][y-1]=targedId then
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 0, tileArr[ID][12]);
@@ -780,8 +810,13 @@ begin
         tile.Canvas.Draw(0, 0, tileArr[ID][4]);
       end;
     end
+    else
+      tile.Canvas.Draw(0, 0, tileArr[ID][4]);
+  end
   else
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 0, tileArr[ID][3]);
@@ -793,7 +828,10 @@ begin
         else
           tile.Canvas.Draw(0, 0, tileArr[ID][1])
       end;
-    end;
+    end
+    else
+      tile.Canvas.Draw(0, 0, tileArr[ID][1])
+  end;
 
   //Oben-Rechts
   if terrain[x][y-1]=targedId then
@@ -825,6 +863,8 @@ begin
   //Unten-Links
   if terrain[x][y+1]=targedId then
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 16, tileArr[ID][11]);
@@ -834,8 +874,13 @@ begin
         tile.Canvas.Draw(0, 16, tileArr[ID][6]);
       end;
     end
+    else
+      tile.Canvas.Draw(0, 16, tileArr[ID][6]);
+  end
   else
   begin
+    if (x>0) then
+    begin
       if terrain[x-1][y]=targedId then
       begin
         tile.Canvas.Draw(0, 16, tileArr[ID][3]);
@@ -847,7 +892,10 @@ begin
         else
           tile.Canvas.Draw(0, 16, tileArr[ID][2])
       end;
-    end;
+    end
+    else
+      tile.Canvas.Draw(0, 16, tileArr[ID][2])
+  end;
 
   //Unten-Rechts
   if terrain[x][y+1]=targedId then
