@@ -157,7 +157,7 @@ implementation
 
 procedure SetUpGui();
 begin
-  // Ist notwendig da bei verschieden Monitoren sich die Gui-Elemente verschoben haben
+  // Verschiebt alle Gui-Elemente an die richtige Stelle
 
   // Start
   Form1.Button1.Visible:=false;
@@ -592,6 +592,8 @@ end;
 
 procedure UpdateGui();
 begin
+  // Aktuallisert alle Gui-Elemente um veränderte Werte anzuzeigen
+
   // Statusbar
   Form1.Canvas.Draw(0, 960, statusBarGfx[0]);
   Form1.Canvas.Draw(315, 960, statusBarGfx[1]);
@@ -634,7 +636,7 @@ end;
 
 procedure UpdateInspector(x, y:Integer);
 begin
-
+  // Aktuallisiert den Inspektor welcher die Werte für das angeklichte Gebäude zeigt
   if (buildings[x][y].id<>0) then
     begin
       if (buildings[x][y].id=3)then
@@ -764,6 +766,11 @@ var saveFileString:TStringList;
     splitLine:Array of String;
     x, y:Integer;
 begin
+  // Aus der ausgewählten Datei wird Zeile für Zeile die Zeile durchgegangen und auf die Anfangszeichen überprüft
+  // der Character:';' fungiert als Trenzeichen für die Werte.
+  
+  // Falls im Fenster eine Datei ausgewählt wird, wird true wiedergegeben
+
   if Form1.OpenDialog1.Execute then
     begin
       saveFileString:=TStringList.Create;
@@ -772,6 +779,8 @@ begin
       begin
            splitLine:=line.Split(';');
       case splitline[0] of
+        // steht für gebäude
+        // die in der Zeile stehenden Werte werden im Array buildings gespeichert
         'b':
           begin
             x:=StrToInt(splitLine[1]);
@@ -786,21 +795,29 @@ begin
             buildings[x][y].buildprice:=StrToInt(splitLine[10]);
             buildings[x][y].isParentTile:=StrToBool(splitLine[11]);
           end;
+        // steht für terrain
+        // die in der Zeile stehenden Werte werden im Array terrain gespeichert  
         't':
           begin
             x:=StrToInt(splitLine[1]);
             y:=StrToInt(splitLine[2]);
             terrain[x][y]:=StrToInt(splitLine[3]);
           end;
+          
+        // steht für money/Bank Guthaben
         'm':
           bankAccount:=StrToInt(splitLine[1]);
+        // steht für weeks past/woche vergangen
         'wp':
           date:=StrToInt(splitLine[1]);
+        // steht für date started/ Startdatum      
         'ds':
           dateTime:=StrToUInt64(splitLine[1]);
       end;
     end;
   end;
+  
+  // Aktuallisert Alle Gui anzeigen und malt die Karte
   UpdateEnergyProduction();
   UpdateWaterProduction();
   UpdateAllResidents();
@@ -816,14 +833,20 @@ procedure SaveGame();
 var saveString:TStringList;
     x, y:Integer;
 begin
+  // essentielle Werte wie BankGuthaben, Datum, date(anzahl der vergangenen Wochen), und die Arrays buildings und terrain werden gespeichert
+  // Dazu wird eine StringList erstellt
+  // Eine Zeile steht für einen Wert bspw: integer, Building(record)
+  // durch ein Trennzeichen können zusammenhängende Werte in einen Zeile geschrieben werden und anschliesend wieder unterschieden werden
   if Form1.SaveDialog1.Execute then
     begin
+    
+      // Speichern der notwendigen Variablen
       saveString:=TStringList.Create;
       saveString.Add('m;'+IntToSTr(bankAccount));
       saveString.Add('wp;'+IntToSTr(date));
       saveString.Add('ds;'+ IntToStr(trunc(dateTime)));
 
-      // buildings
+      // Speichern jedes Gebäudes des Arrays buildings
       for x:=0 to mapWidth-1 do
       begin
         for y:=0 to mapHeight-1 do
@@ -832,7 +855,7 @@ begin
         end;
       end;
 
-      //terrain
+      // Speichern jedes Integers des Arrays terrain
       for x:=0 to mapWidth-1 do
       begin
         for y:=0 to mapHeight-1 do
@@ -849,6 +872,7 @@ end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
+  // Lädt die Spielwert aus einer Datei 
   LoadGame();
 end;
 
@@ -885,6 +909,8 @@ end;
 procedure TForm1.FormClick(Sender: TObject);
 var tilePos, mousePos:TPoint;
 begin
+  // Registriert die Klicks auf die Form 
+  // Anhand von der Possition werden weitere Mothoden aufgerüfen
   mousePos:=Form1.ScreenToClient(TPoint.Create(Mouse.CursorPos.X, Mouse.CursorPos.Y));
 
   // Klick in Tilemap
@@ -918,6 +944,9 @@ begin
 
 end;
 
+
+// Fast Alle folgenden proceduren sind teil des Baumenus
+// Diese dienen dazu um die Id des angeklichten Gebäudes zu speichern
 procedure TForm1.Image10Click(Sender: TObject);
 begin
   selectedBuildingTile:=15;
@@ -1088,6 +1117,9 @@ begin
   selectedBuildingTile:=9;
 end;
 
+
+// Image welches als Button fungiert
+// Ruft alle Mothoden zur Berechnung der neuen Woche auf
 procedure TForm1.Image6Click(Sender: TObject);
 begin
   inc(date);
@@ -1129,6 +1161,7 @@ begin
     ToggleBox1.Checked:=false;
 end;
 
+// Pfeile zum verschieden der Kamera
 procedure TForm1.Arrow2Click(Sender: TObject);
 begin
   MoveCamera(offsetX, offsetY-1);
@@ -1153,12 +1186,14 @@ begin
   DrawMinimap();
 end;
 
+// Speichert die antuelle Welt in einer Datei (*.pasc)
 procedure TForm1.Button2Click(Sender: TObject);
 begin
   SaveGame();
   ShowMessage('Speichern erfolgreich!');
 end;
 
+// Pfeile zum verschieden der Kamera
 procedure TForm1.Arrow1Click(Sender: TObject);
 begin
   MoveCamera(offsetX-1, offsetY);
