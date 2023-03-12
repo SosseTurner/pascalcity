@@ -39,9 +39,7 @@ type
     Image23: TImage;
     Image24: TImage;
     Image25: TImage;
-    Image26: TImage;
     Image27: TImage;
-    Image28: TImage;
     Image29: TImage;
     Image3: TImage;
     Image30: TImage;
@@ -228,21 +226,21 @@ begin
       Form1.Image3.Height:=32;
       Form1.Image3.Left:=0;
       Form1.Image3.Top:=0;
-      Form1.Image2.Picture.LoadFromFile('gfx\gui\build-menu/6.bmp');
+      Form1.Image3.Picture.LoadFromFile('gfx/gui/build-menu/6.bmp');
 
       // Landstraße 2-Spuren
       Form1.Image1.Width:=32;
       Form1.Image1.Height:=32;
       Form1.Image1.Left:=32;
       Form1.Image1.Top:=0;
-      Form1.Image1.Picture.LoadFromFile('gfx\gui\build-menu/7.bmp');
+      Form1.Image1.Picture.LoadFromFile('gfx/gui/build-menu/7.bmp');
 
       // Allee
       Form1.Image4.Width:=32;
       Form1.Image4.Height:=32;
       Form1.Image4.Left:=64;
       Form1.Image4.Top:=0;
-      Form1.Image4.Picture.LoadFromFile('gfx\gui\build-menu/8.bmp');
+      Form1.Image4.Picture.LoadFromFile('gfx/gui/build-menu/8.bmp');
 
       // Landstraße 4-Spuren
       Form1.Image5.Width:=32;
@@ -395,18 +393,6 @@ begin
       Form1.Image27.Left:=96;
       Form1.Image27.Top:=0;
       Form1.Image27.Picture.LoadFromFile('gfx/gui/build-menu/18.bmp');
-
-      // Wasserpumpe vertikal
-      Form1.Image28.Width:=32;
-      Form1.Image28.Height:=64;
-      Form1.Image28.Left:=160;
-      Form1.Image28.Top:=0;
-
-      // Staudamm vertikal
-      Form1.Image26.Width:=32;
-      Form1.Image26.Height:=128;
-      Form1.Image26.Left:=192;
-      Form1.Image26.Top:=0;
 
       // Staudamm horizontal
       Form1.Image25.Width:=128;
@@ -770,6 +756,7 @@ begin
   // der Character:';' fungiert als Trenzeichen für die Werte.
   
   // Falls im Fenster eine Datei ausgewählt wird, wird true wiedergegeben
+
   if Form1.OpenDialog1.Execute then
     begin
       saveFileString:=TStringList.Create;
@@ -794,9 +781,8 @@ begin
             buildings[x][y].buildprice:=StrToInt(splitLine[10]);
             buildings[x][y].isParentTile:=StrToBool(splitLine[11]);
           end;
-          
         // steht für terrain
-        // die in der Zeile stehenden Werte werden im Array terrain gespeichert
+        // die in der Zeile stehenden Werte werden im Array terrain gespeichert  
         't':
           begin
             x:=StrToInt(splitLine[1]);
@@ -810,8 +796,7 @@ begin
         // steht für weeks past/woche vergangen
         'wp':
           date:=StrToInt(splitLine[1]);
-          
-        // steht für date started/ Startdatum
+        // steht für date started/ Startdatum      
         'ds':
           dateTime:=StrToUInt64(splitLine[1]);
       end;
@@ -840,9 +825,9 @@ begin
   // durch ein Trennzeichen können zusammenhängende Werte in einen Zeile geschrieben werden und anschliesend wieder unterschieden werden
   if Form1.SaveDialog1.Execute then
     begin
-      saveString:=TStringList.Create;
-      
+    
       // Speichern der notwendigen Variablen
+      saveString:=TStringList.Create;
       saveString.Add('m;'+IntToSTr(bankAccount));
       saveString.Add('wp;'+IntToSTr(date));
       saveString.Add('ds;'+ IntToStr(trunc(dateTime)));
@@ -864,7 +849,7 @@ begin
           saveString.Add('t;'+IntToStr(x)+';'+IntToStr(y)+';'+IntToStr(terrain[x][y]));
         end;
       end;
-      
+
       saveString.SaveToFile(Form1.SaveDialog1.FileName);
       saveString.Free;
     end;
@@ -900,6 +885,13 @@ begin
   DrawMap();
 end;
 
+procedure PlaceTerrainTile(x, y, id : Integer);
+begin
+  terrain[x][y]:=id;
+
+  UpdateTilemapTile(x, y, 5);
+end;
+
 procedure TForm1.FormClick(Sender: TObject);
 var tilePos, mousePos:TPoint;
 begin
@@ -929,7 +921,11 @@ begin
 
        // Click Tile
        else
-         UpdateInspector(tilePos.x, tilepos.y);
+         begin
+           UpdateInspector(tilePos.x, tilepos.y);
+           StaticText1.Caption:=IntToStr(BankAccount)+'€';
+         end;
+
      end;
 
   // Klick in Minimap
@@ -938,7 +934,8 @@ begin
 
 end;
 
-// Alle folgenden proceduren sind teil des Baumenus
+
+// Fast Alle folgenden proceduren sind teil des Baumenus
 // Diese dienen dazu um die Id des angeklichten Gebäudes zu speichern
 procedure TForm1.Image10Click(Sender: TObject);
 begin
@@ -1109,6 +1106,7 @@ procedure TForm1.Image5Click(Sender: TObject);
 begin
   selectedBuildingTile:=9;
 end;
+
 
 // Image welches als Button fungiert
 // Ruft alle Mothoden zur Berechnung der neuen Woche auf

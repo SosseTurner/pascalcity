@@ -308,13 +308,13 @@ begin
   // Gibt die Wasserproduktion eines Gebäudes wieder
   case id of
     16:
-      GetWaterProductionOfTile:=200;
+      GetWaterProductionOfTile:=400;
     17:
-      GetWaterProductionOfTile:=750;
+      GetWaterProductionOfTile:=1500;
     18:
-      GetWaterProductionOfTile:=4000;
+      GetWaterProductionOfTile:=80000;
     19:
-      GetWaterProductionOfTile:=7500;
+      GetWaterProductionOfTile:=15000;
   end;
 end;
 
@@ -323,15 +323,15 @@ begin
   // Gibt die Energieproduktion eines Gebäudes wieder
   case id of
     11:
-      GetEnergyProductionOfTile:=200;
+      GetEnergyProductionOfTile:=400;
     12:
-      GetEnergyProductionOfTile:=500;
+      GetEnergyProductionOfTile:=1000;
     13:
-      GetEnergyProductionOfTile:=1500;
+      GetEnergyProductionOfTile:=3000;
     14:
-      GetEnergyProductionOfTile:=4000;
+      GetEnergyProductionOfTile:=8000;
     15:
-      GetEnergyProductionOfTile:=7500;
+      GetEnergyProductionOfTile:=15000;
   end;
 end;
 
@@ -714,7 +714,7 @@ procedure CalculateHappiness();
 var x, y, range,offsetdX, offsetdY, happinessFromBuilding : Integer;
 begin
 
-  // Zurücksetzen der Happiness
+  // Zurücksetzen der Happiness bei jedem Gebäude im Array buildings
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
@@ -723,6 +723,7 @@ begin
     end;
   end;
 
+  // durchlaufen des Array buildings für jeden wert von x und y
   for x:=0 to mapWidth-1 do
   begin
     for y:=0 to mapHeight-1 do
@@ -731,17 +732,23 @@ begin
       begin
         if (residents<>0) and (workplaces<>0) then
         begin
+          
+          // bestimmte Gebäude haben in einen bestimmten Bereich Einfluss auf die Zufriedenheit. Der Einflusswert wird über die funktion GetBuildingHappiness ermittelt
+          // dieser Wert wird der Wasser und Stromversorgung multipliziert (falls dieser nicht größer als 1 ist)
+        
           happinessFromBuilding:=GetBuildingHappiness(buildings[x][y].id, buildings[x][y].level);
           if (waterCapacity/(residents+workplaces)<1) then
             happinessFromBuilding:=Round(happinessFromBuilding*(waterCapacity/(residents+workplaces)));
           if (energyCapacity/(residents+workplaces)<1) then
             happinessFromBuilding:=Round(happinessFromBuilding*(energyCapacity/(residents+workplaces)));
 
+          // in der Reichweite liegende Gebäude werden werden durchlaufen
           range:=GetHappinessBuildingRange(buildings[x][y].id, buildings[x][y].level);
           for offsetdX:=(range*-1) to range do
           begin
             for offsetdY:=(range*-1) to range do
             begin
+              // hinzufügen der happiness bei jedem Gebäude
               buildings[x+offsetdX][y+offsetdY].happiness+=happinessFromBuilding;
             end;
           end;
@@ -762,6 +769,9 @@ begin
       if (buildings[x][y].id=3) then
         buildings[x][y].localincome:=(buildings[x][y].residents)*(buildings[x][y].level);
         totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+      if (buildings[x][y].id=4) or (buildings[x][y].id=5) then
+        buildings[x][y].localincome:=((buildings[x][y].residents)div 2)*(buildings[x][y].level);
+        totalIncome+=((buildings[x][y].residents)div 2)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin
           totalIncome+=GetUpkeepCost(buildings[x][y].id);
@@ -772,6 +782,7 @@ end;
 
 procedure UpdateBankAccount();
 begin
+  // Das in der Woche erzeugte Einkommen wird mit der verfügbaren Geldmenge multipliziert
   BankAccount+=TotalIncome;
 end;
 
@@ -986,7 +997,7 @@ end;
 
 function GetTileBitmap(x, y: Integer):TBitmap;
 begin
-  // falls Autotiles vorhanden werden diese erstellt
+  // Die Funktion gibt die Tilemap für ein bestimmtes Gebäude an der Stelle x y zurück
   if buildings[x][y].id < 3 then
   begin
     case terrain[x][y] of
@@ -1089,6 +1100,7 @@ function IsNearStreet(tileX, tileY, width, height:Integer):Boolean;
 var x, y, i:Integer;
   corners:array[0..3] of TPoint;
 begin
+  // Überpruft ob ein Gebäude in der Nähe einer Straße ist
   // Bei Größeren Tiles wird bei jeder Ecke überprüft ob diese in der Nähe einer Straße ist
 
   corners[0].X:=tilex;
@@ -1154,6 +1166,7 @@ end;
 function IsBuildingPlaceable(tileX, tileY, width, height:Integer):Boolean;
 var x, y:Integer;
 begin
+  // gibt eine Boolean zurüch ob ein gebäude an eine bestimmte Stelle gebaut werden kann
   // Wird am anfang true gesetzt
   IsBuildingPlaceable:=true;
   for x:=0 to width-1 do
@@ -1191,7 +1204,7 @@ procedure DestroyMultiTile(tileX, tileY, width, height: Integer);
 var x, y : Integer;
   parentPos:TPoint;
 begin
-  // Mit hilfe der Höhe und Breite wird ein Quadrat gelöst. Der Wert id wird auf null gesezt.
+  // Mit hilfe der Höhe und Breite wird ein Quadrat gelöscht. Essentielle Werte werden auf 0/false gesetzt
   parentPos:=GetParentTilePosition(tilex, tiley, width, height);
   for x:=0 to width-1 do
   begin
@@ -1370,7 +1383,7 @@ end;
 
 function GetMinimapColor(id:Integer):TColor;
 begin
-  // Zum Generieren der Minimap erhält jedes Gebäude(Id) einen eigenen Farbwert.
+  // Zum Generieren der Minimap erhält jedes Gebäude(Id) einen eigenen Farbwert. DIeser wird zurückgegeben
   case id of
     0:
       GetMinimapColor:=RGBToColor(0, 153, 219);
