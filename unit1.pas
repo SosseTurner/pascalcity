@@ -1091,12 +1091,13 @@ end;
 procedure TForm1.Image6Click(Sender: TObject);
 begin
   inc(date);
+  UpdateEnergyProduction();
+  UpdateWaterProduction();
   CalculateHappiness();
   CalculateTaxIncome();
   UpdateBankAccount();
   UpdateZones();
-  UpdateEnergyProduction();
-  UpdateWaterProduction();
+  CalculateHappiness();
   UpdateGui();
   DrawMap();
 end;
