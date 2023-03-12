@@ -46,10 +46,10 @@ object Form1: TForm1
     Height = 300
     Top = 240
     Width = 300
-    ActivePage = TabSheet9
+    ActivePage = TabSheet6
     MultiLine = True
     ParentFont = False
-    TabIndex = 8
+    TabIndex = 5
     TabOrder = 3
     Options = [nboMultiLine]
     object TabSheet1: TTabSheet
@@ -1568,6 +1568,7 @@ object Form1: TForm1
         Top = 0
         Width = 64
         OnClick = Image27Click
+        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B47726170686963F30B000089504E47
           0D0A1A0A0000000D49484452000000400000002008020000002DFFE9D3000000
@@ -1667,6 +1668,7 @@ object Form1: TForm1
           1CAC4422CBCBBF84CBA5CBE271E3310BF8F5F14B6DCCAF0482F8378E340FCEEC
           9813E90000000049454E44AE426082
         }
+        ShowHint = True
       end
     end
     object TabSheet4: TTabSheet
@@ -1681,6 +1683,7 @@ object Form1: TForm1
         Top = 0
         Width = 32
         OnClick = Image11Click
+        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635B09000089504E47
           0D0A1A0A0000000D4948445200000020000000200802000000FC18EDA3000000
@@ -1759,6 +1762,7 @@ object Form1: TForm1
           C0F74498F851E2F891F0434A60F2C74E0057E285495C4B29855E43F2FC85F2CC
           EBFF02731BD50681134CC50000000049454E44AE426082
         }
+        ShowHint = True
       end
       object Image12: TImage
         Left = 32
@@ -1767,6 +1771,7 @@ object Form1: TForm1
         Top = 0
         Width = 64
         OnClick = Image12Click
+        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869630520000089504E47
           0D0A1A0A0000000D4948445200000040000000400802000000250BE689000000
@@ -2027,6 +2032,7 @@ object Form1: TForm1
           A1BD78E5A873EE5CEFB9E7FE0F068AE24BDD31D3850000000049454E44AE4260
           82
         }
+        ShowHint = True
       end
       object Image13: TImage
         Left = 0
@@ -2272,6 +2278,7 @@ object Form1: TForm1
         Top = -8
         Width = 128
         OnClick = Image14Click
+        ParentShowHint = False
         Picture.Data = {
           1754506F727461626C654E6574776F726B477261706869635894000089504E47
           0D0A1A0A0000000D49484452000000800000008008020000004C5CF69C000000
@@ -3462,6 +3469,7 @@ object Form1: TForm1
           F103C688AA2987C6F8A6971ECAA30F64925F002EB05155A0C677ACECBAEEFF01
           7FBB2A5B31A0FAE20000000049454E44AE426082
         }
+        ShowHint = True
       end
     end
     object TabSheet5: TTabSheet
@@ -3578,6 +3586,8 @@ object Form1: TForm1
         Top = 0
         Width = 64
         OnClick = Image30Click
+        ParentShowHint = False
+        ShowHint = True
       end
       object Image31: TImage
         Left = 96
