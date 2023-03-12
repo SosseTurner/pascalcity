@@ -764,7 +764,7 @@ begin
         totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
       if (buildings[x][y].id=4) or (buildings[x][y].id=5) then
         buildings[x][y].localincome:=((buildings[x][y].residents)div 2)*(buildings[x][y].level);
-        totalIncome+=(buildings[x][y].residents)*(buildings[x][y].level);
+        totalIncome+=((buildings[x][y].residents)div 2)*(buildings[x][y].level);
       if (buildings[x][y].id>5) and (buildings[x][y].isParentTile) then
         begin
           totalIncome+=GetUpkeepCost(buildings[x][y].id);
